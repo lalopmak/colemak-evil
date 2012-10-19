@@ -226,7 +226,6 @@
 ;;; Misc overridden keys must be prefixed with g
 ;;; not useful anyway
 
-
 (define-key evil-motion-state-map "k" 'evil-search-next)
 (define-key evil-motion-state-map "K" 'evil-search-previous)
 
@@ -241,13 +240,7 @@
 ;(define-key evil-motion-state-map "e" 'evil-forward-word-end)
 ;(define-key evil-motion-state-map "E" 'evil-forward-WORD-end)
 (define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
-(defun my-move-key (keymap-from keymap-to key)
-  "Moves key binding from one keymap to another, deleting from the old location. "
-  (define-key keymap-to key (lookup-key keymap-from key))
-  (define-key keymap-from key nil))
-(my-move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
-(my-move-key evil-motion-state-map evil-normal-state-map " ")
-(my-move-key evil-motion-state-map evil-normal-state-map (kbd "DEL"))
+(define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
 
 ;(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
 
