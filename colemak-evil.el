@@ -278,7 +278,6 @@
 (set-in-all-evil-states-but-insert "w" 'evil-find-char)
 (set-in-all-evil-states-but-insert "W" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char)
-;;;TODO: make the finds land on the character
 
 ;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
@@ -295,39 +294,56 @@
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
 ;TODO: Remember what state we were at before, and revert after 
 (evil-define-motion colemak-evil-paste-below (count)
+  "Pastes in the line below."
   (evil-open-below 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
-  (evil-paste-after 1)
+  (evil-paste-after 1))
+
+(evil-define-motion colemak-evil-paste-below-then-normal (count)
+  "Pastes in the line below then normal mode."
+  (colemak-evil-paste-below count)
   (evil-normal-state))
 
 (evil-define-motion colemak-evil-paste-above (count)
+  "Pastes in the line above."
   (evil-open-above 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
-  (evil-paste-after 1)
+  (evil-paste-after 1))
+
+(evil-define-motion colemak-evil-paste-above-then-normal (count)
+  "Pastes in the line above then normal mode."
+  (colemak-evil-paste-above count)
   (evil-normal-state))
 
-(evil-define-motion colemak-evil-paste-bol (count)
+(evil-define-motion colemak-evil-paste-at-bol (count)
+  "Pastes at beginning of line."
   (back-to-indentation) 
   (evil-paste-before 1))
 
-(evil-define-motion colemak-evil-paste-eol (count)
+(evil-define-motion colemak-evil-paste-at-eol (count)
+  "Pastes at end of line."
   (evil-end-of-line) 
   (evil-paste-after 1))
 
 (evil-define-motion colemak-evil-goto-line-if-count-else-open-below (count)
+  "evil-open-below unless preceded by number, in which case
+go to that line."
   (if count
       (evil-goto-line count)
     (evil-open-below 1)))
 
+;o to open in line above/below, or [number]o to go to line [number]
 (set-in-all-evil-states-but-insert "o" 'colemak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-(set-in-all-evil-states "\M-o" 'colemak-evil-paste-above)
-(set-in-all-evil-states "\C-o" 'colemak-evil-paste-below)
 
-(set-in-all-evil-states "\M-u" 'colemak-evil-paste-above)
-(set-in-all-evil-states "\M-e" 'colemak-evil-paste-below)
-(set-in-all-evil-states "\M-n" 'colemak-evil-paste-bol)
-(set-in-all-evil-states "\M-i" 'colemak-evil-paste-eol)
+;M-[direction] to paste in that direction; keeps in insert mode iff already in that
+(set-in-all-evil-states-but-insert "\M-u" 'colemak-evil-paste-above-then-normal)
+(set-in-all-evil-states-but-insert "\M-e" 'colemak-evil-paste-below-then-normal)
+(define-key evil-insert-state-map "\M-u" 'colemak-evil-paste-above) 
+(define-key evil-insert-state-map "\M-e" 'colemak-evil-paste-below)
+
+(set-in-all-evil-states "\M-n" 'colemak-evil-paste-at-bol)
+(set-in-all-evil-states "\M-i" 'colemak-evil-paste-at-eol)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
