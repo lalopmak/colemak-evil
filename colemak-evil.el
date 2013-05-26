@@ -107,10 +107,6 @@
 ;; Execute command: map : to ;
 (define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
 
-;;; Word end forward/backward
-;; (set-in-all-evil-states-but-insert ";" 'evil-forward-word-end)
-;; (set-in-all-evil-states-but-insert "g;" 'evil-backward-word-end)
-
 ;;; Folds, etc.
 ;; (define-key evil-normal-state-map ",o" 'evil-open-fold)
 ;; (define-key evil-normal-state-map ",c" 'evil-close-fold)
@@ -279,34 +275,20 @@
 (set-in-all-evil-states-but-insert "P" 'evil-change-line)
 
 ;;; Search character
-
-;;makes sure repeat-find-char doesn't just go to the same result
-(evil-define-motion colemak-evil-repeat-find-char (count) 
-  (if (or (not count)
-	  (= count 1))
-      (evil-repeat-find-char 2)
-    (evil-repeat-find-char count)))
-
-(set-in-all-evil-states-but-insert "w" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "W" 'evil-find-char-to-backward)
-(set-in-all-evil-states-but-insert "\C-w" 'colemak-evil-repeat-find-char)
-
+(set-in-all-evil-states-but-insert "w" 'evil-find-char)
+(set-in-all-evil-states-but-insert "W" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char)
+;;;TODO: make the finds land on the character
 
 ;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
-;; (set-in-all-evil-states-but-insert-and-motion "q" 'evil-find-char-to)
-;; (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-find-char-to-backward)
-
 
 (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
 (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
 
 (define-key evil-motion-state-map "b" 'switch-to-buffer)
 (define-key evil-motion-state-map "B" 'find-file)
-
-;; (define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
-;; (define-key evil-motion-state-map "w" 'evil-backward-WORD-begin)
 
 (define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
@@ -332,8 +314,12 @@
   (evil-end-of-line) 
   (evil-paste-after 1))
 
+(evil-define-motion colemak-evil-goto-line-if-count-else-open-below (count)
+  (if count
+      (evil-goto-line count)
+    (evil-open-below 1)))
 
-(set-in-all-evil-states-but-insert "o" 'evil-open-below)
+(set-in-all-evil-states-but-insert "o" 'colemak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
 (set-in-all-evil-states "\M-o" 'colemak-evil-paste-above)
 (set-in-all-evil-states "\C-o" 'colemak-evil-paste-below)
@@ -390,3 +376,4 @@
 
 ;allows you to use ; as :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
+
