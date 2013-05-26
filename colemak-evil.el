@@ -183,12 +183,6 @@
 ;;; Insert literal
 ;; not implemented
 
-;;; Search
-;; f unchanged
-;; F unchanged
-;; (set-in-all-evil-states-but-insert "p" 'evil-find-char-to)
-;; (set-in-all-evil-states-but-insert "P" 'evil-find-char-to-backward)
-
 ;;; GUI search
 ;; not implemented
 
@@ -284,10 +278,25 @@
 (set-in-all-evil-states-but-insert "p" 'evil-change)
 (set-in-all-evil-states-but-insert "P" 'evil-change-line)
 
+;;; Search character
+
+;;makes sure repeat-find-char doesn't just go to the same result
+(evil-define-motion colemak-evil-repeat-find-char (count) 
+  (if (or (not count)
+	  (= count 1))
+      (evil-repeat-find-char 2)
+    (evil-repeat-find-char count)))
+
+(set-in-all-evil-states-but-insert "w" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "W" 'evil-find-char-to-backward)
+(set-in-all-evil-states-but-insert "\C-w" 'colemak-evil-repeat-find-char)
+
 
 ;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
+;; (set-in-all-evil-states-but-insert-and-motion "q" 'evil-find-char-to)
+;; (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-find-char-to-backward)
 
 
 (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
@@ -296,8 +305,8 @@
 (define-key evil-motion-state-map "b" 'switch-to-buffer)
 (define-key evil-motion-state-map "B" 'find-file)
 
-(define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
-(define-key evil-motion-state-map "w" 'evil-backward-WORD-begin)
+;; (define-key evil-motion-state-map "W" 'evil-forward-WORD-begin)
+;; (define-key evil-motion-state-map "w" 'evil-backward-WORD-begin)
 
 (define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
