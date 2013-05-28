@@ -276,12 +276,13 @@
 
 ;;; Search character
 (set-in-all-evil-states-but-insert "w" 'evil-find-char)
-(set-in-all-evil-states-but-insert "W" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "W" 'evil-shift-right)
 (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char)
 
 ;not motion for compatiblilty with undo-tree
-(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
+(set-in-all-evil-states-but-insert-and-motion "q" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
+(set-in-all-evil-states-but-insert-and-motion "\C-q" 'evil-repeat-find-char)
 
 (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
 (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
