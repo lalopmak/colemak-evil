@@ -277,7 +277,7 @@
 ;;; Search character
 (set-in-all-evil-states-but-insert "w" 'evil-find-char)
 (set-in-all-evil-states-but-insert "W" 'evil-shift-right)
-(set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char)
+;; (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char) ;;for window maps
 
 ;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-find-char-backward)
