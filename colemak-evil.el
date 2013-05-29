@@ -44,15 +44,15 @@
 
 (defun set-in-all-evil-states-but-insert (key def)
   (set-in-all-evil-states key def (list evil-normal-state-map
-				   evil-visual-state-map
-				   evil-emacs-state-map
-				   evil-motion-state-map)))
+					evil-visual-state-map
+					evil-emacs-state-map
+					evil-motion-state-map)))
 
 
 (defun set-in-all-evil-states-but-insert-and-motion (key def)
   (set-in-all-evil-states key def (list evil-normal-state-map
-				   evil-visual-state-map
-				   evil-emacs-state-map)))
+					evil-visual-state-map
+					evil-emacs-state-map)))
 
 ;;; No insert-state alt-navigation remappings (they would clobber
 ;;; Emacs shortcuts, and Emacs has its own navigation commands that 
@@ -143,9 +143,9 @@
 ;; How is this different from gg/G?
 ;; C-h would interfere with the useful C-h f/v/k commands
 ;; (set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
-					     ;; (goto-char (point-min))))
+;; (goto-char (point-min))))
 ;; (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
-					     ;; (goto-char (point-max))))
+;; (goto-char (point-max))))
 
 ;;; Move cursor to top/bottom of screen
 ;; next/prior are page up/down
@@ -153,10 +153,10 @@
 (set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
 
 ;;; inSert/Replace/Append
-(set-in-all-evil-states-but-insert "s" 'evil-insert)
-(set-in-all-evil-states-but-insert "S" 'evil-insert-line)
-(set-in-all-evil-states-but-insert "t" 'evil-append)
-(set-in-all-evil-states-but-insert "T" 'evil-append-line)
+(set-in-all-evil-states-but-insert "r" 'evil-insert)
+(set-in-all-evil-states-but-insert "R" 'evil-insert-line)
+(set-in-all-evil-states-but-insert "s" 'evil-append)
+(set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
@@ -196,8 +196,8 @@
 
 (set-in-all-evil-states-but-insert "J" 'evil-join)
 
-(set-in-all-evil-states-but-insert "r" 'evil-replace)
-(set-in-all-evil-states-but-insert "R" 'evil-replace-state)
+(set-in-all-evil-states-but-insert "T" 'evil-replace)
+;; (set-in-all-evil-states-but-insert "R" 'evil-replace-state)
 
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
@@ -277,6 +277,13 @@
 ;;; Search character
 (set-in-all-evil-states-but-insert "w" 'evil-find-char)
 (set-in-all-evil-states-but-insert "W" 'evil-shift-right)
+(set-in-all-evil-states-but-insert "\C-i" 'evil-find-char)
+(set-in-all-evil-states-but-insert "\C-n" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "I" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "N" 'evil-find-char-to-backward)
+(set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
+
+
 ;; (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char) ;;for window maps
 
 ;not motion for compatiblilty with undo-tree
