@@ -188,8 +188,8 @@
 
 (set-in-all-evil-states-but-insert "J" 'evil-join)
 
-(set-in-all-evil-states-but-insert "T" 'evil-replace)
-(set-in-all-evil-states-but-insert "\M-t" 'evil-replace-state)
+(set-in-all-evil-states-but-insert "q" 'evil-replace)
+(set-in-all-evil-states-but-insert "Q" 'evil-replace-state)
 
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
@@ -393,7 +393,8 @@ go to that line."
 ;; (define-key evil-normal-state-map "o" (lambda (&optional argz)))
 ;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
 
-;allows you to use ; as :
+;; Custom : commands
+;; Makes ; an alias for :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
 (evil-ex-define-cmd "git" 'magit-status)
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
