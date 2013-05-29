@@ -1,6 +1,11 @@
-" Redesigned mapping for the Colemak layout for Vim 7.0
+" Original: Redesigned mapping for the Colemak layout for Vim 7.0
 " 2008-04-21 Shai Coleman, http://colemak.com/ . Public domain. 
 "
+" Forked 2013, released under the CC0 1.0 Universal license. You are
+" free to use, modify, and redistribute it as you please. This software
+" comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
+" http://creativecommons.org/publicdomain/zero/1.0/
+ 
 " * Use ":source colemak.vim" (without quotes) to load this file. Adjust path to colemak.vim if needed.
 " * Add the line: "source colemak.vim" (without quotes) in your .vimrc file to automatically load this file. 
 "   It is recommended to load colemak.vim after all other Vim scripts.
