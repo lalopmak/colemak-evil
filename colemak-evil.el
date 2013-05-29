@@ -86,10 +86,6 @@
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
-;;; Jump to line
-;; Redundant with gg and G
-;; (set-in-all-evil-states-but-insert "-" 'evil-goto-first-line)
-;; (set-in-all-evil-states-but-insert "_" 'evil-goto-line)
 
 ;;; Words forward/backward
 (set-in-all-evil-states-but-insert "l" 'evil-backward-word-begin)
@@ -99,8 +95,9 @@
 (set-in-all-evil-states-but-insert (kbd "C-l") 'evil-backward-WORD-begin)
 
 ;;; inneR text objects
-(define-key evil-visual-state-map "r" evil-inner-text-objects-map)
-(define-key evil-operator-state-map "r" evil-inner-text-objects-map)
+;;; conflicts with find-char-backwards
+;; (define-key evil-visual-state-map "r" evil-inner-text-objects-map)
+;; (define-key evil-operator-state-map "r" evil-inner-text-objects-map)
 (define-key evil-inner-text-objects-map "y" 'evil-inner-word)
 (define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
 
@@ -139,13 +136,6 @@
 (set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
 (set-in-all-evil-states-but-insert ")" 'evil-jump-forward)
 
-;;; Start/end of document
-;; How is this different from gg/G?
-;; C-h would interfere with the useful C-h f/v/k commands
-;; (set-in-all-evil-states-but-insert "\C-j" '(lambda () (interactive)
-;; (goto-char (point-min))))
-;; (set-in-all-evil-states-but-insert "\C-h" '(lambda () (interactive)
-;; (goto-char (point-max))))
 
 ;;; Move cursor to top/bottom of screen
 ;; next/prior are page up/down
@@ -153,10 +143,12 @@
 (set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
 
 ;;; inSert/Replace/Append
+
 (set-in-all-evil-states-but-insert "w" 'evil-insert)
 (set-in-all-evil-states-but-insert "W" 'evil-insert-line)
-(set-in-all-evil-states-but-insert "f" 'evil-append)
-(set-in-all-evil-states-but-insert "F" 'evil-append-line)
+(set-in-all-evil-states-but-insert "p" 'evil-append)
+(set-in-all-evil-states-but-insert "P" 'evil-append-line)
+
 
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
@@ -197,7 +189,7 @@
 (set-in-all-evil-states-but-insert "J" 'evil-join)
 
 (set-in-all-evil-states-but-insert "T" 'evil-replace)
-;; (set-in-all-evil-states-but-insert "R" 'evil-replace-state)
+(set-in-all-evil-states-but-insert "\M-t" 'evil-replace-state)
 
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
@@ -271,10 +263,12 @@
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
 ;;; Change
-(set-in-all-evil-states-but-insert "p" 'evil-change)
-(set-in-all-evil-states-but-insert "P" 'evil-change-line)
+
+(set-in-all-evil-states-but-insert "f" 'evil-change)
+(set-in-all-evil-states-but-insert "F" 'evil-change-line)
 
 ;;; Search character
+
 
 (set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "s" 'evil-find-char)
@@ -302,7 +296,6 @@
 (define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
-;TODO: Remember what state we were at before, and revert after 
 (evil-define-motion colemak-evil-paste-below (count)
   "Pastes in the line below."
   (evil-open-below 1) 
@@ -403,3 +396,7 @@ go to that line."
 ;allows you to use ; as :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
 
+(defun colemak-evil-hints ()
+  "Hello World and you can call it via M-x hello."
+  (interactive)
+  (message "Hello World!"))
