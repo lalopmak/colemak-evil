@@ -278,6 +278,7 @@
 (set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
 (set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
 (set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
+(set-in-all-evil-states-but-insert "T" 'evil-repeat-find-char-reverse)
 
 
 ;; (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char) ;;for window maps
