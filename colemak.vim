@@ -383,7 +383,10 @@ noremap s f|
 noremap R T|
 noremap S t|
 
-noremap t t|
+"Repeat find char
+noremap t .|
+noremap T ,|
 
-noremap T r|
-noremap <A-t> R|
+"Replace as q
+noremap q r|
+noremap Q R|
