@@ -395,8 +395,10 @@ go to that line."
 
 ;allows you to use ; as :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
+(evil-ex-define-cmd "git" 'magit-status)
 
 (defun colemak-evil-hints ()
   "Hello World and you can call it via M-x hello."
   (interactive)
   (message "Hello World!"))
+
