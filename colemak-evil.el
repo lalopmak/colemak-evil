@@ -153,10 +153,10 @@
 (set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
 
 ;;; inSert/Replace/Append
-(set-in-all-evil-states-but-insert "r" 'evil-insert)
-(set-in-all-evil-states-but-insert "R" 'evil-insert-line)
-(set-in-all-evil-states-but-insert "s" 'evil-append)
-(set-in-all-evil-states-but-insert "S" 'evil-append-line)
+(set-in-all-evil-states-but-insert "w" 'evil-insert)
+(set-in-all-evil-states-but-insert "W" 'evil-insert-line)
+(set-in-all-evil-states-but-insert "f" 'evil-append)
+(set-in-all-evil-states-but-insert "F" 'evil-append-line)
 
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
@@ -275,24 +275,26 @@
 (set-in-all-evil-states-but-insert "P" 'evil-change-line)
 
 ;;; Search character
-(set-in-all-evil-states-but-insert "w" 'evil-find-char)
-(set-in-all-evil-states-but-insert "W" 'evil-shift-right)
+
+(set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "s" 'evil-find-char)
+;; (set-in-all-evil-states-but-insert "W" 'evil-shift-right)
 (set-in-all-evil-states-but-insert "\C-i" 'evil-find-char)
 (set-in-all-evil-states-but-insert "\C-n" 'evil-find-char-backward)
-(set-in-all-evil-states-but-insert "I" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "N" 'evil-find-char-to-backward)
+(set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
 (set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
 
 
 ;; (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char) ;;for window maps
 
-;not motion for compatiblilty with undo-tree
-(set-in-all-evil-states-but-insert-and-motion "q" 'evil-find-char-backward)
+					;not motion for compatiblilty with undo-tree
+(set-in-all-evil-states-but-insert-and-motion "q" 'evil-shift-right)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-shift-left) 
 (set-in-all-evil-states-but-insert-and-motion "\C-q" 'evil-repeat-find-char)
 
-(set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
-(set-in-all-evil-states-but-insert "F" 'delete-forward-char)
+;; (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
+;; (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
 
 (define-key evil-motion-state-map "b" 'switch-to-buffer)
 (define-key evil-motion-state-map "B" 'find-file)
