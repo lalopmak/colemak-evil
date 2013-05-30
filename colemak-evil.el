@@ -142,13 +142,6 @@
 (set-in-all-evil-states (kbd "C-<next>") 'evil-window-bottom)
 (set-in-all-evil-states (kbd "C-<prior>") 'evil-window-top)
 
-;;; inSert/Replace/Append
-
-(set-in-all-evil-states-but-insert "w" 'evil-insert)
-(set-in-all-evil-states-but-insert "W" 'evil-insert-line)
-(set-in-all-evil-states-but-insert "p" 'evil-append)
-(set-in-all-evil-states-but-insert "P" 'evil-append-line)
-
 
 ;;; Make insert/add work also in visual line mode like in visual block mode
 ;; not sure what this means
@@ -188,8 +181,10 @@
 
 (set-in-all-evil-states-but-insert "J" 'evil-join)
 
-(set-in-all-evil-states-but-insert "q" 'evil-replace)
-(set-in-all-evil-states-but-insert "Q" 'evil-replace-state)
+
+;;not motion for compatiblilty with undo-tree
+(set-in-all-evil-states-but-insert-and-motion "q" 'evil-replace)
+(set-in-all-evil-states-but-insert-and-motion "Q" 'evil-replace-state)
 
 
 (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
@@ -255,35 +250,58 @@
 
 
 
-
-
-
-
-
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
-;;; Change
 
+
+
+
+;; Radical version: insert and change at wf
+
+;;Insert
+(set-in-all-evil-states-but-insert "w" 'evil-insert)
+(set-in-all-evil-states-but-insert "W" 'evil-insert-line)
+
+;;Change
 (set-in-all-evil-states-but-insert "f" 'evil-change)
 (set-in-all-evil-states-but-insert "F" 'evil-change-line)
 
-;;; Search character
-
-
+;;Find char
 (set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "s" 'evil-find-char)
-;; (set-in-all-evil-states-but-insert "W" 'evil-shift-right)
-(set-in-all-evil-states-but-insert "\C-i" 'evil-find-char)
-(set-in-all-evil-states-but-insert "\C-n" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
 (set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
-(set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
+
+
+;; Conservative version: insert and change at rs
+
+;; ;; Insert
+;; (set-in-all-evil-states-but-insert "r" 'evil-insert)
+;; (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
+
+;; ;;Change
+;; (set-in-all-evil-states-but-insert "s" 'evil-change)
+;; (set-in-all-evil-states-but-insert "S" 'evil-change-line)
+
+;; ;;Find char
+;; (set-in-all-evil-states-but-insert "w" 'evil-find-char-backward)
+;; (set-in-all-evil-states-but-insert "f" 'evil-find-char)
+;; (set-in-all-evil-states-but-insert "W" 'evil-find-char-to)
+;; (set-in-all-evil-states-but-insert "F" 'evil-find-char-to-backward)
+
+
+
+;;Append
+(set-in-all-evil-states-but-insert "p" 'evil-append)
+(set-in-all-evil-states-but-insert "P" 'evil-append-line)
+
 (set-in-all-evil-states-but-insert "T" 'evil-repeat-find-char-reverse)
+(set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
 
 
-;; (set-in-all-evil-states-but-insert "\C-w" 'evil-repeat-find-char) ;;for window maps
 
-					;not motion for compatiblilty with undo-tree
+
+
 
 
 ;; (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
