@@ -288,7 +288,7 @@
 
 ;;Change
 (set-in-all-evil-states-but-insert "\C-p" 'evil-change)
-;; (set-in-all-evil-states-but-insert "P" 'evil-change-line)
+(set-in-all-evil-states-but-insert "\M-p" 'evil-change-line)
 (set-in-all-evil-states-but-insert "p" 'evil-substitute)
 (set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
 
