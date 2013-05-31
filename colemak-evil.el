@@ -238,6 +238,7 @@
 
 ;;; Window handling
 ;; C-w (not C-r as in Shai's mappings) prefixes window commands
+
 (define-key evil-window-map "n" 'evil-window-left)
 (define-key evil-window-map "N" 'evil-window-move-far-left)
 (define-key evil-window-map "e" 'evil-window-down)
@@ -258,13 +259,15 @@
 
 ;; Radical version: insert and change at wf
 
+(define-key evil-motion-state-map "W" 'evil-window-map)
+
 ;;Insert
 (set-in-all-evil-states-but-insert "w" 'evil-insert)
-(set-in-all-evil-states-but-insert "W" 'evil-insert-line)
+(set-in-all-evil-states-but-insert "\C-W" 'evil-insert-line)
 
 ;;Change
 (set-in-all-evil-states-but-insert "f" 'evil-change)
-(set-in-all-evil-states-but-insert "F" 'evil-change-line)
+(set-in-all-evil-states-but-insert "\C-F" 'evil-change-line)
 
 ;;Find char
 (set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
@@ -289,11 +292,9 @@
 ;; (set-in-all-evil-states-but-insert "W" 'evil-find-char-to)
 ;; (set-in-all-evil-states-but-insert "F" 'evil-find-char-to-backward)
 
-
-
 ;;Append
 (set-in-all-evil-states-but-insert "p" 'evil-append)
-(set-in-all-evil-states-but-insert "P" 'evil-append-line)
+(set-in-all-evil-states-but-insert "\C-P" 'evil-append-line)
 
 (set-in-all-evil-states-but-insert "T" 'evil-repeat-find-char-reverse)
 (set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
