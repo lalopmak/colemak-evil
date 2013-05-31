@@ -259,42 +259,46 @@
 
 ;; Radical version: insert and change at wf
 
-(define-key evil-motion-state-map "W" 'evil-window-map)
+;; (define-key evil-motion-state-map "W" 'evil-window-map)
 
-;;Insert
-(set-in-all-evil-states-but-insert "w" 'evil-insert)
-(set-in-all-evil-states-but-insert "\C-W" 'evil-insert-line)
+;; ;;Insert
+;; (set-in-all-evil-states-but-insert "w" 'evil-insert)
+;; (set-in-all-evil-states-but-insert "\C-W" 'evil-insert-line)
 
-;;Change
-(set-in-all-evil-states-but-insert "f" 'evil-change)
-(set-in-all-evil-states-but-insert "\C-F" 'evil-change-line)
+;; ;;Change
+;; (set-in-all-evil-states-but-insert "f" 'evil-change)
+;; (set-in-all-evil-states-but-insert "\C-F" 'evil-change-line)
 
-;;Find char
-(set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
-(set-in-all-evil-states-but-insert "s" 'evil-find-char)
-(set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
+;; ;;Find char
+;; (set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
+;; (set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
+;; (set-in-all-evil-states-but-insert "s" 'evil-find-char)
+;; (set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
+
+;; ;;Append
+;; (set-in-all-evil-states-but-insert "p" 'evil-append)
+;; (set-in-all-evil-states-but-insert "\C-P" 'evil-append-line)
 
 
 ;; Conservative version: insert and change at rs
 
-;; ;; Insert
-;; (set-in-all-evil-states-but-insert "r" 'evil-insert)
-;; (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
+;; Insert
+(set-in-all-evil-states-but-insert "r" 'evil-insert)
+(set-in-all-evil-states-but-insert "R" 'evil-insert-line)
 
-;; ;;Change
-;; (set-in-all-evil-states-but-insert "s" 'evil-change)
-;; (set-in-all-evil-states-but-insert "S" 'evil-change-line)
+;;Change
+(set-in-all-evil-states-but-insert "p" 'evil-change)
+(set-in-all-evil-states-but-insert "P" 'evil-change-line)
 
-;; ;;Find char
-;; (set-in-all-evil-states-but-insert "w" 'evil-find-char-backward)
-;; (set-in-all-evil-states-but-insert "f" 'evil-find-char)
-;; (set-in-all-evil-states-but-insert "W" 'evil-find-char-to)
-;; (set-in-all-evil-states-but-insert "F" 'evil-find-char-to-backward)
+;;Find char
+(set-in-all-evil-states-but-insert "f" 'evil-find-char)
+(set-in-all-evil-states-but-insert "F" 'evil-find-char-to)
+(set-in-all-evil-states-but-insert "w" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "W" 'evil-find-char-to-backward)
 
 ;;Append
-(set-in-all-evil-states-but-insert "p" 'evil-append)
-(set-in-all-evil-states-but-insert "\C-P" 'evil-append-line)
+(set-in-all-evil-states-but-insert "s" 'evil-append)
+(set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
 (set-in-all-evil-states-but-insert "T" 'evil-repeat-find-char-reverse)
 (set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)

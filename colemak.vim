@@ -367,21 +367,49 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 "inoremap <expr> <C-n> pumvisible() ? "\<lt>C-n>" : "\<lt>C-n>\<lt>C-r>=pumvisible() ? \"\\<lt>Down>\" : \"\"\<lt>CR>"
 "inoremap <expr> <M-;> pumvisible() ? "\<lt>C-n>" : "\<lt>C-x>\<lt>C-o>\<lt>C-n>\<lt>C-p>\<lt>C-r>=pumvisible() ? \"\\<lt>Down>\" : \"\"\<lt>CR>"
 
+
+" "Radical version
+" "Change
+" noremap f c|
+" noremap F C|
+
+" " inSert/Replace/append (T)
+" noremap w i|
+" noremap W I|
+" noremap p a|
+" noremap P A|
+
+" "Find char/till
+" noremap r F|
+" noremap s f|
+" noremap R T|
+" noremap S t|
+
+" "Repeat find char
+" noremap t .|
+" noremap T ,|
+
+" "Replace as q
+" noremap q r|
+" noremap Q R|
+
+" "Conservative version
+
 "Change
-noremap f c|
-noremap F C|
+noremap p c|
+noremap P C|
 
 " inSert/Replace/append (T)
-noremap w i|
-noremap W I|
-noremap p a|
-noremap P A|
+noremap r i|
+noremap R I|
+noremap s a|
+noremap S A|
 
 "Find char/till
-noremap r F|
-noremap s f|
-noremap R T|
-noremap S t|
+noremap w F|
+noremap f f|
+noremap W T|
+noremap F t|
 
 "Repeat find char
 noremap t .|
