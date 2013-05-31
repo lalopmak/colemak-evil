@@ -287,8 +287,10 @@
 (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
 
 ;;Change
-(set-in-all-evil-states-but-insert "p" 'evil-change)
-(set-in-all-evil-states-but-insert "P" 'evil-change-line)
+(set-in-all-evil-states-but-insert "\C-p" 'evil-change)
+;; (set-in-all-evil-states-but-insert "P" 'evil-change-line)
+(set-in-all-evil-states-but-insert "p" 'evil-substitute)
+(set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
 
 ;;Find char
 (set-in-all-evil-states-but-insert "f" 'evil-find-char)
