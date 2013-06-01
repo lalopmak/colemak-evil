@@ -16,6 +16,48 @@
 ;; For the full text of the GNU General Public License, see
 ;; http://www.gnu.org/licenses/gpl.html 
 
+(defvar colemak-evil-hintstring "Hints for lalop's colemak-evil configuration.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
+
+To dismiss: retype one of the above commands or press q in the buffer.
+
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|~ Case     |! ExtFlt>  |@ PlyMcr·  |#  <-=     |$  ->|     |% GoMatch  |^  <--     |+ Next<--  |[ Rep :s   |]  =->     |( |<-Sent  |) Sent->|  |_ LastLin  |
+|` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|           |           |           |           |ChangeToEOL|           |           |           |           |     =<Up> |           |           |           |
+|  NextTab  |           | WinCmd    |           |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |           |
+| <TAB>     |  RepState | Find Till | Find Till |Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
+| <TAB>     |  Replace  | Find Char | Find Char |Substitute | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' GoMk·|<  |
+|           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀=== L   |     U     |   Y ===▶  |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+ Meta-----> |SelectBlock|           |           |           |           |           |           |   =<Left> |     =<Dn> |   =<Rght> |           |           |
+ Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
+ Shift----> |Select Line| Insert BOL| Append EOL|RptFndChBkw||D Del->|  |}          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
+ Normal---> |  Select   | Insert    | Append    |RptFindChar|  Delete>  |]          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
+            +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+            |           |           |           |           |           |           |           |           |           |           |
+            |           |           |           |           |           |           |           |           |           |           |    · = char arg.
+            |   Redo    | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|           | < ◀-Dedent| > Indent-▶|    > = move arg.
+            |   Undo    |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|  Set Mk·  | ,         | .         |
+            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
+            +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+")
+
+(defun colemak-evil-hints ()
+  "Provides hints about this configuration, or closes said hints."
+  (interactive)
+  (let* ((hints-buffer-name "Colemak-Evil Hints") 
+	 (hints-buffer (get-buffer hints-buffer-name) ) )
+    ;;if hints are currently visible, close them. Otherwise, display them.
+    (if (and hints-buffer 
+	     (get-buffer-window hints-buffer)) 
+	(progn (delete-windows-on hints-buffer-name)
+	       (kill-buffer hints-buffer-name))
+      (with-output-to-temp-buffer hints-buffer-name
+	(princ colemak-evil-hintstring)))))
+
+
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
@@ -203,9 +245,9 @@
 ;;; Free mappings: ,/+/H
 
 ;;; Macros
-(define-key evil-normal-state-map "Q" '(lambda ()
-					 (interactive)
-					 (evil-execute-macro 1 last-kbd-macro)))
+;; (define-key evil-normal-state-map "Q" '(lambda ()
+;; 					 (interactive)
+;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
 ;;; Duplicate line
 ;; not implemented
@@ -359,11 +401,11 @@ go to that line."
       (evil-goto-line count)
     (evil-open-below 1)))
 
-;o to open in line above/below, or [number]o to go to line [number]
+					;o to open in line above/below, or [number]o to go to line [number]
 (set-in-all-evil-states-but-insert "o" 'colemak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
 
-;M-[direction] to paste in that direction; keeps in insert mode iff already in that
+					;M-[direction] to paste in that direction; keeps in insert mode iff already in that
 (set-in-all-evil-states-but-insert "\M-u" 'colemak-evil-paste-above-then-normal)
 (set-in-all-evil-states-but-insert "\M-e" 'colemak-evil-paste-below-then-normal)
 (define-key evil-insert-state-map "\M-u" 'colemak-evil-paste-above) 
@@ -376,7 +418,7 @@ go to that line."
 
 
 
-;TODO make caps paste from kill ring search above/below
+					;TODO make caps paste from kill ring search above/below
 
 ;;;;Experiment: generalize the paste-above/paste-below functions as macros
 ;; (defmacro colemak-evil-do-body ( body)
@@ -389,7 +431,7 @@ go to that line."
 ;;      (interactive)
 ;;      (colemak-evil-do-body ,body)
 ;;      (evil-normal-state)))
-  
+
 
 ;; (set-in-all-evil-states-but-insert "o" 'evil-open-below)
 ;; (set-in-all-evil-states-but-insert "O" 'evil-open-above)
@@ -424,8 +466,8 @@ go to that line."
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
 
-(defun colemak-evil-hints ()
-  "Hello World and you can call it via M-x hello."
-  (interactive)
-  (message "Hello World!"))
+(evil-ex-define-cmd "hints" 'colemak-evil-hints)
+(evil-ex-define-cmd "h" "hints")
+(evil-ex-define-cmd "ars" "hints")
+
 
