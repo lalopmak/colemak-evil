@@ -1,4 +1,4 @@
-sandbox for lalop's test changes.  Original repository: https://github.com/patbl/colemak-evil
+lalop's variant of colemak-evil.el and (to a lesser extent) colemak.vim
 
 colemak-evil
 ============
