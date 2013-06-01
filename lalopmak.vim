@@ -1,14 +1,14 @@
-" Original: Redesigned mapping for the Colemak layout for Vim 7.0
+" Original (colemak.vim): Redesigned mapping for the Colemak layout for Vim 7.0
 " 2008-04-21 Shai Coleman, http://colemak.com/ . Public domain. 
 "
-" Forked 2013, released under the CC0 1.0 Universal license. You are
+" Forked 2013 (lalopmak.vim), released under the CC0 1.0 Universal license. You are
 " free to use, modify, and redistribute it as you please. This software
 " comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
 " http://creativecommons.org/publicdomain/zero/1.0/
  
-" * Use ":source colemak.vim" (without quotes) to load this file. Adjust path to colemak.vim if needed.
-" * Add the line: "source colemak.vim" (without quotes) in your .vimrc file to automatically load this file. 
-"   It is recommended to load colemak.vim after all other Vim scripts.
+" * Use ":source lalopmak.vim" (without quotes) to load this file. Adjust path to lalopmak.vim if needed.
+" * Add the line: "source lalopmak.vim" (without quotes) in your .vimrc file to automatically load this file. 
+"   It is recommended to load lalopmak.vim after all other Vim scripts.
 
 " recommended commands for running under Linux console
 " $ export TERM=xterm    # make Backspace and Ctrl-H work correctly
@@ -40,7 +40,7 @@
 " S - Shift, C - Ctrl
 " (c - command line, i - insert mode, n - normal mode, v - visual+select mode)
 "
-if v:version < 700 | echohl WarningMsg | echo "colemak.vim: You need Vim version 7.0 or later" | echohl None | finish | endif
+if v:version < 700 | echohl WarningMsg | echo "lalopmak.vim: You need Vim version 7.0 or later" | echohl None | finish | endif
 
 " incompatible scripts: matchit.vim (fix available)
 
