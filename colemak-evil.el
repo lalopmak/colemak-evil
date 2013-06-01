@@ -16,7 +16,7 @@
 ;; For the full text of the GNU General Public License, see
 ;; http://www.gnu.org/licenses/gpl.html 
 
-(defvar colemak-evil-hintstring "Hints for lalop's colemak-evil configuration.  Accessed via: :hints, :h, :ars, or M-x colemak-evil-hints.
+(defvar lalopmak-evil-hintstring "Hints for lalop's colemak-evil configuration.  Accessed via: :hints, :h, :ars, or M-x lalopmak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
 
@@ -28,7 +28,7 @@ To dismiss: retype one of the above commands or press q in the buffer.
 |  NextTab  |           | WinCmd    |           |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |           |
 | <TAB>     |  RepState | Find Till | Find Till |Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
 | <TAB>     |  Replace  | Find Char | Find Char |Substitute | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' GoMk·|<  |
-|           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀=== L   |     U     |   Y ===▶  |           |           |
+|           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> |SelectBlock|           |           |           |           |           |           |   =<Left> |     =<Dn> |   =<Rght> |           |           |
  Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
@@ -44,7 +44,7 @@ To dismiss: retype one of the above commands or press q in the buffer.
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 ")
 
-(defun colemak-evil-hints ()
+(defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
   (let* ((hints-buffer-name "Colemak-Evil Hints") 
@@ -55,7 +55,7 @@ To dismiss: retype one of the above commands or press q in the buffer.
 	(progn (delete-windows-on hints-buffer-name)
 	       (kill-buffer hints-buffer-name))
       (with-output-to-temp-buffer hints-buffer-name
-	(princ colemak-evil-hintstring)))))
+	(princ lalopmak-evil-hintstring)))))
 
 
 ;; remove all keybindings from insert-state keymap
@@ -362,39 +362,39 @@ To dismiss: retype one of the above commands or press q in the buffer.
 (define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
-(evil-define-motion colemak-evil-paste-below (count)
+(evil-define-motion lalopmak-evil-paste-below (count)
   "Pastes in the line below."
   (evil-open-below 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1))
 
-(evil-define-motion colemak-evil-paste-below-then-normal (count)
+(evil-define-motion lalopmak-evil-paste-below-then-normal (count)
   "Pastes in the line below then normal mode."
-  (colemak-evil-paste-below count)
+  (lalopmak-evil-paste-below count)
   (evil-normal-state))
 
-(evil-define-motion colemak-evil-paste-above (count)
+(evil-define-motion lalopmak-evil-paste-above (count)
   "Pastes in the line above."
   (evil-open-above 1) 
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1))
 
-(evil-define-motion colemak-evil-paste-above-then-normal (count)
+(evil-define-motion lalopmak-evil-paste-above-then-normal (count)
   "Pastes in the line above then normal mode."
-  (colemak-evil-paste-above count)
+  (lalopmak-evil-paste-above count)
   (evil-normal-state))
 
-(evil-define-motion colemak-evil-paste-at-bol (count)
+(evil-define-motion lalopmak-evil-paste-at-bol (count)
   "Pastes at beginning of line."
   (back-to-indentation) 
   (evil-paste-before 1))
 
-(evil-define-motion colemak-evil-paste-at-eol (count)
+(evil-define-motion lalopmak-evil-paste-at-eol (count)
   "Pastes at end of line."
   (evil-end-of-line) 
   (evil-paste-after 1))
 
-(evil-define-motion colemak-evil-goto-line-if-count-else-open-below (count)
+(evil-define-motion lalopmak-evil-goto-line-if-count-else-open-below (count)
   "evil-open-below unless preceded by number, in which case
 go to that line."
   (if count
@@ -402,17 +402,17 @@ go to that line."
     (evil-open-below 1)))
 
 					;o to open in line above/below, or [number]o to go to line [number]
-(set-in-all-evil-states-but-insert "o" 'colemak-evil-goto-line-if-count-else-open-below)
+(set-in-all-evil-states-but-insert "o" 'lalopmak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
 
 					;M-[direction] to paste in that direction; keeps in insert mode iff already in that
-(set-in-all-evil-states-but-insert "\M-u" 'colemak-evil-paste-above-then-normal)
-(set-in-all-evil-states-but-insert "\M-e" 'colemak-evil-paste-below-then-normal)
-(define-key evil-insert-state-map "\M-u" 'colemak-evil-paste-above) 
-(define-key evil-insert-state-map "\M-e" 'colemak-evil-paste-below)
+(set-in-all-evil-states-but-insert "\M-u" 'lalopmak-evil-paste-above-then-normal)
+(set-in-all-evil-states-but-insert "\M-e" 'lalopmak-evil-paste-below-then-normal)
+(define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above) 
+(define-key evil-insert-state-map "\M-e" 'lalopmak-evil-paste-below)
 
-(set-in-all-evil-states "\M-n" 'colemak-evil-paste-at-bol)
-(set-in-all-evil-states "\M-i" 'colemak-evil-paste-at-eol)
+(set-in-all-evil-states "\M-n" 'lalopmak-evil-paste-at-bol)
+(set-in-all-evil-states "\M-i" 'lalopmak-evil-paste-at-eol)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -421,22 +421,22 @@ go to that line."
 					;TODO make caps paste from kill ring search above/below
 
 ;;;;Experiment: generalize the paste-above/paste-below functions as macros
-;; (defmacro colemak-evil-do-body ( body)
+;; (defmacro lalopmak-evil-do-body ( body)
 ;;   (when body
 ;;     (car body)
-;;     (colemak-evil-do-body (cdr body))))
+;;     (lalopmak-evil-do-body (cdr body))))
 
-;; (defmacro colemak-evil-do-interactively-then-normal (&rest body)
+;; (defmacro lalopmak-evil-do-interactively-then-normal (&rest body)
 ;;   `(lambda (count)
 ;;      (interactive)
-;;      (colemak-evil-do-body ,body)
+;;      (lalopmak-evil-do-body ,body)
 ;;      (evil-normal-state)))
 
 
 ;; (set-in-all-evil-states-but-insert "o" 'evil-open-below)
 ;; (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-;; (define-key evil-motion-state-map "\C-o" (colemak-evil-do-interactively-then-normal (evil-open-below 1) (evil-paste-after 1) ))
-;; (define-key evil-motion-state-map "\C-O" (colemak-evil-do-interactively-then-normal (evil-open-above 1) (evil-paste-after 1) ))
+;; (define-key evil-motion-state-map "\C-o" (lalopmak-evil-do-interactively-then-normal (evil-open-below 1) (evil-paste-after 1) ))
+;; (define-key evil-motion-state-map "\C-O" (lalopmak-evil-do-interactively-then-normal (evil-open-above 1) (evil-paste-after 1) ))
 
 
 
@@ -444,8 +444,8 @@ go to that line."
 ;; ;;Experiment: swap o and ;
 ;; (set-in-all-evil-states-but-insert ";" 'evil-open-below)
 ;; (set-in-all-evil-states-but-insert ":" 'evil-open-above)
-;; (define-key evil-motion-state-map "\M-;" 'colemak-evil-paste-below)
-;; (define-key evil-motion-state-map "\M-:" 'colemak-evil-paste-above)
+;; (define-key evil-motion-state-map "\M-;" 'lalopmak-evil-paste-below)
+;; (define-key evil-motion-state-map "\M-:" 'lalopmak-evil-paste-above)
 ;; ;;accounting for the other usages of o
 ;; (define-key evil-window-map ";" 'delete-other-windows)
 ;; (define-key evil-visual-state-map ";" 'exchange-point-and-mark)
@@ -466,7 +466,7 @@ go to that line."
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
 
-(evil-ex-define-cmd "hints" 'colemak-evil-hints)
+(evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
 (evil-ex-define-cmd "h" "hints")
 (evil-ex-define-cmd "ars" "hints")
 
