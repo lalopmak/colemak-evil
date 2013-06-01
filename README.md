@@ -5,6 +5,10 @@ A variant of colemak-evil.el/colemak.vim that takes some of Shai's ideas even fu
 
 A draft diagram can be found [near the top of the main file](https://raw.github.com/lalopmak/lalopmak-evil/master/lalopmak-evil.el).
 
+vim version is also in progress, but not nearly as developed.
+
+
+
 Setup
 -----
 1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
@@ -13,7 +17,7 @@ Setup
 
 Tips
 ----
-Type :hints or :ars to get the diagram above.
+Type :hints or :ars to get the hint diagram.
 
 Escape takes you into normal mode, an unfortunate historical accident.
 I recommend defining an easy AltGr mapping (I use AltGr+t) since it will
