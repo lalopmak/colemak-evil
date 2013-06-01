@@ -69,12 +69,6 @@ Normal mode:
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 
-;; To enter normal mode: Use <Esc> or define your own key combination
-;;  using Key Chord (http://www.emacswiki.org/emacs/key-chord.el).
-;;  "hn" is the only home-row combination that I know of that is
-;;  relatively uncommon in English: (key-chord-define-global "hn"
-;;  'evil-normal-state)
-
 ;; map multiple states at once (courtesy of Michael Markert;
 ;; http://permalink.gmane.org/gmane.emacs.vim-emulation/1674)
 (defun set-in-all-evil-states (key def &optional maps)
@@ -99,10 +93,6 @@ Normal mode:
   (set-in-all-evil-states key def (list evil-normal-state-map
 					evil-visual-state-map
 					evil-emacs-state-map)))
-
-;;; No insert-state alt-navigation remappings (they would clobber
-;;; Emacs shortcuts, and Emacs has its own navigation commands that 
-;;; you can use
 
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
@@ -174,9 +164,6 @@ Normal mode:
 (when (fboundp 'undo-tree-undo)
   (define-key evil-normal-state-map "z" 'undo-tree-undo)
   (define-key evil-normal-state-map "Z" 'undo-tree-redo))
-
-;;; Break undo chain
-;; not sure what this is
 
 ;;; Cursor position jumplist
 (set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
