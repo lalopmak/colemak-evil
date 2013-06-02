@@ -17,7 +17,7 @@ Setup
 
 Tips
 ----
-Type :hints or :ars to get the hint diagram.
+Type :hints or :ars for the hint screen.
 
 Escape takes you into normal mode, an unfortunate historical accident.
 I recommend defining an easy AltGr mapping (I use AltGr+t) since it will
