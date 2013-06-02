@@ -430,16 +430,15 @@ go to that line."
       (evil-goto-line count)
     (evil-open-below 1)))
 
-					;o to open in line above/below, or [number]o to go to line [number]
+;;o to open in line above/below, or [number]o to go to line [number]
 (set-in-all-evil-states-but-insert "o" 'lalopmak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
 
-					;M-[direction] to paste in that direction; keeps in insert mode iff already in that
+;;M-[direction] to paste in that direction
 (set-in-all-evil-states-but-insert "\M-u" 'lalopmak-evil-paste-above-then-normal)
 (set-in-all-evil-states-but-insert "\M-e" 'lalopmak-evil-paste-below-then-normal)
 (define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above) 
 (define-key evil-insert-state-map "\M-e" 'lalopmak-evil-paste-below)
-
 (set-in-all-evil-states "\M-n" 'lalopmak-evil-paste-at-bol)
 (set-in-all-evil-states "\M-i" 'lalopmak-evil-paste-at-eol)
 
@@ -447,7 +446,7 @@ go to that line."
 
 
 
-					;TODO make caps paste from kill ring search above/below
+;;TODO make caps paste from kill ring search above/below
 
 ;;;;Experiment: generalize the paste-above/paste-below functions as macros
 ;; (defmacro lalopmak-evil-do-body ( body)
