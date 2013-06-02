@@ -364,7 +364,7 @@ Shortcuts:
 
 (evil-define-motion lalopmak-evil-repeat-find-char (count) 
   "Makes sure repeating evil-find-char-to doesn't just go to the same result"
-  (if (and (eq (car evil-last-find) 'evil-find-char-to)
+  (if (and (eq (first evil-last-find) 'evil-find-char-to)
 	   (or (not count)
 	       (= count 1))
 	   (lalopmak-evil-repeat-collision)) 
@@ -374,7 +374,7 @@ Shortcuts:
 
 (evil-define-motion lalopmak-evil-repeat-find-char-reverse (count) 
   "Makes sure repeating evil-find-char-to-reverse doesn't just go to the same result"
-  (if (and (eq (car evil-last-find) 'evil-find-char-to)
+  (if (and (eq (first evil-last-find) 'evil-find-char-to)
 	   (or (not count)
 	       (= count 1))
 	   (lalopmak-evil-repeat-collision t)) 
@@ -452,8 +452,8 @@ go to that line."
 ;;;;Experiment: generalize the paste-above/paste-below functions as macros
 ;; (defmacro lalopmak-evil-do-body ( body)
 ;;   (when body
-;;     (car body)
-;;     (lalopmak-evil-do-body (cdr body))))
+;;     (first body)
+;;     (lalopmak-evil-do-body (rest body))))
 
 ;; (defmacro lalopmak-evil-do-interactively-then-normal (&rest body)
 ;;   `(lambda (count)
