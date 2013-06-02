@@ -46,6 +46,18 @@ Normal mode:
             |   Undo    |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|  Set Mk·  | ,         | .         |
             |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+====Commands====
+
+Help:
+:hints = :ars = shows/dismisses this prompt (M-x lalopmak-evil-hints)
+:key = describes key (C-h k)
+:fun = describes function (C-h f)
+
+Shortcuts:
+:comment = :c = M-x comment-or-uncomment-region
+:git = M-x magit-status
+:eval = :ev = Evaluates an elisp expression (C-:)
 ")
 
 (defun lalopmak-evil-hints ()
@@ -335,18 +347,44 @@ Normal mode:
 (set-in-all-evil-states-but-insert "s" 'evil-append)
 (set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
-(set-in-all-evil-states-but-insert "T" 'evil-repeat-find-char-reverse)
-(set-in-all-evil-states-but-insert "t" 'evil-repeat-find-char)
+
+;;Repeat find char
+(defun lalopmak-evil-adjacent-char-is (char &optional reversed)
+  "True iff the next (or, if reversed, previous) character is char.  Does not accept string."
+  (if reversed
+      (= (char-before) char)
+    (= (char-after (1+ (point))) char)))
+
+(defun lalopmak-evil-repeat-collision (&optional reversed)
+  "Checks if an adjacent letter keeps repeat-find in the same spot.  Set reversed = t for reverse-find."
+  (let ((char (nth 1 evil-last-find))
+	(forward (nth 2 evil-last-find)))
+    (lalopmak-evil-adjacent-char-is char (or (and reversed forward)
+					     (and (not reversed) (not forward))))))
+
+(evil-define-motion lalopmak-evil-repeat-find-char (count) 
+  "Makes sure repeating evil-find-char-to doesn't just go to the same result"
+  (if (and (eq (car evil-last-find) 'evil-find-char-to)
+	   (or (not count)
+	       (= count 1))
+	   (lalopmak-evil-repeat-collision)) 
+      (evil-repeat-find-char 2)
+    (evil-repeat-find-char count)))
 
 
+(evil-define-motion lalopmak-evil-repeat-find-char-reverse (count) 
+  "Makes sure repeating evil-find-char-to-reverse doesn't just go to the same result"
+  (if (and (eq (car evil-last-find) 'evil-find-char-to)
+	   (or (not count)
+	       (= count 1))
+	   (lalopmak-evil-repeat-collision t)) 
+      (evil-repeat-find-char-reverse 2)
+    (evil-repeat-find-char-reverse count)))
 
+(set-in-all-evil-states-but-insert "t" 'lalopmak-evil-repeat-find-char)
+(set-in-all-evil-states-but-insert "T" 'lalopmak-evil-repeat-find-char-reverse)
 
-
-
-
-;; (set-in-all-evil-states-but-insert-and-motion "f" 'delete-backward-char)
-;; (set-in-all-evil-states-but-insert "F" 'delete-forward-char)
-
+;switch to buffer
 (define-key evil-motion-state-map "b" 'switch-to-buffer)
 (define-key evil-motion-state-map "B" 'find-file)
 
@@ -450,15 +488,36 @@ go to that line."
 ;; (define-key evil-normal-state-map "o" (lambda (&optional argz)))
 ;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
 
+
+
 ;; Custom : commands
 ;; Makes ; an alias for :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
+
+;;hooks for hints
+(evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
+(evil-ex-define-cmd "ars" "hints")
+
+;;git
 (evil-ex-define-cmd "git" 'magit-status)
+
+;;comment
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
 
-(evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
-(evil-ex-define-cmd "h" "hints")
-(evil-ex-define-cmd "ars" "hints")
+;;M-:
+(evil-ex-define-cmd "eval" 'eval-expression)
+(evil-ex-define-cmd "ev" "eval")
+
+;;C-h k
+(evil-ex-define-cmd "describe-key" 'describe-key)
+(evil-ex-define-cmd "key" "describe-key")
+
+;;C-h f
+(evil-ex-define-cmd "describe-function" 'describe-function)
+(evil-ex-define-cmd "function" "describe-function")
+(evil-ex-define-cmd "fun" "describe-function")
+
+
 
 
