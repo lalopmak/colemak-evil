@@ -518,5 +518,6 @@ go to that line."
 (evil-ex-define-cmd "fun" "describe-function")
 
 
+(provide 'lalopmak-evil)
 
 
