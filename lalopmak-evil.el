@@ -62,13 +62,28 @@ Shortcuts:
 
 (require 'lalopmak-buffer)
 
+;;Pattern: closing visible then calling a helper on the same name
+;;TODO: figure out how to get this pattern into lalopmak-buffers.el (lexical binding?)
+(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-buffer-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+
+(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-window-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+;;End Pattern
+
+
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
-  (let ((hints-buffer-name "Colemak-Evil Hints"))
-    (close-visible-buffer-or-do hints-buffer-name
-                                (with-output-to-temp-buffer hints-buffer-name
-                                  (princ lalopmak-evil-hintstring)))))
+  (close-visible-buffer-or-call-helper "Colemak-Evil Hints"
+                                       with-output-to-temp-buffer 
+                                       (princ lalopmak-evil-hintstring)))
 
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
 
@@ -495,20 +510,6 @@ go to that line."
   "Create a terminal buffer.  Can open several."
   (interactive)
   (do-in-new-buffer "*ansi-term*" (terminal-command)))
-
-;;Pattern: closing visible then calling a helper on the same name
-;;TODO: figure out how to get this pattern into lalopmak-buffers.el (lexical binding?)
-(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-buffer-or-do ,bufferName
-                               (,helper ,bufferName ,@body)))
-
-
-(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-window-or-do ,bufferName
-                               (,helper ,bufferName ,@body)))
-
 
 (defun sole-terminal-window ()
   "Creates or reopens a unique terminal window."

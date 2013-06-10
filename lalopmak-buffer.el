@@ -10,7 +10,7 @@
 
 
 (defmacro if-visible-buffer (bufferName then-stmt else-stmt)
-  "If buffer by that name exists, then-statement, else, else-stmt."
+  "If buffer by that name is visible, then-statement, else, else-stmt."
   `(let ((buffer (get-buffer ,bufferName)))
      (if (and buffer 
               (get-buffer-window buffer)) 
