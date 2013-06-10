@@ -60,49 +60,17 @@ Shortcuts:
 :eval = :ev = Evaluates an elisp expression (C-:)
 ")
 
+(require 'lalopmak-buffer)
+
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
-  (let* ((hints-buffer-name "Colemak-Evil Hints") 
-	 (hints-buffer (get-buffer hints-buffer-name) ) )
-    ;;if hints are currently visible, close them. Otherwise, display them.
-    (if (and hints-buffer 
-	     (get-buffer-window hints-buffer)) 
-	(progn (delete-windows-on hints-buffer-name)
-	       (kill-buffer hints-buffer-name))
-      (with-output-to-temp-buffer hints-buffer-name
-	(princ lalopmak-evil-hintstring)))))
+  (let ((hints-buffer-name "Colemak-Evil Hints"))
+    (close-visible-buffer-or-do hints-buffer-name
+                                (with-output-to-temp-buffer hints-buffer-name
+                                  (princ lalopmak-evil-hintstring)))))
 
-
-(defmacro do-in-new-buffer (bufferName &rest body)
-  "Splits current window, call it bufferName (or unique variant thereof), execute body in the buffer"
-  `(progn (split-window-sensibly (selected-window))
-          (other-window 1)
-          ,@body
-          (rename-buffer ,bufferName 'make-unique)))
-
-(defmacro do-in-buffer (bufferName &rest body)
-  "If the buffer already exists, go there.  Otherwise, execute body in new buffer."
-  `(if (not (get-buffer ,bufferName))
-       (do-in-new-buffer ,bufferName ,@body)
-     (switch-to-buffer-other-window ,bufferName)))
- 
-(defun do-func-in-new-buffer (bufferName func)
- (do-in-new-buffer bufferName (funcall func))) 
- 
-(defun do-func-in-buffer (bufferName func)
- (do-in-buffer bufferName (funcall func))) 
-
-(defun new-terminal-window ()
-  "Create a terminal buffer.  Can open several."
-  (interactive)
-  (do-in-new-buffer "*ansi-term*" (ansi-term (getenv "SHELL"))))
-
-(defun ielm-window ()
-  "Create or visit an ielm buffer."
-  (interactive)
-  (do-func-in-buffer "*ielm*" 'ielm))
-
+;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
 
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
@@ -518,8 +486,29 @@ go to that line."
 ;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
 
 
+;;;;;;;;;;;; Buffer Manipulation macros/functions ;;;;;;;;;;;;;;
+(defmacro terminal-command () `(ansi-term (getenv "SHELL")))
 
-;; Custom : commands
+(defun new-terminal-window ()
+  "Create a terminal buffer.  Can open several."
+  (interactive)
+  (do-in-new-buffer "*ansi-term*" (terminal-command)))
+
+(defun sole-terminal-window ()
+  "Creates or reopens a unique terminal window."
+  (interactive)
+  (let ((terminalName "Sole Terminal"))
+    (close-visible-window-or-do terminalName
+                                (do-in-buffer terminalName (terminal-command))))) 
+
+(defun ielm-window ()
+  "Open or close a visible ielm buffer."
+  (interactive)
+  (close-visible-window-or-do "*ielm*"
+                              (do-func-in-buffer "*ielm*" 'ielm)))
+
+;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Makes ; an alias for :
 (define-key evil-motion-state-map ";" 'evil-ex-read-command)
 
@@ -542,7 +531,9 @@ go to that line."
 (evil-ex-define-cmd "interactive-eval" "ielm")
 
 ;;Terminal
-(evil-ex-define-cmd "terminal" 'new-terminal-window)
+(evil-ex-define-cmd "terminal" 'sole-terminal-window)
+(evil-ex-define-cmd "newterminal" 'new-terminal-window)
+
 
 ;;C-h k
 (evil-ex-define-cmd "describe-key" 'describe-key)
