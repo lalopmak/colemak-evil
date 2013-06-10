@@ -74,6 +74,36 @@ Shortcuts:
 	(princ lalopmak-evil-hintstring)))))
 
 
+(defmacro do-in-new-buffer (bufferName &rest body)
+  "Splits current window, call it bufferName (or unique variant thereof), execute body in the buffer"
+  `(progn (split-window-sensibly (selected-window))
+          (other-window 1)
+          ,@body
+          (rename-buffer ,bufferName 'make-unique)))
+
+(defmacro do-in-buffer (bufferName &rest body)
+  "If the buffer already exists, go there.  Otherwise, execute body in new buffer."
+  `(if (not (get-buffer ,bufferName))
+       (do-in-new-buffer ,bufferName ,@body)
+     (switch-to-buffer-other-window ,bufferName)))
+ 
+(defun do-func-in-new-buffer (bufferName func)
+ (do-in-new-buffer bufferName (funcall func))) 
+ 
+(defun do-func-in-buffer (bufferName func)
+ (do-in-buffer bufferName (funcall func))) 
+
+(defun new-terminal-window ()
+  "Create a terminal buffer.  Can open several."
+  (interactive)
+  (do-in-new-buffer "*ansi-term*" (ansi-term (getenv "SHELL"))))
+
+(defun ielm-window ()
+  "Create or visit an ielm buffer."
+  (interactive)
+  (do-func-in-buffer "*ielm*" 'ielm))
+
+
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
@@ -504,9 +534,15 @@ go to that line."
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
 
+
 ;;M-:
 (evil-ex-define-cmd "eval" 'eval-expression)
 (evil-ex-define-cmd "ev" "eval")
+(evil-ex-define-cmd "ielm" 'ielm-window)
+(evil-ex-define-cmd "interactive-eval" "ielm")
+
+;;Terminal
+(evil-ex-define-cmd "terminal" 'new-terminal-window)
 
 ;;C-h k
 (evil-ex-define-cmd "describe-key" 'describe-key)
