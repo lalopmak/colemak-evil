@@ -487,6 +487,8 @@ go to that line."
 
 
 ;;;;;;;;;;;; Buffer Manipulation macros/functions ;;;;;;;;;;;;;;
+
+
 (defmacro terminal-command () `(ansi-term (getenv "SHELL")))
 
 (defun new-terminal-window ()
@@ -494,18 +496,29 @@ go to that line."
   (interactive)
   (do-in-new-buffer "*ansi-term*" (terminal-command)))
 
+;;Pattern: closing visible then calling a helper on the same name
+;;TODO: figure out how to get this pattern into lalopmak-buffers.el (lexical binding?)
+(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-buffer-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+
+(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-window-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+
 (defun sole-terminal-window ()
   "Creates or reopens a unique terminal window."
   (interactive)
-  (let ((terminalName "Sole Terminal"))
-    (close-visible-window-or-do terminalName
-                                (do-in-buffer terminalName (terminal-command))))) 
+  (close-visible-window-or-call-helper "Sole Terminal" do-in-buffer (terminal-command)))
 
 (defun ielm-window ()
   "Open or close a visible ielm buffer."
-  (interactive)
-  (close-visible-window-or-do "*ielm*"
-                              (do-func-in-buffer "*ielm*" 'ielm)))
+  (interactive) 
+  (close-visible-window-or-call-helper "*ielm*" do-func-in-buffer 'ielm))
 
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 

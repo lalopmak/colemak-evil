@@ -5,7 +5,8 @@
 ;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
 ;; http://creativecommons.org/publicdomain/zero/1.0/
 
-;;Misc buffer commands
+
+;;Buffer helper commands/macros
 
 
 (defmacro if-visible-buffer (bufferName then-stmt else-stmt)
@@ -15,6 +16,9 @@
               (get-buffer-window buffer)) 
          ,then-stmt
        ,else-stmt)))
+
+
+;;Pattern: Closing visible thing or else doing something (most likely starting up one)
 
 (defmacro close-visible-buffer-or-do (bufferName &rest body)
   "If buffer by that name is visible, close it and kill the buffer.  Otherwise, execute body."
@@ -29,6 +33,7 @@
                       (delete-windows-on ,bufferName)
                       ,@body))
 
+;;Helper functions/macros
 
 (defmacro do-in-new-buffer (bufferName &rest body)
   "Splits current window, call it bufferName (or unique variant thereof), execute body in the buffer"
@@ -50,5 +55,6 @@
 (defun do-func-in-buffer (bufferName func) 
   "If the buffer already exists, open it up in a window.  Otherwise, execute func in new buffer."
  (do-in-buffer bufferName (funcall func))) 
+
 
 (provide 'lalopmak-buffer)
