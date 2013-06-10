@@ -55,6 +55,21 @@
 (defun do-func-in-buffer (bufferName func) 
   "If the buffer already exists, open it up in a window.  Otherwise, execute func in new buffer."
  (do-in-buffer bufferName (funcall func))) 
+;;;;;;;;;;;;;
+;;Pattern: closing visible then calling a helper on the same name
+;;These need to go BELOW the helpers above, or else they won't be recognized
 
+(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-buffer-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+
+(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
+  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+  `(close-visible-window-or-do ,bufferName
+                               (,helper ,bufferName ,@body)))
+
+;;;;;;;;;;;;;
 
 (provide 'lalopmak-buffer)

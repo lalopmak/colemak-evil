@@ -62,22 +62,6 @@ Shortcuts:
 
 (require 'lalopmak-buffer)
 
-;;Pattern: closing visible then calling a helper on the same name
-;;TODO: figure out how to get this pattern into lalopmak-buffers.el (lexical binding?)
-(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-buffer-or-do ,bufferName
-                               (,helper ,bufferName ,@body)))
-
-
-(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-window-or-do ,bufferName
-                               (,helper ,bufferName ,@body)))
-
-;;End Pattern
-
-
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
@@ -514,12 +498,16 @@ go to that line."
 (defun sole-terminal-window ()
   "Creates or reopens a unique terminal window."
   (interactive)
-  (close-visible-window-or-call-helper "Sole Terminal" do-in-buffer (terminal-command)))
+  (close-visible-window-or-call-helper "Sole Terminal" 
+                                       do-in-buffer 
+                                       (terminal-command)))
 
 (defun ielm-window ()
   "Open or close a visible ielm buffer."
   (interactive) 
-  (close-visible-window-or-call-helper "*ielm*" do-func-in-buffer 'ielm))
+  (close-visible-window-or-call-helper "*ielm*" 
+                                       do-func-in-buffer 
+                                       'ielm))
 
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
