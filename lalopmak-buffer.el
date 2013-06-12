@@ -44,9 +44,9 @@
 
 (defmacro do-in-buffer (bufferName &rest body)
   "If the buffer already exists, open it up in a window.  Otherwise, execute body in new buffer."
-  `(if (not (get-buffer ,bufferName))
-       (do-in-new-buffer ,bufferName ,@body)
-     (switch-to-buffer-other-window ,bufferName)))
+  `(if (get-buffer ,bufferName)
+       (switch-to-buffer-other-window ,bufferName)
+       (do-in-new-buffer ,bufferName ,@body)))
  
 (defun do-func-in-new-buffer (bufferName func)
   "Splits current window, call it bufferName (or unique variant thereof), execute func in the buffer"
