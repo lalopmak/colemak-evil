@@ -127,9 +127,24 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "L" 'back-to-indentation)
 (set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
 
+(defun lalopmak-evil-scroll-then-center (count motion)
+  "Does a motion, then centers"
+  (if count
+      (funcall motion count) 
+    (funcall motion 1))
+  (move-to-window-line nil))
+ 
+(evil-define-motion lalopmak-evil-scroll-page-up (count)
+  "Scrolls page up, centers the cursor"
+  (lalopmak-evil-scroll-then-center count 'evil-scroll-page-up))
+
+(evil-define-motion lalopmak-evil-scroll-page-down (count)
+  "Scrolls page down, centers the cursor"
+  (lalopmak-evil-scroll-then-center count 'evil-scroll-page-down))
+
 ;;; Page up/page down
-(define-key evil-motion-state-map (kbd "j") 'evil-scroll-page-up)
-(define-key evil-motion-state-map (kbd "h") 'evil-scroll-page-down)
+(define-key evil-motion-state-map (kbd "j") 'lalopmak-evil-scroll-page-up)
+(define-key evil-motion-state-map (kbd "h") 'lalopmak-evil-scroll-page-down)
 
 ;;; Page halfway up/down 
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
