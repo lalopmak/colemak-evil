@@ -48,15 +48,15 @@ If the buffer is not visible, and there are no else-stmts, the value is nil."
   "If the buffer already exists, open it up in a window.  Otherwise, execute else-stmts in new buffer."
   `(if (get-buffer ,bufferName)
        (switch-to-buffer-other-window ,bufferName)
-       (do-in-new-buffer ,bufferName ,@else-stmts)))
- 
+     (do-in-new-buffer ,bufferName ,@else-stmts)))
+
 (defun do-func-in-new-buffer (bufferName func)
   "Splits current window, call it bufferName (or unique variant thereof), execute func in the buffer"
- (do-in-new-buffer bufferName (funcall func))) 
- 
+  (do-in-new-buffer bufferName (funcall func))) 
+
 (defun do-func-in-buffer (bufferName func) 
   "If the buffer already exists, open it up in a window.  Otherwise, execute func in new buffer."
- (do-in-buffer bufferName (funcall func))) 
+  (do-in-buffer bufferName (funcall func))) 
 ;;;;;;;;;;;;;
 ;;Pattern: closing visible then calling a helper on the same name
 ;;These need to go BELOW the helpers above, or else they won't be recognized
@@ -64,13 +64,13 @@ If the buffer is not visible, and there are no else-stmts, the value is nil."
 (defmacro close-visible-buffer-else-call-helper (bufferName helper &rest call-args)
   "Closes the visible window or, if closed, calls the helper function/macro with those call-args"
   `(close-visible-buffer-else-do ,bufferName
-                               (,helper ,bufferName ,@call-args)))
+                                 (,helper ,bufferName ,@call-args)))
 
 
 (defmacro close-visible-window-else-call-helper (bufferName helper &rest call-args)
   "Closes the visible window or, if closed, calls the helper function/macro with those call-args"
   `(close-visible-window-else-do ,bufferName
-                               (,helper ,bufferName ,@call-args)))
+                                 (,helper ,bufferName ,@call-args)))
 
 ;;;;;;;;;;;;;
 
