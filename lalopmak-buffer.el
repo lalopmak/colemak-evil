@@ -20,33 +20,33 @@
 
 ;;Pattern: Closing visible thing or else doing something (most likely starting up one)
 
-(defmacro close-visible-buffer-else-do (bufferName &rest body)
-  "If buffer by that name is visible, close it and kill the buffer.  Otherwise, execute body."
+(defmacro close-visible-buffer-else-do (bufferName &rest else-stmts)
+  "If buffer by that name is visible, close it and kill the buffer.  Otherwise, execute else-stmts."
   `(if-visible-buffer ,bufferName
                       (progn (delete-windows-on ,bufferName)
                              (kill-buffer ,bufferName))
-                      ,@body))
+                      ,@else-stmts))
 
-(defmacro close-visible-window-else-do (bufferName &rest body)
-  "If buffer by that name is visible, close it.  Otherwise, execute body."
+(defmacro close-visible-window-else-do (bufferName &rest else-stmts)
+  "If buffer by that name is visible, close it.  Otherwise, execute else-stmts."
   `(if-visible-buffer ,bufferName
                       (delete-windows-on ,bufferName)
-                      ,@body))
+                      ,@else-stmts))
 
 ;;Helper functions/macros
 
-(defmacro do-in-new-buffer (bufferName &rest body)
-  "Splits current window, call it bufferName (or unique variant thereof), execute body in the buffer"
+(defmacro do-in-new-buffer (bufferName &rest else-stmts)
+  "Splits current window, call it bufferName (or unique variant thereof), execute else-stmts in the buffer"
   `(progn (split-window-sensibly (selected-window))
           (other-window 1)
-          ,@body
+          ,@else-stmts
           (rename-buffer ,bufferName 'make-unique)))
 
-(defmacro do-in-buffer (bufferName &rest body)
-  "If the buffer already exists, open it up in a window.  Otherwise, execute body in new buffer."
+(defmacro do-in-buffer (bufferName &rest else-stmts)
+  "If the buffer already exists, open it up in a window.  Otherwise, execute else-stmts in new buffer."
   `(if (get-buffer ,bufferName)
        (switch-to-buffer-other-window ,bufferName)
-       (do-in-new-buffer ,bufferName ,@body)))
+       (do-in-new-buffer ,bufferName ,@else-stmts)))
  
 (defun do-func-in-new-buffer (bufferName func)
   "Splits current window, call it bufferName (or unique variant thereof), execute func in the buffer"
@@ -59,16 +59,16 @@
 ;;Pattern: closing visible then calling a helper on the same name
 ;;These need to go BELOW the helpers above, or else they won't be recognized
 
-(defmacro close-visible-buffer-else-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+(defmacro close-visible-buffer-else-call-helper (bufferName helper &rest else-stmts)
+  "Closes the visible window or, if closed, calls the helper function/macro with that else-stmts"
   `(close-visible-buffer-else-do ,bufferName
-                               (,helper ,bufferName ,@body)))
+                               (,helper ,bufferName ,@else-stmts)))
 
 
-(defmacro close-visible-window-else-call-helper (bufferName helper &rest body)
-  "Closes the visible window or, if closed, calls the helper function/macro with that body"
+(defmacro close-visible-window-else-call-helper (bufferName helper &rest else-stmts)
+  "Closes the visible window or, if closed, calls the helper function/macro with that else-stmts"
   `(close-visible-window-else-do ,bufferName
-                               (,helper ,bufferName ,@body)))
+                               (,helper ,bufferName ,@else-stmts)))
 
 ;;;;;;;;;;;;;
 
