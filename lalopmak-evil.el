@@ -56,8 +56,12 @@ Help:
 
 Shortcuts:
 :comment = :c = M-x comment-or-uncomment-region
+:relative = M-x linum-relative-toggle
 :git = M-x magit-status
+:terminal = M-x sole-terminal-window = opens up terminal window, one buffer
+:newterminal = M-x new-terminal-window = opens up new terminal window
 :eval = :ev = Evaluates an elisp expression (C-:)
+:ielm = M-x ielm-window = opens up lisp evaluation window
 ")
 
 (require 'lalopmak-buffer)
@@ -520,6 +524,9 @@ go to that line."
 
 ;;git
 (evil-ex-define-cmd "git" 'magit-status)
+
+;;linum relative toggle
+(evil-ex-define-cmd "relative" 'linum-relative-toggle)
 
 ;;comment
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
