@@ -20,14 +20,14 @@
 
 ;;Pattern: Closing visible thing or else doing something (most likely starting up one)
 
-(defmacro close-visible-buffer-or-do (bufferName &rest body)
+(defmacro close-visible-buffer-else-do (bufferName &rest body)
   "If buffer by that name is visible, close it and kill the buffer.  Otherwise, execute body."
   `(if-visible-buffer ,bufferName
                       (progn (delete-windows-on ,bufferName)
                              (kill-buffer ,bufferName))
                       ,@body))
 
-(defmacro close-visible-window-or-do (bufferName &rest body)
+(defmacro close-visible-window-else-do (bufferName &rest body)
   "If buffer by that name is visible, close it.  Otherwise, execute body."
   `(if-visible-buffer ,bufferName
                       (delete-windows-on ,bufferName)
@@ -59,15 +59,15 @@
 ;;Pattern: closing visible then calling a helper on the same name
 ;;These need to go BELOW the helpers above, or else they won't be recognized
 
-(defmacro close-visible-buffer-or-call-helper (bufferName helper &rest body)
+(defmacro close-visible-buffer-else-call-helper (bufferName helper &rest body)
   "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-buffer-or-do ,bufferName
+  `(close-visible-buffer-else-do ,bufferName
                                (,helper ,bufferName ,@body)))
 
 
-(defmacro close-visible-window-or-call-helper (bufferName helper &rest body)
+(defmacro close-visible-window-else-call-helper (bufferName helper &rest body)
   "Closes the visible window or, if closed, calls the helper function/macro with that body"
-  `(close-visible-window-or-do ,bufferName
+  `(close-visible-window-else-do ,bufferName
                                (,helper ,bufferName ,@body)))
 
 ;;;;;;;;;;;;;

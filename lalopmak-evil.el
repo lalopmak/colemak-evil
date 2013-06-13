@@ -65,7 +65,7 @@ Shortcuts:
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
-  (close-visible-buffer-or-call-helper "Colemak-Evil Hints"
+  (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
                                        with-output-to-temp-buffer 
                                        (princ lalopmak-evil-hintstring)))
 
@@ -498,14 +498,14 @@ go to that line."
 (defun sole-terminal-window ()
   "Creates or reopens a unique terminal window."
   (interactive)
-  (close-visible-window-or-call-helper "Sole Terminal" 
+  (close-visible-window-else-call-helper "Sole Terminal" 
                                        do-in-buffer 
                                        (terminal-command)))
 
 (defun ielm-window ()
   "Open or close a visible ielm buffer."
   (interactive) 
-  (close-visible-window-or-call-helper "*ielm*" 
+  (close-visible-window-else-call-helper "*ielm*" 
                                        do-func-in-buffer 
                                        'ielm))
 
