@@ -9,14 +9,16 @@
 ;;Buffer helper commands/macros
 
 
-(defmacro if-visible-buffer (bufferName then-stmt else-stmt)
-  "If buffer by that name is visible, then-statement, else, else-stmt."
+(defmacro if-visible-buffer (bufferName then-stmt &rest else-stmts)
+  "If buffer by that name is visible, then-statement, else, else-stmts.
+Returns the value of then-stmt or else the last of the else-stmts
+then-statement must be one expression, but else-stmts can be zero or more expressions.
+If the buffer is not visible, and there are no else-stmts, the value is nil."
   `(let ((buffer (get-buffer ,bufferName)))
      (if (and buffer 
               (get-buffer-window buffer)) 
          ,then-stmt
-       ,else-stmt)))
-
+       ,@else-stmts)))
 
 ;;Pattern: Closing visible thing or else doing something (most likely starting up one)
 
@@ -59,16 +61,16 @@
 ;;Pattern: closing visible then calling a helper on the same name
 ;;These need to go BELOW the helpers above, or else they won't be recognized
 
-(defmacro close-visible-buffer-else-call-helper (bufferName helper &rest else-stmts)
-  "Closes the visible window or, if closed, calls the helper function/macro with that else-stmts"
+(defmacro close-visible-buffer-else-call-helper (bufferName helper &rest call-args)
+  "Closes the visible window or, if closed, calls the helper function/macro with those call-args"
   `(close-visible-buffer-else-do ,bufferName
-                               (,helper ,bufferName ,@else-stmts)))
+                               (,helper ,bufferName ,@call-args)))
 
 
-(defmacro close-visible-window-else-call-helper (bufferName helper &rest else-stmts)
-  "Closes the visible window or, if closed, calls the helper function/macro with that else-stmts"
+(defmacro close-visible-window-else-call-helper (bufferName helper &rest call-args)
+  "Closes the visible window or, if closed, calls the helper function/macro with those call-args"
   `(close-visible-window-else-do ,bufferName
-                               (,helper ,bufferName ,@else-stmts)))
+                               (,helper ,bufferName ,@call-args)))
 
 ;;;;;;;;;;;;;
 
