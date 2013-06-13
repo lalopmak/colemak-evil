@@ -363,24 +363,26 @@ Shortcuts:
     (lalopmak-evil-adjacent-char-is char (or (and reversed forward)
 					     (and (not reversed) (not forward))))))
 
+(defmacro lalopmak-evil-if-char-collision (then-stmt else-stmt &optional reversed)
+  "If there's a collision in find-char, then-stmt.  Else else-stmt.  Reversed if this is find-char-reverse."
+  `(if (and (eq (first evil-last-find) 'evil-find-char-to)  ;if this was last a character find
+            (or (not count)                                 ;if count > 1, it's up to the user
+                (= count 1))
+            (lalopmak-evil-repeat-collision ,reversed)) 
+       ,then-stmt
+     ,else-stmt))
+       
 (evil-define-motion lalopmak-evil-repeat-find-char (count) 
   "Makes sure repeating evil-find-char-to doesn't just go to the same result"
-  (if (and (eq (first evil-last-find) 'evil-find-char-to)
-	   (or (not count)
-	       (= count 1))
-	   (lalopmak-evil-repeat-collision)) 
-      (evil-repeat-find-char 2)
-    (evil-repeat-find-char count)))
+  (lalopmak-evil-if-char-collision (evil-repeat-find-char 2)
+                                   (evil-repeat-find-char count)))
 
 
 (evil-define-motion lalopmak-evil-repeat-find-char-reverse (count) 
   "Makes sure repeating evil-find-char-to-reverse doesn't just go to the same result"
-  (if (and (eq (first evil-last-find) 'evil-find-char-to)
-	   (or (not count)
-	       (= count 1))
-	   (lalopmak-evil-repeat-collision t)) 
-      (evil-repeat-find-char-reverse 2)
-    (evil-repeat-find-char-reverse count)))
+  (lalopmak-evil-if-char-collision (evil-repeat-find-char-reverse 2)
+                                   (evil-repeat-find-char-reverse count)
+                                   t))
 
 (set-in-all-evil-states-but-insert "t" 'lalopmak-evil-repeat-find-char)
 (set-in-all-evil-states-but-insert "T" 'lalopmak-evil-repeat-find-char-reverse)
