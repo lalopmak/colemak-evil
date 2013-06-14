@@ -55,8 +55,9 @@ Help:
 :fun = describes function (C-h f)
 
 Shortcuts:
-:comment = :c = M-x comment-or-uncomment-region
 :relative = M-x linum-relative-toggle
+:ccmode = M-x centered-cursor-mode
+:comment = :c = M-x comment-or-uncomment-region
 :git = M-x magit-status
 :terminal = M-x sole-terminal-window = opens up terminal window, one buffer
 :newterminal = M-x new-terminal-window = opens up new terminal window
@@ -533,7 +534,7 @@ go to that line."
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Makes ; an alias for :
-(define-key evil-motion-state-map ";" 'evil-ex-read-command)
+(define-key evil-motion-state-map ";" 'evil-ex)
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
@@ -544,6 +545,8 @@ go to that line."
 
 ;;linum relative toggle
 (evil-ex-define-cmd "relative" 'linum-relative-toggle)
+(evil-ex-define-cmd "ccmode" 'centered-cursor-mode)
+
 
 ;;comment
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
