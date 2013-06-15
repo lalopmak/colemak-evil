@@ -188,13 +188,57 @@ Shortcuts:
 ;; for virtualedit=onemore
 ;; set virtualedit=block,onemore
 
+;;;;;;;;;;;;;;;;
+;;;;;;;;;   Advice to send copies/cuts to clipboard
+;;;;;;;;;   (Useful if you're still using primary as main clipboard)
+;;;;;;;;;
+
+(defadvice evil-delete-char (before cut-char-to-clipboard (beg end &optional type register)) 
+  "Saves the cut char to the clipboard"
+  (clipboard-kill-ring-save beg end))
+
+(defadvice evil-delete-line (before cut-line-to-clipboard (beg end &optional type register yank-handler)) 
+  "Saves the cut line to the clipboard"
+  (clipboard-kill-ring-save (or beg 1) (or end 1)))
+
+(defadvice evil-yank (before copy-char-to-clipboard (beg end &optional type register yank-handler)) 
+  "Saves the copied motion to the clipboard"
+  (clipboard-kill-ring-save beg end))
+
+(defadvice evil-yank-line (before copy-line-to-clipboard (beg end type register)) 
+  "Saves the copied line to the clipboard"
+  (clipboard-kill-ring-save beg end))
+
 ;;; Cut/copy/paste
 (set-in-all-evil-states-but-insert "x" 'evil-delete-char)
 (set-in-all-evil-states-but-insert "X" 'evil-delete-line)  ; delete to end of line; use dd to delete whole line
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
+
+
+(defun most-recent-clip ()
+  "Return the most recent item of the clipboard"
+  (let ((x-select-enable-clipboard t))      ;temporarily enables the clipboard
+    (or (x-selection-value)
+        x-last-selected-text-clipboard)))
+
+;;;Attempts at pasting advice
+(defadvice evil-paste-before (before copy-clipboard-entry-to-kill-ring (count &optional register yank-handler))
+  "Updates our kill ring (in case it is used) with the latest clipboard entry"
+  (kill-new (most-recent-clip)))  
+
+(defadvice evil-paste-after (around temporarily-enable-clipboard (count &optional register yank-handler)) 
+  "Updates our kill ring (in case it is used) with the latest clipboard entry"
+    (let ((x-select-enable-clipboard t)
+          (x-select-enable-primary nil))      ;temporarily enables the clipboard
+      (kill-new (most-recent-clip))
+      ad-do-it))
+
 (set-in-all-evil-states-but-insert "V" 'evil-paste-before)
 (set-in-all-evil-states-but-insert "v" 'evil-paste-after)
+
+
+
 
 ;;; Undo/redo
 (define-key evil-normal-state-map "z" 'undo)
@@ -581,6 +625,9 @@ go to that line."
 (evil-ex-define-cmd "function" "describe-function")
 (evil-ex-define-cmd "fun" "describe-function")
 
+
+
+(ad-activate-all)  
 
 (provide 'lalopmak-evil)
 
