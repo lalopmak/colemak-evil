@@ -193,8 +193,8 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "X" 'evil-delete-line)  ; delete to end of line; use dd to delete whole line
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
-(set-in-all-evil-states-but-insert "v" 'evil-paste-before)
-(set-in-all-evil-states-but-insert "V" 'evil-paste-after)
+(set-in-all-evil-states-but-insert "V" 'evil-paste-before)
+(set-in-all-evil-states-but-insert "v" 'evil-paste-after)
 
 ;;; Undo/redo
 (define-key evil-normal-state-map "z" 'undo)
