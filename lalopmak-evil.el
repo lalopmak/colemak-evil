@@ -108,12 +108,20 @@ Shortcuts:
 					evil-visual-state-map
 					evil-emacs-state-map)))
 
+(evil-define-motion lalopmak-evil-forward-char (count)
+  "Forward character, allowing you to fall to the next line"
+  (evil-forward-char count 'crosslines))
+
+(evil-define-motion lalopmak-evil-backward-char (count)
+  "Backward character, allowing you to rise to the previous line"
+  (evil-backward-char count 'crosslines))
+
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
-(set-in-all-evil-states-but-insert "n" 'evil-backward-char)
-(set-in-all-evil-states-but-insert "i" 'evil-forward-char)
-(define-key evil-operator-state-map "i" 'evil-forward-char)
+(set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
+(set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
+;; (define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;;; Turbo navigation mode
 (set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
