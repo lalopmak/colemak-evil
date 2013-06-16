@@ -337,34 +337,6 @@ Shortcuts:
 (define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
 
-
-
-
-;; Radical version: insert and change at wf
-
-;; (define-key evil-motion-state-map "W" 'evil-window-map)
-
-;; ;;Insert
-;; (set-in-all-evil-states-but-insert "w" 'evil-insert)
-;; (set-in-all-evil-states-but-insert "\C-W" 'evil-insert-line)
-
-;; ;;Change
-;; (set-in-all-evil-states-but-insert "f" 'evil-change)
-;; (set-in-all-evil-states-but-insert "\C-F" 'evil-change-line)
-
-;; ;;Find char
-;; (set-in-all-evil-states-but-insert "r" 'evil-find-char-backward)
-;; (set-in-all-evil-states-but-insert "R" 'evil-find-char-to-backward)
-;; (set-in-all-evil-states-but-insert "s" 'evil-find-char)
-;; (set-in-all-evil-states-but-insert "S" 'evil-find-char-to)
-
-;; ;;Append
-;; (set-in-all-evil-states-but-insert "p" 'evil-append)
-;; (set-in-all-evil-states-but-insert "\C-P" 'evil-append-line)
-
-
-;; Conservative version: insert and change at rs
-
 ;; Insert
 (set-in-all-evil-states-but-insert "r" 'evil-insert)
 (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
@@ -482,51 +454,6 @@ go to that line."
 (set-in-all-evil-states "\M-n" 'lalopmak-evil-paste-at-bol)
 (set-in-all-evil-states "\M-i" 'lalopmak-evil-paste-at-eol)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;TODO make caps paste from kill ring search above/below
-
-;;;;Experiment: generalize the paste-above/paste-below functions as macros
-;; (defmacro lalopmak-evil-do-body ( body)
-;;   (when body
-;;     (first body)
-;;     (lalopmak-evil-do-body (rest body))))
-
-;; (defmacro lalopmak-evil-do-interactively-then-normal (&rest body)
-;;   `(lambda (count)
-;;      (interactive)
-;;      (lalopmak-evil-do-body ,body)
-;;      (evil-normal-state)))
-
-
-;; (set-in-all-evil-states-but-insert "o" 'evil-open-below)
-;; (set-in-all-evil-states-but-insert "O" 'evil-open-above)
-;; (define-key evil-motion-state-map "\C-o" (lalopmak-evil-do-interactively-then-normal (evil-open-below 1) (evil-paste-after 1) ))
-;; (define-key evil-motion-state-map "\C-O" (lalopmak-evil-do-interactively-then-normal (evil-open-above 1) (evil-paste-after 1) ))
-
-
-
-
-;; ;;Experiment: swap o and ;
-;; (set-in-all-evil-states-but-insert ";" 'evil-open-below)
-;; (set-in-all-evil-states-but-insert ":" 'evil-open-above)
-;; (define-key evil-motion-state-map "\M-;" 'lalopmak-evil-paste-below)
-;; (define-key evil-motion-state-map "\M-:" 'lalopmak-evil-paste-above)
-;; ;;accounting for the other usages of o
-;; (define-key evil-window-map ";" 'delete-other-windows)
-;; (define-key evil-visual-state-map ";" 'exchange-point-and-mark)
-;; (define-key evil-visual-state-map ":" 'evil-visual-exchange-corners)
-;; (define-key evil-normal-state-map ";" 'evil-open-below)
-;; (define-key evil-normal-state-map ":" 'evil-open-above)
-;; ;;deleting those other usages of o
-;; (define-key evil-window-map "o" (lambda (&optional argz)))
-;; (define-key evil-visual-state-map "o" (lambda (&optional argz)))
-;; (define-key evil-visual-state-map "O" (lambda (&optional argz)))
-;; (define-key evil-normal-state-map "o" (lambda (&optional argz)))
-;; (define-key evil-normal-state-map "O" (lambda (&optional argz)))
-
 
 ;;;;;;;;;;;; Buffer Manipulation macros/functions ;;;;;;;;;;;;;;
 
@@ -600,7 +527,7 @@ go to that line."
 (evil-ex-define-cmd "variable" "describe-variable")
 
 
-(ad-activate-all)  
+;; (ad-activate-all)  ;activates all advice
 
 ;;FRAGILE
 ;;Redefines visual updates so as to update the primary, rather than the clipboard, with the selection
