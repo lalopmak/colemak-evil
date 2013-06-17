@@ -81,7 +81,7 @@ Shortcuts:
     (setq lalopmak-layout-map 'colemak-to-colemak)) 
 
 (defmacro lalopmak-evil-define-key (keymap key def)
-  "Defines key given the lalopmak-evil keymap"
+  "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
   `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,def))
 
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
@@ -505,10 +505,11 @@ go to that line."
     (evil-write beg end type filename bang)))
 
 ;; (defadvice evil-write (around check-edit-server 
-;;                               (beg end &optional type filename bang)
-;;   (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode) 
+;;                               (beg end &optional type filename bang))
+;;   (if (edit-server-edit-mode-running) 
 ;;       (edit-server-save) 
-;;     ad-do-it)))
+;;     ad-do-it))
+
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Makes ; an alias for :
