@@ -75,12 +75,46 @@ Shortcuts:
                                        with-output-to-temp-buffer 
                                        (princ lalopmak-evil-hintstring)))
 
+
+(defun colemak-to-qwerty () 
+  "Returns the colemak to qwerty map"
+  '(("f"."e") ("p"."r") ("g"."t") ("j"."y") ("l"."u") ("u"."i") ("y"."o") (";"."p") (":"."P")
+    ("r"."s") ("s"."d") ("t"."f") ("d"."g") ("n"."j") ("e"."k") ("i"."l") ("o".";") ("O".":")
+    ("k"."n")))
+
+(defun colemak-default ()
+  "Returns the colemak to colemak map, aka itself"
+  '())
+
+(defun key-to-layout (key layout)
+  "Given a key and a layout map, uses it"
+  (if (stringp key)
+      (let ((result (assoc key (funcall layout)))
+            (lowerResult (assoc (downcase key) (funcall layout)))  ;result of lowercase
+            (upperResult (assoc (upcase key) (funcall layout)))    ;result of uppercase
+            (hyphen (string-match "-" key)))
+        (cond (result (rest result))  ;if it's in our (funcall layout) map, we take it
+              (hyphen (let ((prefix (substring key 0 hyphen)) ;if we have hyphen, eg M-x, to M-(key-to-(funcall layout) x)
+                            (suffix (substring key (1+ hyphen))))
+                        (concat prefix "-" (key-to-layout suffix layout))))  
+              (lowerResult (upcase (rest lowerResult)))   ;key originally uppercase
+              (upperResult (downcase (rest upperResult)))  ;key originally lowercase
+              (t key))) ;returns itself as fallback
+    key))  
+
+(if (not (boundp 'lalopmak-layout-map))
+    (setq lalopmak-layout-map 'colemak-default)) 
+
+(defmacro lalopmak-evil-define-key (keymap key def)
+  "Defines key given the lalopmak-evil keymap"
+  `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,def))
+
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
 
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
-(define-key evil-insert-state-map [escape] 'evil-normal-state) 
+(lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 
@@ -94,20 +128,23 @@ Shortcuts:
                      evil-emacs-state-map
 		     evil-motion-state-map)))
   (while maps
-    (define-key (pop maps) key def)))
+    (lalopmak-evil-define-key (pop maps) key def)))
 
 
 (defun set-in-all-evil-states-but-insert (key def)
-  (set-in-all-evil-states key def (list evil-normal-state-map
-					evil-visual-state-map
-					evil-emacs-state-map
-					evil-motion-state-map)))
-
+  (set-in-all-evil-states key 
+                          def 
+                          (list evil-normal-state-map
+                                evil-visual-state-map
+                                evil-emacs-state-map
+                                evil-motion-state-map)))
 
 (defun set-in-all-evil-states-but-insert-and-motion (key def)
-  (set-in-all-evil-states key def (list evil-normal-state-map
-					evil-visual-state-map
-					evil-emacs-state-map)))
+  (set-in-all-evil-states key
+                          def 
+                          (list evil-normal-state-map
+                                evil-visual-state-map
+                                evil-emacs-state-map)))
 
 (evil-define-motion lalopmak-evil-forward-char (count)
   "Forward character, allowing you to fall to the next line"
@@ -122,7 +159,7 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
 (set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
-;; (define-key evil-operator-state-map "i" 'evil-forward-char)
+;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;;; Turbo navigation mode
 (set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
@@ -153,8 +190,8 @@ Shortcuts:
   (lalopmak-evil-scroll-then-center count 'evil-scroll-page-down))
 
 ;;; Page up/page down
-(define-key evil-motion-state-map (kbd "j") 'lalopmak-evil-scroll-page-up)
-(define-key evil-motion-state-map (kbd "h") 'lalopmak-evil-scroll-page-down)
+(lalopmak-evil-define-key evil-motion-state-map "j" 'lalopmak-evil-scroll-page-up)
+(lalopmak-evil-define-key evil-motion-state-map "h" 'lalopmak-evil-scroll-page-down)
 
 ;;; Page halfway up/down 
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
@@ -165,25 +202,25 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "l" 'evil-backward-word-begin)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 ;;; WORD forward/backward
-(set-in-all-evil-states-but-insert (kbd "C-y") 'evil-forward-WORD-begin)
-(set-in-all-evil-states-but-insert (kbd "C-l") 'evil-backward-WORD-begin)
+(set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
+(set-in-all-evil-states-but-insert "\C-l" 'evil-backward-WORD-begin)
 
 ;;; inneR text objects
 ;;; conflicts with find-char-backwards
-;; (define-key evil-visual-state-map "r" evil-inner-text-objects-map)
-;; (define-key evil-operator-state-map "r" evil-inner-text-objects-map)
-(define-key evil-inner-text-objects-map "y" 'evil-inner-word)
-(define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
+;; (lalopmak-evil-define-key evil-visual-state-map "r" evil-inner-text-objects-map)
+;; (lalopmak-evil-define-key evil-operator-state-map "r" evil-inner-text-objects-map)
+(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
+(lalopmak-evil-define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
 
 ;; Execute command: map : to ;
-(define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
+(lalopmak-evil-define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
 
 ;;; Folds, etc.
-;; (define-key evil-normal-state-map ",o" 'evil-open-fold)
-;; (define-key evil-normal-state-map ",c" 'evil-close-fold)
-;; (define-key evil-normal-state-map ",a" 'evil-toggle-fold)
-;; (define-key evil-normal-state-map ",r" 'evil-open-folds)
-;; (define-key evil-normal-state-map ",m" 'evil-close-folds)
+;; (lalopmak-evil-define-key evil-normal-state-map ",o" 'evil-open-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map ",c" 'evil-close-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map ",a" 'evil-toggle-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map ",r" 'evil-open-folds)
+;; (lalopmak-evil-define-key evil-normal-state-map ",m" 'evil-close-folds)
 
 ;;; I'm not sure what this is
 ;; for virtualedit=onemore
@@ -210,10 +247,10 @@ Shortcuts:
 
 
 ;;; Undo/redo
-(define-key evil-normal-state-map "z" 'undo)
+(lalopmak-evil-define-key evil-normal-state-map "z" 'undo)
 (when (fboundp 'undo-tree-undo)
-  (define-key evil-normal-state-map "z" 'undo-tree-undo)
-  (define-key evil-normal-state-map "Z" 'undo-tree-redo))
+  (lalopmak-evil-define-key evil-normal-state-map "z" 'undo-tree-undo)
+  (lalopmak-evil-define-key evil-normal-state-map "Z" 'undo-tree-redo))
 
 ;;; Cursor position jumplist
 (set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
@@ -237,7 +274,7 @@ Shortcuts:
 ;;; visual Block mode
 ;; Since the system clipboard is accessible by Emacs through the
 ;; regular paste command (v), a separate C-v mapping isn't needed.
-;; (define-key evil-motion-state-map "\C-b" 'evil-visual-block)
+;; (lalopmak-evil-define-key evil-motion-state-map "\C-b" 'evil-visual-block)
 
 ;;; Allow switching from visual line to visual block mode
 ;; not implemented
@@ -270,14 +307,14 @@ Shortcuts:
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-replace-state)
 
 
-(define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
-(define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
-(define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
-(define-key evil-motion-state-map (kbd "C-y") 'evil-scroll-line-up)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-y") 'evil-scroll-line-up)
 
 ;;; Scroll in place
-(define-key evil-motion-state-map (kbd "C-<up>") 'evil-scroll-line-up)
-(define-key evil-motion-state-map (kbd "C-<down>") 'evil-scroll-line-down)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-<up>") 'evil-scroll-line-up)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-<down>") 'evil-scroll-line-down)
 
 ;;; Live line reordering
 ;; not implemented
@@ -286,7 +323,7 @@ Shortcuts:
 ;;; Free mappings: ,/+/H
 
 ;;; Macros
-;; (define-key evil-normal-state-map "Q" '(lambda ()
+;; (lalopmak-evil-define-key evil-normal-state-map "Q" '(lambda ()
 ;; 					 (interactive)
 ;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
@@ -298,21 +335,21 @@ Shortcuts:
 ;; not implemented
 
 ;;; Search
-(define-key evil-motion-state-map "k" 'evil-search-next)
-(define-key evil-motion-state-map "K" 'evil-search-previous)
+(lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
+(lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
 
 ;;; Folding
-;; (define-key evil-normal-state-map "zo" 'evil-open-fold)
-;; (define-key evil-normal-state-map "zc" 'evil-close-fold)
-;; (define-key evil-normal-state-map "za" 'evil-toggle-fold)
-;; (define-key evil-normal-state-map "zr" 'evil-open-folds)
-;; (define-key evil-normal-state-map "zm" 'evil-close-folds)
+;; (lalopmak-evil-define-key evil-normal-state-map "zo" 'evil-open-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map "zc" 'evil-close-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map "za" 'evil-toggle-fold)
+;; (lalopmak-evil-define-key evil-normal-state-map "zr" 'evil-open-folds)
+;; (lalopmak-evil-define-key evil-normal-state-map "zm" 'evil-close-folds)
 
 ;;; Make the space, return, and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
-(define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
-(define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
-(define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
+(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 ;;; Visual line navigation
 ;; In normal mode, use "ge" and "gu" when lines wrap.
@@ -322,19 +359,19 @@ Shortcuts:
 ;;; Window handling
 ;; C-w (not C-r as in Shai's mappings) prefixes window commands
 
-(define-key evil-window-map "n" 'evil-window-left)
-(define-key evil-window-map "N" 'evil-window-move-far-left)
-(define-key evil-window-map "e" 'evil-window-down)
-(define-key evil-window-map "E" 'evil-window-move-very-bottom)
-(define-key evil-window-map "u" 'evil-window-up)
-(define-key evil-window-map "U" 'evil-window-move-very-top)
-(define-key evil-window-map "i" 'evil-window-right)
-(define-key evil-window-map "I" 'evil-window-move-far-right)
-(define-key evil-window-map "k" 'evil-window-new)
+(lalopmak-evil-define-key evil-window-map "n" 'evil-window-left)
+(lalopmak-evil-define-key evil-window-map "N" 'evil-window-move-far-left)
+(lalopmak-evil-define-key evil-window-map "e" 'evil-window-down)
+(lalopmak-evil-define-key evil-window-map "E" 'evil-window-move-very-bottom)
+(lalopmak-evil-define-key evil-window-map "u" 'evil-window-up)
+(lalopmak-evil-define-key evil-window-map "U" 'evil-window-move-very-top)
+(lalopmak-evil-define-key evil-window-map "i" 'evil-window-right)
+(lalopmak-evil-define-key evil-window-map "I" 'evil-window-move-far-right)
+(lalopmak-evil-define-key evil-window-map "k" 'evil-window-new)
 
 
 
-(define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
+(lalopmak-evil-define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
 
 
 ;; Insert
@@ -397,10 +434,10 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "T" 'lalopmak-evil-repeat-find-char-reverse)
 
 ;switch to buffer
-(define-key evil-motion-state-map "b" 'switch-to-buffer)
-(define-key evil-motion-state-map "B" 'find-file)
+(lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
+(lalopmak-evil-define-key evil-motion-state-map "B" 'find-file)
 
-(define-key evil-motion-state-map "\M-a" 'evil-visual-block)
+(lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
 (evil-define-motion lalopmak-evil-paste-below (count)
@@ -449,8 +486,8 @@ go to that line."
 ;;M-[direction] to paste in that direction
 (set-in-all-evil-states-but-insert "\M-u" 'lalopmak-evil-paste-above-then-normal)
 (set-in-all-evil-states-but-insert "\M-e" 'lalopmak-evil-paste-below-then-normal)
-(define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above) 
-(define-key evil-insert-state-map "\M-e" 'lalopmak-evil-paste-below)
+(lalopmak-evil-define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above) 
+(lalopmak-evil-define-key evil-insert-state-map "\M-e" 'lalopmak-evil-paste-below)
 (set-in-all-evil-states "\M-n" 'lalopmak-evil-paste-at-bol)
 (set-in-all-evil-states "\M-i" 'lalopmak-evil-paste-at-eol)
 
@@ -479,14 +516,36 @@ go to that line."
                                        do-func-in-buffer 
                                        'ielm))
 
+;;;Experimental for web server editing
+(defmacro minor-mode-running (mode)
+  `(and (boundp ',mode) ,mode))
+
+(defun edit-server-edit-mode-running ()
+  (minor-mode-running edit-server-edit-mode))
+
+
+(defun lalopmak-evil-write (beg end &optional type filename bang)
+  (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)  
+      (edit-server-save) 
+    (evil-write beg end type filename bang)))
+
+;; (defadvice evil-write (around check-edit-server 
+;;                               (beg end &optional type filename bang)
+;;   (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode) 
+;;       (edit-server-save) 
+;;     ad-do-it)))
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Makes ; an alias for :
-(define-key evil-motion-state-map ";" 'evil-ex)
+
+(set-in-all-evil-states-but-insert ";" 'evil-ex)
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
 (evil-ex-define-cmd "ars" "hints")
+
+;;hooks for quitting/saving commands
+(evil-ex-define-cmd "w[rite]" 'evil-write)
 
 ;;git
 (evil-ex-define-cmd "git" 'magit-status)
@@ -546,6 +605,13 @@ go to that line."
                                      evil-visual-beginning
                                      evil-visual-end))
           (setq x-last-selected-text-primary ))))))
+
+
+;;Experiment: swaps o and :
+;; (set-in-all-evil-states-but-insert ";" 'lalopmak-evil-goto-line-if-count-else-open-below)
+;; (set-in-all-evil-states-but-insert ":" 'evil-open-above)
+;; (set-in-all-evil-states-but-insert "o" 'evil-ex)
+;; (set-in-all-evil-states-but-insert "O" 'evil-ex)
 
 (provide 'lalopmak-evil)
 
