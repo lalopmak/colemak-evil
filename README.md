@@ -15,6 +15,9 @@ Setup
 2. Download lalopmak-evil and put it somewhere in your load path.
 3. Add `(load "lalopmak-evil")` to your Emacs init file.
 
+
+If you wish to use this with QWERTY, add (defvar lalopmak-layout-map 'colemak-to-qwerty) to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.
+
 Tips
 ----
 Type :hints or :ars to bring up the hint screen.

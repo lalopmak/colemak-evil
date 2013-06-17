@@ -67,6 +67,7 @@ Shortcuts:
 ")
 
 (require 'lalopmak-buffer)
+(require 'lalopmak-layouts)
 
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
@@ -75,35 +76,9 @@ Shortcuts:
                                        with-output-to-temp-buffer 
                                        (princ lalopmak-evil-hintstring)))
 
-
-(defun colemak-to-qwerty () 
-  "Returns the colemak to qwerty map"
-  '(("f"."e") ("p"."r") ("g"."t") ("j"."y") ("l"."u") ("u"."i") ("y"."o") (";"."p") (":"."P")
-    ("r"."s") ("s"."d") ("t"."f") ("d"."g") ("n"."j") ("e"."k") ("i"."l") ("o".";") ("O".":")
-    ("k"."n")))
-
-(defun colemak-default ()
-  "Returns the colemak to colemak map, aka itself"
-  '())
-
-(defun key-to-layout (key layout)
-  "Given a key and a layout map, uses it"
-  (if (stringp key)
-      (let ((result (assoc key (funcall layout)))
-            (lowerResult (assoc (downcase key) (funcall layout)))  ;result of lowercase
-            (upperResult (assoc (upcase key) (funcall layout)))    ;result of uppercase
-            (hyphen (string-match "-" key)))
-        (cond (result (rest result))  ;if it's in our (funcall layout) map, we take it
-              (hyphen (let ((prefix (substring key 0 hyphen)) ;if we have hyphen, eg M-x, to M-(key-to-(funcall layout) x)
-                            (suffix (substring key (1+ hyphen))))
-                        (concat prefix "-" (key-to-layout suffix layout))))  
-              (lowerResult (upcase (rest lowerResult)))   ;key originally uppercase
-              (upperResult (downcase (rest upperResult)))  ;key originally lowercase
-              (t key))) ;returns itself as fallback
-    key))  
-
+;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
-    (setq lalopmak-layout-map 'colemak-default)) 
+    (setq lalopmak-layout-map 'colemak-to-colemak)) 
 
 (defmacro lalopmak-evil-define-key (keymap key def)
   "Defines key given the lalopmak-evil keymap"
