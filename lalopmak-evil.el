@@ -307,10 +307,10 @@ Shortcuts:
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-replace-state)
 
 
-(lalopmak-evil-define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
-(lalopmak-evil-define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
-(lalopmak-evil-define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
-(lalopmak-evil-define-key evil-motion-state-map (kbd "C-y") 'evil-scroll-line-up)
+(lalopmak-evil-define-key evil-motion-state-map "\C-e" 'evil-scroll-line-down)
+(lalopmak-evil-define-key evil-motion-state-map "\C-f" 'evil-scroll-page-down)
+(lalopmak-evil-define-key evil-motion-state-map "\C-o" 'evil-jump-backward)
+(lalopmak-evil-define-key evil-motion-state-map "\C-y" 'evil-scroll-line-up)
 
 ;;; Scroll in place
 (lalopmak-evil-define-key evil-motion-state-map (kbd "C-<up>") 'evil-scroll-line-up)
