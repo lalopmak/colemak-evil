@@ -84,6 +84,11 @@ Shortcuts:
   "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
   `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,def))
 
+
+(defmacro lalopmak-evil-local-set-key (keymap key)
+  "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
+  `(local-set-key ,keymap (key-to-layout ,key lalopmak-layout-map)))
+
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
 
 ;; remove all keybindings from insert-state keymap
@@ -155,7 +160,7 @@ Shortcuts:
       (funcall motion count) 
     (funcall motion 1))
   (move-to-window-line nil))
- 
+
 (evil-define-motion lalopmak-evil-scroll-page-up (count)
   "Scrolls page up, centers the cursor"
   (lalopmak-evil-scroll-then-center count 'evil-scroll-page-up))
@@ -302,8 +307,12 @@ Shortcuts:
 ;; 					 (interactive)
 ;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
-(define-key evil-normal-state-map "M" 'evil-record-macro)
-(define-key evil-normal-state-map "\"" 'evil-execute-macro)
+(cond (window-system  ; ensure not running in a terminal
+       (lalopmak-evil-local-set-key (kbd "<return>") 'newline)
+       (lalopmak-evil-local-set-key "\C-m" 'kill-ring-save)))
+(lalopmak-evil-define-key evil-normal-state-map (kbd "C-'") 'evil-execute-macro)
+;; (lalopmak-evil-define-key evil-normal-state-map "M" 'evil-record-macro)
+;; (lalopmak-evil-define-key evil-normal-state-map "\"" 'evil-execute-macro)
 
 ;;; Duplicate line
 ;; not implemented
