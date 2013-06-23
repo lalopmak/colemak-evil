@@ -302,6 +302,9 @@ Shortcuts:
 ;; 					 (interactive)
 ;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
+(define-key evil-normal-state-map "!" 'evil-record-macro)
+(define-key evil-normal-state-map "\\" 'evil-execute-macro)
+
 ;;; Duplicate line
 ;; not implemented
 ;; Use "CV" instead
