@@ -9,9 +9,9 @@
 
 (defun colemak-to-qwerty () 
   "Returns the colemak to qwerty map"
-  '(("f"."e") ("p"."r") ("g"."t") ("j"."y") ("l"."u") ("u"."i") ("y"."o") (";"."p") (":"."P")
+  '(("f"."e") ("p"."r") ("g"."t") ("j"."y") ("l"."u") ("u"."i") ("y"."o") (";"."p") (":"."P") ;;TODO: fix bizarre error ;("\'"."[") ("\""."{")
     ("r"."s") ("s"."d") ("t"."f") ("d"."g") ("n"."j") ("e"."k") ("i"."l") ("o".";") ("O".":")
-    ("k"."n")))
+    ("k"."n") ) )
 
 (defun colemak-to-colemak ()
   "Returns the colemak to colemak map, aka itself"
