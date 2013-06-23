@@ -21,6 +21,11 @@
   "Short for (kbd (concat [args]))"
   `(kbd (concat ,@args)))
 
+(defmacro key-equals (key &rest args)
+  "Checks if key is equal to the kbdconcat of the rest"
+  `(equal ,key
+          (kbdconcat ,@args)))
+
 (defun check-all-keys (key layout)
   "Brute force checks and returns matchings between the key and (kbd [modifier]-[layout keys])" 
   (first (delq nil 
@@ -28,11 +33,11 @@
                        (let* ((strFirst (first mapping))
                               (kbdFirst (kbd strFirst))
                               (strRest (rest mapping))) 
-                         (cond ((equal (kbdconcat "C-" key)
-                                       kbdFirst) 
+                         (cond ((key-equals key 
+                                            "C-" strFirst)
                                 (kbdconcat "C-" strRest))
-                               ((equal (kbdconcat "M-" key)
-                                       kbdFirst)
+                               ((key-equals key 
+                                            "M-" strFirst)
                                 (kbdconcat "M-" strRest))
                                (t nil))))
                      (funcall layout)))))
@@ -53,7 +58,6 @@
               (upperResult (downcase (rest upperResult)))  ;key originally lowercase
               (t key))) ;returns itself as fallback
     (let ((completeCheck (check-all-keys key layout)))  ;brute force check
-      (if completeCheck completeCheck key))
-))  
+      (if completeCheck completeCheck key))))  
 
 (provide 'lalopmak-layouts)
