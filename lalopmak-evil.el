@@ -302,8 +302,8 @@ Shortcuts:
 ;; 					 (interactive)
 ;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
-(define-key evil-normal-state-map "!" 'evil-record-macro)
-(define-key evil-normal-state-map "\\" 'evil-execute-macro)
+(define-key evil-normal-state-map "B" 'evil-record-macro)
+(define-key evil-normal-state-map "b" 'evil-execute-macro)
 
 ;;; Duplicate line
 ;; not implemented
@@ -412,8 +412,8 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "T" 'lalopmak-evil-repeat-find-char-reverse)
 
 ;switch to buffer
-(lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
-(lalopmak-evil-define-key evil-motion-state-map "B" 'find-file)
+(lalopmak-evil-define-key evil-motion-state-map "\\" 'switch-to-buffer)
+(lalopmak-evil-define-key evil-motion-state-map "!" 'find-file)
 
 (lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
