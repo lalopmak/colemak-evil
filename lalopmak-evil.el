@@ -29,7 +29,7 @@ Normal mode:
 |` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 |           |           |           |           |ChangeToEOL|           |           |           |           | PasteAbove|           |           |           |
-|  NextTab  |           | WinCmd    |           |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |           |
+|  NextTab  |           | WinCmd    |           |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  RunMacro |
 | <TAB>     |  RepState | Find Till | Find Till |Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
 | <TAB>     |  Replace  | Find Char | Find Char |Substitute | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' GoMk·|<  |
 |           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
@@ -41,8 +41,8 @@ Normal mode:
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
-            |           |           |           |           |           |           |           |           |           |           |    · = char arg.
-            |   Redo    | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|           | < ◀-Dedent| > Indent-▶|    > = move arg.
+            |           |           |           |           |           |           |           |CreateMacro|           |           |    · = char arg.
+            |   Redo    | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd| MidCursor | < ◀-Dedent| > Indent-▶|    > = move arg.
             |   Undo    |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|  Set Mk·  | ,         | .         |
             |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
