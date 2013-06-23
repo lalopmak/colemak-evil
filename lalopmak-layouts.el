@@ -17,8 +17,29 @@
   "Returns the colemak to colemak map, aka itself"
   '())
 
+(defmacro kbdconcat (&rest args)
+  "Short for (kbd (concat [args]))"
+  `(kbd (concat ,@args)))
+
+(defun check-all-keys (key layout)
+  "Brute force checks and returns matchings between the key and (kbd [modifier]-[layout keys])" 
+  (first (delq nil 
+               (mapcar (lambda (mapping)
+                       (let* ((strFirst (first mapping))
+                              (kbdFirst (kbd strFirst))
+                              (strRest (rest mapping))) 
+                         (cond ((equal (kbdconcat "C-" key)
+                                       kbdFirst) 
+                                (kbdconcat "C-" strRest))
+                               ((equal (kbdconcat "M-" key)
+                                       kbdFirst)
+                                (kbdconcat "M-" strRest))
+                               (t nil))))
+                     (funcall layout)))))
+                      
+ 
 (defun key-to-layout (key layout)
-  "Given a key and a layout map, uses it"
+  "Given a key and a layout map, gets the corresponding key in the other layout.  Preferred input via strings, e.g. '\C-a'"
   (if (stringp key)   ;currently can only do strings
       (let ((result (assoc key (funcall layout)))                  ;result of the layout map
             (lowerResult (assoc (downcase key) (funcall layout)))  ;result of lowercase
@@ -31,6 +52,8 @@
               (lowerResult (upcase (rest lowerResult)))   ;key originally uppercase
               (upperResult (downcase (rest upperResult)))  ;key originally lowercase
               (t key))) ;returns itself as fallback
-    key))  
+    (let ((completeCheck (check-all-keys key layout)))  ;brute force check
+      (if completeCheck completeCheck key))
+))  
 
 (provide 'lalopmak-layouts)
