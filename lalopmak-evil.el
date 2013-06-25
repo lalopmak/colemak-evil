@@ -86,7 +86,7 @@ Shortcuts:
 
 
 (defmacro lalopmak-evil-local-set-key (keymap key)
-  "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
+  "Defines local key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
   `(local-set-key ,keymap (key-to-layout ,key lalopmak-layout-map)))
 
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
