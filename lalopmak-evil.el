@@ -307,13 +307,17 @@ Shortcuts:
 ;; 					 (interactive)
 ;; 					 (evil-execute-macro 1 last-kbd-macro)))
 
-(cond (window-system  ; ensure not running in a terminal
-       (lalopmak-evil-local-set-key (kbd "<return>") 'newline)
-       (lalopmak-evil-local-set-key "\C-m" 'kill-ring-save)))
-(lalopmak-evil-define-key evil-normal-state-map (kbd "C-'") 'evil-execute-macro)
-;; (lalopmak-evil-define-key evil-normal-state-map "M" 'evil-record-macro)
+;; (cond (window-system  ; ensure not running in a terminal
+;;        (lalopmak-evil-local-set-key (kbd "<return>") 'newline)
+;;        (lalopmak-evil-local-set-key "\C-m" 'evil-record-macro)))
+(lalopmak-evil-define-key evil-normal-state-map "'" 'evil-execute-macro)
+(lalopmak-evil-define-key evil-normal-state-map "m" 'evil-record-macro)
 ;; (lalopmak-evil-define-key evil-normal-state-map "\"" 'evil-execute-macro)
 
+
+(define-key evil-normal-state-map "M" 'evil-set-marker)
+
+(define-key evil-motion-state-map (kbd "C-'") 'evil-goto-mark-line)
 ;;; Duplicate line
 ;; not implemented
 ;; Use "CV" instead
@@ -573,6 +577,9 @@ go to that line."
 (evil-ex-define-cmd "describe-variable" 'describe-variable)
 (evil-ex-define-cmd "variable" "describe-variable")
 
+;;M-x flyspell-mode
+
+(evil-ex-define-cmd "spell" 'speck-mode)
 
 ;; (ad-activate-all)  ;activates all advice
 
