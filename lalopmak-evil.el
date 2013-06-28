@@ -577,7 +577,7 @@ go to that line."
 (evil-ex-define-cmd "describe-variable" 'describe-variable)
 (evil-ex-define-cmd "variable" "describe-variable")
 
-;;M-x flyspell-mode
+;;M-x speck-mode (spell checking)
 
 (evil-ex-define-cmd "spell" 'speck-mode)
 
