@@ -1,0 +1,75 @@
+#  License
+
+#  This software is released under the CC0 1.0 Universal license. You are
+#  free to use, modify, and redistribute it as you please. This software
+#  comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
+#  http://creativecommons.org/publicdomain/zero/1.0/
+
+#Attempted evil mappings for bash/readline.
+#Very, very incomplete, buggy.
+
+
+
+#put .inputrc (or symlink to .inputrc) in home folder 
+
+set editing-mode vi
+
+# Show all completions as soon as I press tab, even if there's more than one
+set show-all-if-ambiguous on
+# Ignore case
+set completion-ignore-case on
+# on menu-complete, first display the common prefix, then cycle through the 
+# options when hitting TAB
+menu-complete-display-prefix on
+
+###########################################################
+# Keymaps for when we're in command mode (e.g., after hitting ESC)
+set keymap vi-command
+
+"l": backward-word
+"y": forward-word
+
+"n": backward-char
+"i": forward-char
+
+"L": beginning-of-line
+"Y": end-of-line
+
+"u": previous-history
+"e": next-history
+
+"j": history-search-backward
+"h": history-search-forward
+
+"r": vi-insertion-mode
+"R"  vi-insert-beg
+
+"s": vi-append-mode
+"S"  vi-append-eol
+
+
+"z": undo
+"Z": vi-redo
+"c": vi-yank
+# "C": "yy"
+# "V": vi-put
+
+"q": vi-change-char
+"Q": vi-replace
+
+"k": vi-search-again
+
+"p": vi-change-to
+"P": vi-change-to
+
+# "f": vi-char-search
+# "w": vi-char-search-backward
+
+# "t": vi-char-search-repeat
+###########################################################
+# Keymaps for when we're in insert (i.e., typing stuff in) mode
+set keymap vi-insert
+
+# Needed because binding 'p' in command mode above wipes its insert mode
+# function, too. This fixes that, and will insert 'p' when you type 'p'.
+"p": self-insert
