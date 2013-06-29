@@ -361,8 +361,7 @@ Shortcuts:
 (lalopmak-evil-define-key evil-window-map "k" 'evil-window-new)
 
 
-
-(lalopmak-evil-define-key evil-normal-state-map (kbd "TAB")  'evil-indent)
+(set-in-all-evil-states-but-insert (kbd "TAB")  'evil-indent)
 
 
 ;; Insert
