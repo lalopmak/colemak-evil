@@ -1,9 +1,8 @@
 ;;; License
 
-;; This software is released under the CC0 1.0 Universal license. You are
-;; free to use, modify, and redistribute it as you please. This software
-;; comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
-;; http://creativecommons.org/publicdomain/zero/1.0/
+;; This software is licensed under the CC0 1.0 Public Domain Declaration, as
+;; released by Creative Commons <http://creativecommons.org/publicdomain/zero/1.0/>.
+;; This software comes with NO WARRANTIES OR GUARANTEES WHATSOEVER.
 
 
 ;;Buffer helper commands/macros

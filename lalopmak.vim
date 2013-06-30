@@ -1,10 +1,9 @@
 " Original (colemak.vim): Redesigned mapping for the Colemak layout for Vim 7.0
 " 2008-04-21 Shai Coleman, http://colemak.com/ . Public domain. 
 "
-" Forked 2013 (lalopmak.vim), released under the CC0 1.0 Universal license. You are
-" free to use, modify, and redistribute it as you please. This software
-" comes with NO WARRANTIES OR GUARANTEES WHATSOEVER. For details, see
-" http://creativecommons.org/publicdomain/zero/1.0/
+" Forked 2013 (lalopmak.vim), licensed under the CC0 1.0 Public Domain Declaration, as
+" released by Creative Commons <http://creativecommons.org/publicdomain/zero/1.0/>.
+" This software comes with NO WARRANTIES OR GUARANTEES WHATSOEVER.
  
 " * Use ":source lalopmak.vim" (without quotes) to load this file. Adjust path to lalopmak.vim if needed.
 " * Add the line: "source lalopmak.vim" (without quotes) in your .vimrc file to automatically load this file. 
