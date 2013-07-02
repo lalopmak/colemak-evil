@@ -580,6 +580,17 @@ go to that line."
 
 (evil-ex-define-cmd "spell" 'speck-mode)
 
+;;Ya-snippets
+
+(defun evil-snippet (name)
+  (interactive "sSnippet shortcut:")
+  (evil-insert 1)
+  (insert (concat " " name))
+  (yas-expand))
+
+(evil-ex-define-cmd "snippet" 'evil-snippet)
+
+
 ;; (ad-activate-all)  ;activates all advice
 
 ;;FRAGILE
