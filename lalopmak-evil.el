@@ -213,15 +213,10 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
 
-
-(defun most-recent-clip ()
-  "Return the most recent item of the clipboard"
-  (let ((x-select-enable-clipboard t))      ;temporarily enables the clipboard
-    (or (x-selection-value)
-        x-last-selected-text-clipboard)))
-
 (set-in-all-evil-states-but-insert "V" 'evil-paste-before)
 (set-in-all-evil-states-but-insert "v" 'evil-paste-after)
+
+(set-in-all-evil-states-but-insert "\C-v" 'evil-paste-pop)
 
 
 
