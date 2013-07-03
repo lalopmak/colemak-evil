@@ -41,7 +41,7 @@ Normal mode:
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
-            |           |           |           |           |           |           |           |           |           |           |    · = char arg.
+            |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
             |   Redo    | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
             |   Undo    |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
             |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
