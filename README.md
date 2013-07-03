@@ -5,8 +5,6 @@ A variant of colemak-evil.el/colemak.vim that takes some of Shai's ideas even fu
 
 A draft diagram can be found [near the top of the main file](https://raw.github.com/lalopmak/lalopmak-evil/master/lalopmak-evil.el).
 
-vim version is also in progress, but not nearly as developed.
-
 
 
 Setup
