@@ -28,8 +28,8 @@ Normal mode:
 |~ Case     |! ExtFlt>  |@ PlyMcr·  |#  <-=     |$  ->|     |% GoMatch  |^  <--     |+ Next<--  |[ Rep :s   |]  =->     |( |<-Sent  |) Sent->|  |_ LastLin  |
 |` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|           |           |           |           |ChangeToEOL|           |           |           |           | PasteAbove|           |           |           |
-|  NextTab  |           | WinCmd    |           |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
+|           |           |           | Jump Line |ChangeToEOL|           |           |           |           | PasteAbove|           |           |           |
+|  NextTab  |           | WinCmd    | Jump Char |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
 | <TAB>     |  RepState | Find Till | Find Till |Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
 | <TAB>     |  Replace  | Find Char | Find Char |Substitute | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
@@ -133,6 +133,20 @@ Shortcuts:
 (evil-define-motion lalopmak-evil-backward-char (count)
   "Backward character, allowing you to rise to the previous line"
   (evil-backward-char count 'crosslines))
+
+
+(evil-define-motion lalopmak-evil-previous-line (count)
+  "(previous-line) if no count is provided. Otherwise (evil-previous-line count)."
+  (if count
+      (evil-previous-line count)
+    (previous-line)))
+
+(evil-define-motion lalopmak-evil-next-line (count)
+  "(next-line) if no count is provided. Otherwise (evil-next-line count)."
+  (if count
+      (evil-next-line count)
+    (next-line)))
+
 
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
@@ -374,6 +388,10 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "F" 'evil-find-char-to)
 (set-in-all-evil-states-but-insert "w" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "W" 'evil-find-char-to-backward)
+
+;;Ace jump
+(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states "\M-f" 'evil-ace-jump-line-mode)
 
 ;;Append
 (set-in-all-evil-states-but-insert "s" 'evil-append)
