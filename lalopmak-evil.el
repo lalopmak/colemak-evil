@@ -66,8 +66,12 @@ Shortcuts:
 :ielm = M-x ielm-window = opens up lisp evaluation window
 ")
 
+
+
+
 (require 'lalopmak-buffer)
 (require 'lalopmak-layouts)
+(require 'lalopmak-jump)
 
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
@@ -370,71 +374,35 @@ Shortcuts:
 (lalopmak-evil-define-key evil-window-map "k" 'evil-window-new)
 
 
-(set-in-all-evil-states-but-insert (kbd "TAB")  'evil-indent)
+(set-in-all-evil-states-but-insert (kbd "\\")  'evil-indent)
 
 
 ;; Insert
 (set-in-all-evil-states-but-insert "r" 'evil-insert)
 (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
 
-;;Change
-(set-in-all-evil-states-but-insert "\C-p" 'evil-change)
-(set-in-all-evil-states-but-insert "\M-p" 'evil-change-line)
-(set-in-all-evil-states-but-insert "p" 'evil-substitute)
-(set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
-
-;;Find char
-(set-in-all-evil-states-but-insert "f" 'evil-find-char)
-(set-in-all-evil-states-but-insert "F" 'evil-find-char-to)
-(set-in-all-evil-states-but-insert "w" 'evil-find-char-backward)
-(set-in-all-evil-states-but-insert "W" 'evil-find-char-to-backward)
-
-;;Ace jump
-(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
-(set-in-all-evil-states "\M-f" 'evil-ace-jump-line-mode)
-
 ;;Append
 (set-in-all-evil-states-but-insert "s" 'evil-append)
 (set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
-
-;;Repeat find char
-(defun lalopmak-evil-adjacent-char-is (char &optional reversed)
-  "True iff the next (or, if reversed, previous) character is char.  Does not accept string."
-  (if reversed
-      (= (char-before) char)
-    (= (char-after (1+ (point))) char)))
-
-(defun lalopmak-evil-repeat-collision (&optional reversed)
-  "Checks if an adjacent letter keeps repeat-find in the same spot.  Set reversed = t for reverse-find."
-  (let ((char (nth 1 evil-last-find))
-	(forward (nth 2 evil-last-find)))
-    (lalopmak-evil-adjacent-char-is char (or (and reversed forward)
-					     (and (not reversed) (not forward))))))
-
-(defmacro lalopmak-evil-if-char-collision (then-stmt else-stmt &optional reversed)
-  "If there's a collision in find-char, then-stmt.  Else else-stmt.  Reversed if this is find-char-reverse."
-  `(if (and (eq (first evil-last-find) 'evil-find-char-to)  ;if this was last a character find
-            (or (not count)                                 ;if count > 1, it's up to the user
-                (= count 1))
-            (lalopmak-evil-repeat-collision ,reversed)) 
-       ,then-stmt
-     ,else-stmt))
-       
-(evil-define-motion lalopmak-evil-repeat-find-char (count) 
-  "Makes sure repeating evil-find-char-to doesn't just go to the same result"
-  (lalopmak-evil-if-char-collision (evil-repeat-find-char 2)
-                                   (evil-repeat-find-char count)))
+;;Change
+(set-in-all-evil-states-but-insert "\C-p" 'evil-change)
+(set-in-all-evil-states-but-insert "\M-p" 'evil-change-line)
+(set-in-all-evil-states-but-insert "p" 'evil-change)
+(set-in-all-evil-states-but-insert "t" 'evil-substitute)   ;tentative assignment
+(set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
 
 
-(evil-define-motion lalopmak-evil-repeat-find-char-reverse (count) 
-  "Makes sure repeating evil-find-char-to-reverse doesn't just go to the same result"
-  (lalopmak-evil-if-char-collision (evil-repeat-find-char-reverse 2)
-                                   (evil-repeat-find-char-reverse count)
-                                   t))
+;;Ace jump
+(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "w" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "W" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
-(set-in-all-evil-states-but-insert "t" 'lalopmak-evil-repeat-find-char)
-(set-in-all-evil-states-but-insert "T" 'lalopmak-evil-repeat-find-char-reverse)
+;;Line jump
+(set-in-all-evil-states "\M-f" 'evil-ace-jump-line-mode)
+(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
