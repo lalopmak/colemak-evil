@@ -92,18 +92,23 @@
   (save-excursion (goto-char (point-min)) 
                   (count-matches (make-string 1 char))))
 
-(defmacro max-regions-for-one-ace-jump (char region-restrictor maxLimit)
-  "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
-Limited by ace-jump-max-lines."
-  `(let ((x 0)
-         (numKeys (length ace-jump-mode-move-keys)))
+(defmacro max-regions-for-one-jump (char region-restrictor max-jumper-limit maxLimit)
+  "Max number of lines around cursor for which we can limit a jump of char so that it completes in a single step.
+maxLimit is our search bound."
+  `(let ((x 0))
      (while (and (<= x ,maxLimit)
                  (<= (,region-restrictor x (count-char-in-buffer ,char))
-                     numKeys))
+                     ,max-jumper-limit))
        (setq x (1+ x)))
      (if (eq x 0)  
          x         ;zero is the lowest we can go
        (1- x))))
+
+(defmacro max-regions-for-one-ace-jump (char region-restrictor maxLimit)
+  "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
+Limited by ace-jump-max-lines or maxLimit, our search bound."
+  `(max-regions-for-one-jump ,char ,region-restrictor (length ace-jump-mode-move-keys) ,maxLimit))
+
 
 ;;;
 ;;; normal jump mode
