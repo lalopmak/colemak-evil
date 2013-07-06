@@ -60,17 +60,21 @@
                         (save-excursion-point ,goto-end)
                         ,@code))
 
+(defmacro do-within-n-movements (n movement &rest code)
+  "Narrows region to within n movements, executes code."
+  `(do-within-movements (,movement (- ,n)) (,movement (1+ ,n)) ,@code))
+
 (defmacro do-within-n-lines (n &rest code)
   "Narrows region to within n lines, executes code"
-  `(do-within-movements (forward-line (- ,n)) (forward-line (1+ ,n)) ,@code))
+  `(do-within-n-movements ,n forward-line ,@code))
 
 (defmacro do-within-n-words (n &rest code)
   "Narrows region to within n words, executes code"
-  `(do-within-movements (forward-word (- ,n)) (forward-word (1+ ,n)) ,@code))
+  `(do-within-n-movements ,n forward-word ,@code))
 
 (defmacro do-within-n-chars (n &rest code)
   "Narrows region to within n chars, executes code"
-  `(do-within-movements (forward-char (- ,n)) (forward-char (1+ ,n)) ,@code))
+  `(do-within-n-movements ,n forward-char ,@code))
 
 
 ;;;
