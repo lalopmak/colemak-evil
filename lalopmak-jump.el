@@ -114,7 +114,7 @@ Limited by ace-jump-max-lines or maxLimit, our search bound."
 ;;; normal jump mode
 ;;;
 
-(defmacro perform-ace-jump-char-within-n-regions (char region-restrictor &optional n)
+(defmacro ace-jump-char-within-n-regions (char region-restrictor &optional n)
   "Calls ace-jump-char on char, limiting possible results to within n (default 0) lines of the pointer."
   `(let ((ace-jump-mode-scope 'window))        ;;makes sure we don't leak to other scopes
      (,region-restrictor (or ,n 0) (ace-jump-char-mode ,char))))
@@ -127,7 +127,7 @@ Limited by ace-jump-max-lines or maxLimit, our search bound."
                                                         ,region-restrictor
                                                         ,max-regions))))
      (evil-enclose-ace-jump-for-motion 
-      (perform-ace-jump-char-within-n-regions char ,region-restrictor numRegions))))
+      (ace-jump-char-within-n-regions char ,region-restrictor numRegions))))
   
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
   "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
