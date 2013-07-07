@@ -132,6 +132,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
   "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
   :type inclusive
+  :repeat abort
   (if (or count 
           lalopmak-evil-ace-jump-num-lines)
       ;;if user provided restriction input we assume it's in lines
@@ -158,7 +159,7 @@ executes the resulting actions"
            ((= old-point (point)) ,samePlaceAction))))
 
 (defmacro lalopmak-evil-search-char-to (search)
-  "Converts a searcher to a searcher-to"
+  "Converts a search-char to a search-char-to"
   `(if-point-changed ,search
                      (forward-char)
                      (backward-char)))
@@ -167,11 +168,13 @@ executes the resulting actions"
 (evil-define-motion evil-ace-jump-char-to-mode (count)
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
+  :repeat abort
   (lalopmak-evil-search-char-to (evil-ace-jump-char-mode count)))
  
 (evil-define-motion lalopmak-evil-ace-jump-char-to-mode (count)
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
+  :repeat abort
   (lalopmak-evil-search-char-to (lalopmak-evil-ace-jump-char-mode count)))
 
 
