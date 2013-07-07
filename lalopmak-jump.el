@@ -105,8 +105,8 @@
   "Max number of lines around cursor for which we can limit a jump of char so that it completes in a single step.
 regions-search-limit is our search bound."
   `(loop for r from 0 to ,regions-search-limit
-         while (<= (,region-restrictor r (count-char-in-buffer ,char))
-                   ,jumper-limit)
+         until (> (,region-restrictor r (count-char-in-buffer ,char))
+                  ,jumper-limit)
          finally return (if (eq r 0)  
                             r         ;zero is the lowest we can go
                           (1- r))))
