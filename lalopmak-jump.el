@@ -166,6 +166,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
         ((< (chars-in-window) jump-word-search-threshold)
          ;;there are few enough characters for a char search to cover it
          (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
+        ;;there are too many characters, default to word search
         (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))))
 
 
