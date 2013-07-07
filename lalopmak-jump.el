@@ -86,23 +86,31 @@
   (interactive "p")
   (read-char prompt))
 
+(defvar special-regex-chars
+  '(?. ?[ ?] ?+ ?* ?^ ?$ ?\\ )
+  "List of characters that have to be escaped in a regex")
+
+(defun char-to-escaped-regex (char)
+  "Converts a character to escaped regex"
+  (if (member char special-regex-chars)
+      (string ?\\ char)
+    (make-string 1 char)))
 
 (defun count-char-in-buffer (char)
   "Counts the number of char in buffer"
   (save-excursion (goto-char (point-min)) 
-                  (count-matches (make-string 1 char))))
+                  (count-matches (char-to-escaped-regex char))))
 
 (defmacro max-regions-for-one-jump (char region-restrictor regions-search-limit jumper-limit)
   "Max number of lines around cursor for which we can limit a jump of char so that it completes in a single step.
 regions-search-limit is our search bound."
-  `(let ((x 0))
-     (while (and (<= x ,regions-search-limit)
-                 (<= (,region-restrictor x (count-char-in-buffer ,char))
-                     ,jumper-limit))
-       (setq x (1+ x)))
-     (if (eq x 0)  
-         x         ;zero is the lowest we can go
-       (1- x))))
+  `(loop for r from 0
+         while (and (<= r ,regions-search-limit)
+                    (<= (,region-restrictor r (count-char-in-buffer ,char))
+                        ,jumper-limit))
+         finally return (if (eq r 0)  
+                            r         ;zero is the lowest we can go
+                          (1- r))))
 
 (defmacro max-regions-for-one-ace-jump (char region-restrictor regions-search-limit)
   "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
