@@ -109,19 +109,20 @@ Shortcuts:
 (defun frame-to-top-left-corner (&optional frame)
   (interactive)
   (set-frame-position (or frame (selected-frame)) 0 0))
-  
+ 
+;;todo: find out how to get default 
 (defun set-frame-to-default-size (&optional frame)
   (interactive)
   (set-frame-size (or frame (selected-frame)) 80 31))
 
 (defun make-frame-tall (&optional frame)
   (interactive)
-  (set-frame-size (or frame (selected-frame)) 100 60))
+  (set-frame-size (or frame (selected-frame)) (+ 10 (window-width)) 60))
 
 (defun make-frame-wide (&optional frame)
   (interactive)
   (frame-to-top-left-corner)
-  (set-frame-size (or frame (selected-frame)) 200 40))
+  (set-frame-size (or frame (selected-frame)) 200 (+ 2 (window-height))))
 
 (defun set-frame-size-pixels (x y &optional frame)
   (let* ((f (or frame
