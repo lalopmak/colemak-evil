@@ -9,9 +9,16 @@ A draft diagram can be found near the top of [this file](https://raw.github.com/
 
 Setup
 -----
-1. [Install Evil](http://gitorious.org/evil/pages/Home#Install).
+
+I use [melpa](http://melpa.milkbox.net/) for many of these packages.  Your mileage may vary.
+
+Depending on the package, you may have to initialize it in your init.el.
+
+1. Install: [Evil](http://gitorious.org/evil/pages/Home#Install), ace-jump-mode.
 2. Download lalopmak-evil and put it somewhere in your load path.
-3. Add `(load "lalopmak-evil")` to your Emacs init file.
+3. Add `(require 'lalopmak-evil)` to your Emacs init file.
+
+Recommended: linum-relative, centered-cursor-mode, yasnippet, speck-mode
 
 
 If you wish to use this with QWERTY, add (defvar lalopmak-layout-map 'colemak-to-qwerty) to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.
