@@ -55,7 +55,7 @@ should depend on ace-jump-max-chars.")
        (end-of-buffer (point-max))))
 
 (defmacro do-within-positions (start end &rest code)
-  "Restricts to region determined by positions start, end, executes code."
+  "Restricts to region determined by positions start, end, then executes code."
   `(unwind-protect
        (progn
          (narrow-to-region ,start ,end)
@@ -63,7 +63,7 @@ should depend on ace-jump-max-chars.")
      (widen)))
 
 (defmacro do-within-movements (goto-start goto-end &rest code)
-  "Restructs to region determined by movements goto-start, goto-end, executes code."
+  "Restricts to region determined by movements goto-start, goto-end, then executes code."
   `(do-within-positions (save-excursion-point ,goto-start)
                         (save-excursion-point ,goto-end)
                         ,@code))

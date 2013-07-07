@@ -28,16 +28,16 @@ Normal mode:
 |~ Case     |! ExtFlt>  |@ PlyMcr·  |#  <-=     |$  ->|     |% GoMatch  |^  <--     |+ Next<--  |[ Rep :s   |]  =->     |( |<-Sent  |) Sent->|  |_ LastLin  |
 |` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|           |           |           | Jump Line |ChangeToEOL|           |           |           |           | PasteAbove|           |           |           |
-|  NextTab  |           | WinCmd    | Jump Char |Change     | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
-| <TAB>     |  RepState | Find Till | Find Till |Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
-| <TAB>     |  Replace  | Find Char | Find Char |Substitute | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|           |           |           | Jump Line |           |           |           |           |           | PasteAbove|           |           |           |
+|  NextTab  |           | WinCmd    | Jump Char |ChangeToEOL| Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
+| <TAB>     |  RepState |JmpCharTill|JmpNbyChTil|Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
+| <TAB>     |  Replace  | Jump Char |JmpNrbyChar|Change     | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |  ◀--W     |     F--▶  |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> |SelectBlock|           |           |           |           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
  Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
- Shift----> |Select Line| Insert BOL| Append EOL|RptFndChBkw||D Del->|  |}          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
- Normal---> |  Select   | Insert    | Append    |RptFindChar|  Delete>  |]          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Shift----> |Select Line| Insert BOL| Append EOL|           ||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
+ Normal---> |  Select   | Insert    | Append    |Substitute |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
@@ -386,8 +386,7 @@ Shortcuts:
 (set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
 ;;Change
-(set-in-all-evil-states-but-insert "\C-p" 'evil-change)
-(set-in-all-evil-states-but-insert "\M-p" 'evil-change-line)
+(set-in-all-evil-states-but-insert "\C-p" 'evil-change-line)
 (set-in-all-evil-states-but-insert "p" 'evil-change)
 (set-in-all-evil-states-but-insert "t" 'evil-substitute)   ;tentative assignment
 (set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
