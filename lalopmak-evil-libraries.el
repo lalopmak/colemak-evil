@@ -115,22 +115,42 @@ Shortcuts:
   (interactive)
   (set-frame-size (or frame (selected-frame)) 80 31))
 
+(defun height-chars-to-pixels (c &optional frame)
+  (* c (frame-char-height (or frame (selected-frame)))))
+
+(defun width-chars-to-pixels (c &optional frame)
+  (* c (frame-char-width (or frame (selected-frame)))))
+
+(defun height-pixels-to-chars (p &optional frame)
+  (/ p (frame-char-height (or frame (selected-frame)))))
+
+(defun width-pixels-to-chars (p &optional frame)
+  (/ p (frame-char-width (or frame (selected-frame)))))
+
+(defun window-height-pixels (&optional frame)
+  (height-chars-to-pixels (window-height) frame))
+
+(defun window-width-pixels (&optional frame)
+  (width-chars-to-pixels (window-width) frame))
+
 (defun make-frame-tall (&optional frame)
   (interactive)
-  (set-frame-size (or frame (selected-frame)) (+ 10 (window-width)) 60))
+  (set-frame-size-pixels (+ 70 (window-width-pixels))
+                         (display-pixel-height)
+                         frame))
 
 (defun make-frame-wide (&optional frame)
   (interactive)
   (frame-to-top-left-corner)
-  (set-frame-size (or frame (selected-frame)) 200 (+ 2 (window-height))))
+  (set-frame-size-pixels (display-pixel-width)
+                         (+ 30 (window-height-pixels))
+                         frame))
 
 (defun set-frame-size-pixels (x y &optional frame)
   (let* ((f (or frame
                 (selected-frame)))
-         (char-height-pixels (frame-char-height f))
-         (char-width-pixels (frame-char-width f))
-         (x-chars (/ x char-width-pixels))
-         (y-chars (/ y char-height-pixels)))
+         (x-chars (width-pixels-to-chars x f))
+         (y-chars (height-pixels-to-chars y f)))
     (set-frame-size f x-chars y-chars)))
    
 (defun maximize-frame (&optional frame width-buffer height-buffer)

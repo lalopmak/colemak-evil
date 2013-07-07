@@ -318,16 +318,15 @@
 
 ;;Change
 (set-in-all-evil-states-but-insert "\C-p" 'evil-change-line)
-(set-in-all-evil-states-but-insert "w" 'evil-change)
+(set-in-all-evil-states-but-insert "t" 'evil-change)
 (set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
-(set-in-all-evil-states-but-insert "W" 'evil-change-whole-line)
-
+(set-in-all-evil-states-but-insert "\C-t" 'evil-change-whole-line)
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
 (set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
-(set-in-all-evil-states-but-insert "t" 'evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "w" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "W" 'evil-ace-jump-char-to-mode)
 (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;Line jump
