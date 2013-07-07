@@ -4,7 +4,8 @@
 ;; released by Creative Commons <http://creativecommons.org/publicdomain/zero/1.0/>.
 ;; This software comes with NO WARRANTIES OR GUARANTEES WHATSOEVER.
 
-;;Keyboard Layout related functions
+
+;;; Keyboard Layout related functions
 
 (defun colemak-to-qwerty () 
   "Returns the colemak to qwerty map"
