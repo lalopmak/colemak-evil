@@ -87,7 +87,7 @@
   (read-char prompt))
 
 (defvar special-regex-chars
-  '(?. ?[ ?] ?+ ?* ?^ ?$ ?\\ )
+  '( ?- ?. ?[ ?] ?+ ?* ?^ ?$ ?\\ )
   "List of characters that have to be escaped in a regex")
 
 (defun char-to-escaped-regex (char)
@@ -104,10 +104,9 @@
 (defmacro max-regions-for-one-jump (char region-restrictor regions-search-limit jumper-limit)
   "Max number of lines around cursor for which we can limit a jump of char so that it completes in a single step.
 regions-search-limit is our search bound."
-  `(loop for r from 0
-         while (and (<= r ,regions-search-limit)
-                    (<= (,region-restrictor r (count-char-in-buffer ,char))
-                        ,jumper-limit))
+  `(loop for r from 0 to ,regions-search-limit
+         while (<= (,region-restrictor r (count-char-in-buffer ,char))
+                   ,jumper-limit)
          finally return (if (eq r 0)  
                             r         ;zero is the lowest we can go
                           (1- r))))
