@@ -104,5 +104,50 @@ Shortcuts:
   (minor-mode-running edit-server-edit-mode))
 
 
+;;Resizing
+
+(defun frame-to-top-left-corner (&optional frame)
+  (interactive)
+  (set-frame-position (or frame (selected-frame)) 0 0))
+  
+(defun set-frame-to-default-size (&optional frame)
+  (interactive)
+  (set-frame-size (or frame (selected-frame)) 80 31))
+
+(defun make-frame-tall (&optional frame)
+  (interactive)
+  (set-frame-size (or frame (selected-frame)) 100 60))
+
+(defun make-frame-wide (&optional frame)
+  (interactive)
+  (frame-to-top-left-corner)
+  (set-frame-size (or frame (selected-frame)) 200 40))
+
+(defun set-frame-size-pixels (x y &optional frame)
+  (let* ((f (or frame
+                (selected-frame)))
+         (char-height-pixels (frame-char-height f))
+         (char-width-pixels (frame-char-width f))
+         (x-chars (/ x char-width-pixels))
+         (y-chars (/ y char-height-pixels)))
+    (set-frame-size f x-chars y-chars)))
+   
+(defun maximize-frame (&optional frame width-buffer height-buffer)
+  (interactive)
+  (frame-to-top-left-corner)
+  (set-frame-size-pixels (- (display-pixel-width) (or width-buffer 0))
+                         (- (display-pixel-height) (or height-buffer 0))
+                         frame))
+
+(defun maximize-frame-except-some-width (&optional frame width-buffer)
+  (interactive)
+  (maximize-frame frame (or width-buffer 400) 0))
+
+;; (defun fit-frame-to-buffer-width (&optional frame min-width max-width)
+;;   (let* ((f (or frame (selected-frame)))
+;;          (min (or min-width 80))
+;;          (max (or max-width 1000))
+;;          (height (window-height))
+;;          (width 
 
 (provide 'lalopmak-evil-libraries)

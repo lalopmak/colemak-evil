@@ -18,7 +18,7 @@ Depending on the package/your personal needs, you may have to initialize it in y
 2. Download lalopmak-evil and put it somewhere in your load path.
 3. Add `(require 'lalopmak-evil)` to your Emacs init file.
 
-Recommended: linum-relative, centered-cursor-mode, yasnippet, speck-mode
+Recommended: linum-relative, centered-cursor-mode, yasnippet, speck
 
 
 If you wish to use this with QWERTY, add `(defvar lalopmak-layout-map 'colemak-to-qwerty)` to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.

@@ -318,16 +318,16 @@
 
 ;;Change
 (set-in-all-evil-states-but-insert "\C-p" 'evil-change-line)
-(set-in-all-evil-states-but-insert "p" 'evil-change)
-(set-in-all-evil-states-but-insert "t" 'evil-substitute)   ;tentative assignment
-(set-in-all-evil-states-but-insert "P" 'evil-change-whole-line)
+(set-in-all-evil-states-but-insert "w" 'evil-change)
+(set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
+(set-in-all-evil-states-but-insert "W" 'evil-change-whole-line)
 
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
 (set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
-(set-in-all-evil-states-but-insert "w" 'evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "W" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "t" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-char-to-mode)
 (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;Line jump
@@ -468,6 +468,18 @@ go to that line."
   (yas-expand))
 
 (evil-ex-define-cmd "snippet" 'evil-snippet)
+
+;;Frame sizes
+
+;; (evil-ex-define-cmd "fit" 'fit-frame-to-buffer)
+
+(evil-ex-define-cmd "small" 'set-frame-to-default-size)
+(evil-ex-define-cmd "large" 'maximize-frame-except-some-width)
+(evil-ex-define-cmd "fullscreen" 'maximize-frame)
+
+(evil-ex-define-cmd "tall" 'make-frame-tall)
+(evil-ex-define-cmd "wide" 'make-frame-wide)
+(evil-ex-define-cmd "corner" 'frame-to-top-left-corner)
 
 
 ;; (ad-activate-all)  ;activates all advice
