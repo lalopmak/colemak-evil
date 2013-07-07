@@ -26,13 +26,21 @@
                                          (setq lalopmak-evil-ace-jump-num-lines n)
                                        (setq lalopmak-evil-ace-jump-num-lines nil))))
 
-
-(defvar ace-query "Query Char:")
+(defvar ace-query "Query Char:"
+  "The query that ace-jump gives us")
 
 ;;max lines, words, chars to search
-(defvar ace-jump-max-lines 20)
-(defvar ace-jump-max-words 400)
-(defvar ace-jump-max-chars 1000)
+(defvar ace-jump-max-lines 20
+  "Max number of lines we search through for counting jumps.")
+(defvar ace-jump-max-words 1000
+  "Max number of word regions we search through for counting jumps.")
+(defvar ace-jump-max-chars 1000
+  "Max number of character regions we search through for counting jumps.")
+
+(defvar jump-word-search-threshold 3000
+  "Number of characters on the screen before we switch to word search;
+should depend on ace-jump-max-chars.")
+
 
 ;;;
 ;;; Useful region macros
@@ -60,21 +68,28 @@
                         (save-excursion-point ,goto-end)
                         ,@code))
 
-(defmacro do-within-n-movements (n movement &rest code)
-  "Narrows region to within n movements, executes code."
-  `(do-within-movements (,movement (- ,n)) (,movement (1+ ,n)) ,@code))
+(defmacro do-within-n-movements (n backward-movement forward-movement &rest code)
+  "Narrows region to within n movements, executes code.
+One of backward, forward movement is optional.  Often, but not always, one can be generated from the other."
+  (let ((back (if backward-movement
+                  `(,backward-movement (1+ ,n))
+                `(,forward-movement (- ,n))))
+        (forwards (if forward-movement
+                  `(,forward-movement (1+ ,n))
+                `(,backward-movement (- ,n)))))
+    `(do-within-movements ,back ,forwards ,@code)))
 
 (defmacro do-within-n-lines (n &rest code)
   "Narrows region to within n lines, executes code"
-  `(do-within-n-movements ,n forward-line ,@code))
+  `(do-within-n-movements ,n nil forward-line ,@code))
 
 (defmacro do-within-n-words (n &rest code)
   "Narrows region to within n words, executes code"
-  `(do-within-n-movements ,n forward-word ,@code))
+  `(do-within-n-movements ,n backward-word forward-word ,@code))
 
 (defmacro do-within-n-chars (n &rest code)
   "Narrows region to within n chars, executes code"
-  `(do-within-n-movements ,n forward-char ,@code))
+  `(do-within-n-movements ,n nil forward-char ,@code))
 
 
 ;;;
@@ -135,21 +150,23 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
                                                         ,max-regions))))
      (evil-enclose-ace-jump-for-motion 
       (ace-jump-char-within-n-regions char ,region-restrictor numRegions))))
-  
+ 
+(defun chars-in-window ()
+  (- (window-end) (window-start)))
+
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
   "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
   :type inclusive
   :repeat abort
-  (if (or count 
-          lalopmak-evil-ace-jump-num-lines)
-      ;;if user provided restriction input we assume it's in lines
-      (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines)
-    
-    ;;Three possible search regions so far: chars, words, lines, in increasing granuity.
-    (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars)
-    ;; (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words)
-    ;; (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines)
-))
+  ;;Three possible search regions so far: chars, words, lines, in increasing granuity.
+  (cond ((or count 
+             lalopmak-evil-ace-jump-num-lines) 
+         ;;if user provided restriction input we assume it's in lines
+         (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines))
+        ((< (chars-in-window) jump-word-search-threshold)
+         ;;there are few enough characters for a char search to cover it
+         (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
+        (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))))
 
 
 ;;;
