@@ -21,7 +21,7 @@ Depending on the package/your personal needs, you may have to initialize it in y
 Recommended: linum-relative, centered-cursor-mode, yasnippet, speck-mode
 
 
-If you wish to use this with QWERTY, add (defvar lalopmak-layout-map 'colemak-to-qwerty) to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.
+If you wish to use this with QWERTY, add `(defvar lalopmak-layout-map 'colemak-to-qwerty)` to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.
 
 Tips
 ----
