@@ -70,7 +70,8 @@ should depend on ace-jump-max-chars.")
 
 (defmacro do-within-n-movements (n backward-movement forward-movement &rest code)
   "Narrows region to within n movements, executes code.
-One of backward, forward movement is optional.  Often, but not always, one can be generated from the other."
+One of backward, forward movement is optional (the other should be input as nil),
+since often, but not always, one can be generated from the other."
   (let ((back (if backward-movement
                   `(,backward-movement (1+ ,n))
                 `(,forward-movement (- ,n))))
@@ -166,7 +167,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
         ((< (chars-in-window) jump-word-search-threshold)
          ;;there are few enough characters for a char search to cover it
          (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
-        ;;there are too many characters, default to word search
+        ;;there are too many characters, default to word search to cover more area
         (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))))
 
 
