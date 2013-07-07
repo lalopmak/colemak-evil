@@ -12,7 +12,7 @@ Setup
 
 I use [melpa](http://melpa.milkbox.net/) for many of these packages.  Your mileage may vary.
 
-Depending on the package, you may have to initialize it in your init.el.
+Depending on the package/your personal needs, you may have to initialize it in your init.el.  Most packages have to at least be `('required ...)` beforehand.
 
 1. Install: [Evil](http://gitorious.org/evil/pages/Home#Install), ace-jump-mode.
 2. Download lalopmak-evil and put it somewhere in your load path.
