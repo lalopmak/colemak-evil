@@ -74,13 +74,14 @@
                                 evil-visual-state-map
                                 evil-emacs-state-map)))
 
-(evil-define-motion lalopmak-evil-forward-char (count)
+(evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
   "Forward character, allowing you to fall to the next line"
-  (evil-forward-char count 'crosslines))
+  :type exclusive
+  (evil-forward-char count 'crosslines noerror))
 
-(evil-define-motion lalopmak-evil-backward-char (count)
+(evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
   "Backward character, allowing you to rise to the previous line"
-  (evil-backward-char count 'crosslines))
+  (evil-backward-char count 'crosslines noerror))
 
 ;;Makes these compatible with undo-tree
 (when (boundp 'undo-tree-visualizer-mode-map)
