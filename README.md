@@ -31,6 +31,15 @@ Escape takes you into normal mode, an unfortunate historical accident.
 I recommend defining an easy AltGr mapping (I use AltGr+t) since it will
 be used a lot.  Alternatively, see patbl's [advice on key chords](https://github.com/patbl/colemak-evil/blob/master/README.md).
 
+Disclaimer
+----
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 Colemak Evil
 ============
