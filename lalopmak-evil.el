@@ -127,9 +127,23 @@
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
+(evil-define-motion evil-backward-word-end (count &optional bigword)
+  "Move the cursor to the end of the COUNT-th previous word.
+If BIGWORD is non-nil, move by WORDS."
+  :type inclusive
+  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
+    (evil-move-beginning (- (or count 1)) move)))
+
+
+(evil-define-motion evil-backward-WORD-end (count &optional bigword)
+  "Move the cursor to the end of the COUNT-th previous word.
+If BIGWORD is non-nil, move by WORDS."
+  :type inclusive
+  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
+    (evil-move-beginning (- (or count 1)) move)))
 
 ;;; Words forward/backward
-(set-in-all-evil-states-but-insert "l" 'evil-backward-word-begin)
+(set-in-all-evil-states-but-insert "l" 'evil-backward-word-end)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 ;;; WORD forward/backward
 (set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
@@ -269,6 +283,18 @@
 
 ;;; Misc overridden keys must be prefixed with g
 ;; not implemented
+
+
+(evil-define-operator lalopmak-evil-all-case (beg end type)
+  "Convert text to lower case."
+  (let ((region (buffer-substring beg end)))
+    (if (equal (upcase region)
+               region)
+        (evil-downcase beg end type)
+      (evil-upcase beg end type))))
+
+
+(lalopmak-evil-define-key evil-visual-state-map "m" 'lalopmak-evil-all-case)
 
 ;;; Search
 (lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
@@ -428,7 +454,6 @@ go to that line."
 ;;comment
 (evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
 (evil-ex-define-cmd "c" "comment")
-
 
 ;;M-:
 (evil-ex-define-cmd "eval" 'eval-expression)

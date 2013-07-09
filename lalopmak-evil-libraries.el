@@ -113,7 +113,6 @@ Shortcuts:
 (defun edit-server-edit-mode-running ()
   (minor-mode-running edit-server-edit-mode))
 
-
 ;;Resizing
 
 (defun frame-to-top-left-corner (&optional frame)
