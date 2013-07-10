@@ -73,6 +73,10 @@ since often, but not always, one can be generated from the other."
 ;;; Misc functions
 ;;;
 
+
+(defun chars-in-window ()
+  (- (window-end) (window-start)))
+
 (defun get-user-input-character (prompt)
   "Prompts, gets user character as input."
   (interactive "p")
@@ -111,10 +115,6 @@ executes the resulting actions"
      (cond ((> old-point (point)) ,decreasedAction)
            ((< old-point (point)) ,increasedAction) 
            ((= old-point (point)) ,samePlaceAction))))
-
-
-(defun chars-in-window ()
-  (- (window-end) (window-start)))
 
 (defmacro search-to-searchTo (search)
   "Converts a search to a search that lands right before the target"

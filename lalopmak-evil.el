@@ -341,10 +341,10 @@ If BIGWORD is non-nil, move by WORDS."
 (set-in-all-evil-states-but-insert "S" 'evil-append-line)
 
 ;;Change
-(set-in-all-evil-states-but-insert "\C-p" 'evil-change-line)
+(set-in-all-evil-states-but-insert "T" 'evil-change-line)
 (set-in-all-evil-states-but-insert "t" 'evil-change)
 (set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
-(set-in-all-evil-states-but-insert "\C-t" 'evil-change-whole-line)
+(set-in-all-evil-states-but-insert "\C-p" 'evil-change-whole-line)
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
@@ -355,7 +355,7 @@ If BIGWORD is non-nil, move by WORDS."
 
 ;;Line jump
 (set-in-all-evil-states "\M-f" 'evil-ace-jump-line-mode)
-(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
@@ -494,6 +494,18 @@ go to that line."
 ;;Frame sizes
 
 ;; (evil-ex-define-cmd "fit" 'fit-frame-to-buffer)
+
+
+(evil-define-motion lalopmak-evil-stretch (count)
+  "Stretches the frame count times"
+   (stretch-frame count))
+
+(evil-define-motion lalopmak-evil-unstretch (count)
+  "Unstretches the frame count times"
+   (unstretch-frame count))
+
+(evil-ex-define-cmd "stretch" 'lalopmak-evil-stretch)
+(evil-ex-define-cmd "unstretch" 'lalopmak-evil-unstretch)
 
 (evil-ex-define-cmd "small" 'set-frame-to-default-size)
 (evil-ex-define-cmd "large" 'maximize-frame-except-some-width)

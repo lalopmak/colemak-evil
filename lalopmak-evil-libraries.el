@@ -148,6 +148,17 @@ Shortcuts:
                          (display-pixel-height)
                          frame))
 
+(defun stretch-frame (&optional count pixels frame)
+  (interactive)
+  (set-frame-size-pixels (+ (* (or count 1) (or pixels 100))
+                            (window-width-pixels))
+                         (window-height-pixels)
+                         frame))
+
+(defun unstretch-frame (&optional count pixels frame)
+  (interactive)
+  (stretch-frame count (or pixels -100) frame))
+
 (defun make-frame-wide (&optional frame)
   (interactive)
   (frame-to-top-left-corner)
