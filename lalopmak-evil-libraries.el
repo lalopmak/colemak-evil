@@ -171,21 +171,32 @@ Frame size changers:
                             (window-height-pixels))
                          frame))
 
+(defvar frame-stretch-pixels 100)
+(defvar frame-grow-pixels 50)
+
 (defun stretch-frame (&optional count pixels frame)
   (interactive)
-  (add-to-frame-size (* (or count 1) (or pixels 100)) nil frame)) 
+  (add-to-frame-size (* (or count 1) (or pixels frame-stretch-pixels)) 
+                     nil 
+                     frame)) 
 
 (defun unstretch-frame (&optional count pixels frame)
   (interactive)
-  (stretch-frame count (or pixels -100) frame))
+  (stretch-frame count 
+                 (or pixels (- frame-stretch-pixels)) 
+                 frame))
 
 (defun grow-frame (&optional count pixels frame)
   (interactive)
-  (add-to-frame-size nil (* (or count 1) (or pixels 50)) frame))
+  (add-to-frame-size nil 
+                     (* (or count 1) (or pixels frame-grow-pixels))
+                     frame))
 
 (defun shrink-frame (&optional count pixels frame)
   (interactive)
-  (grow-frame count (or pixels -50) frame))
+  (grow-frame count 
+              (or pixels (- frame-grow-pixels))
+              frame))
 
 (defun make-frame-wide (&optional frame)
   (interactive)
