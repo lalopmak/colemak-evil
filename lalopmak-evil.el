@@ -506,13 +506,24 @@ go to that line."
 
 (evil-ex-define-cmd "stretch" 'lalopmak-evil-stretch)
 (evil-ex-define-cmd "unstretch" 'lalopmak-evil-unstretch)
+(evil-ex-define-cmd "wide" 'make-frame-wide)
+
+(evil-define-motion lalopmak-evil-grow (count)
+  "Growes the frame count times"
+   (grow-frame count))
+
+(evil-define-motion lalopmak-evil-shrink (count)
+  "Shrinkes the frame count times"
+   (shrink-frame count))
+
+(evil-ex-define-cmd "grow" 'lalopmak-evil-grow)
+(evil-ex-define-cmd "shrink" 'lalopmak-evil-shrink)
+(evil-ex-define-cmd "tall" 'make-frame-tall)
 
 (evil-ex-define-cmd "small" 'set-frame-to-default-size)
 (evil-ex-define-cmd "large" 'maximize-frame-except-some-width)
 (evil-ex-define-cmd "fullscreen" 'maximize-frame)
 
-(evil-ex-define-cmd "tall" 'make-frame-tall)
-(evil-ex-define-cmd "wide" 'make-frame-wide)
 (evil-ex-define-cmd "corner" 'frame-to-top-left-corner)
 
 

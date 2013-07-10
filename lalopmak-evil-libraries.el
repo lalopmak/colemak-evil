@@ -62,6 +62,22 @@ Shortcuts:
 :newterminal = M-x new-terminal-window = opens up new terminal window
 :eval = :ev = Evaluates an elisp expression (C-:)
 :ielm = M-x ielm-window = opens up lisp evaluation window
+:spell = M-x speck-mode = enables speck-mode spell-checking
+
+Frame size changers:
+:small
+:large
+:fullstreen
+:corner
+
+:{n}stretch
+:{n}unstretch
+:wide
+
+:{n}grow
+:{n}shrink
+:tall
+
 ")
 
 
@@ -158,6 +174,18 @@ Shortcuts:
 (defun unstretch-frame (&optional count pixels frame)
   (interactive)
   (stretch-frame count (or pixels -100) frame))
+
+
+(defun grow-frame (&optional count pixels frame)
+  (interactive)
+  (set-frame-size-pixels (window-width-pixels)
+                         (+ (* (or count 1) (or pixels 50))
+                            (window-height-pixels))
+                         frame))
+
+(defun shrink-frame (&optional count pixels frame)
+  (interactive)
+  (grow-frame count (or pixels -50) frame))
 
 (defun make-frame-wide (&optional frame)
   (interactive)
