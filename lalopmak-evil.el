@@ -127,27 +127,24 @@
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
-(evil-define-motion evil-backward-word-end (count &optional bigword)
+(evil-define-motion lalopmak-evil-backward-word-end (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.
 If BIGWORD is non-nil, move by WORDS."
   :type inclusive
   (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
     (evil-move-beginning (- (or count 1)) move)))
 
-
-(evil-define-motion evil-backward-WORD-end (count &optional bigword)
-  "Move the cursor to the end of the COUNT-th previous word.
-If BIGWORD is non-nil, move by WORDS."
+(evil-define-motion lalopmak-evil-backward-WORD-end (count)
+  "Move the cursor to the end of the COUNT-th previous WORD."
   :type inclusive
-  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
-    (evil-move-beginning (- (or count 1)) move)))
+  (lalopmak-evil-backward-word-end count t))
 
 ;;; Words forward/backward
-(set-in-all-evil-states-but-insert "l" 'evil-backward-word-end)
+(set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-end)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 ;;; WORD forward/backward
 (set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
-(set-in-all-evil-states-but-insert "\C-l" 'evil-backward-WORD-begin)
+(set-in-all-evil-states-but-insert "\C-l" 'lalopmak-evil-backward-WORD-end)
 
 ;;; inneR text objects
 ;;; conflicts with find-char-backwards
@@ -286,7 +283,7 @@ If BIGWORD is non-nil, move by WORDS."
 
 
 (evil-define-operator lalopmak-evil-all-case (beg end type)
-  "Convert text to lower case."
+  "Converts to all case, or, if already all case, converts to all lower case."
   (let ((region (buffer-substring beg end)))
     (if (equal (upcase region)
                region)
