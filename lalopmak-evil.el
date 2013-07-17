@@ -353,8 +353,12 @@ If BIGWORD is non-nil, move by WORDS."
 (set-in-all-evil-states-but-insert "W" 'evil-ace-jump-char-to-mode)
 (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
+;;old find char/reverse for use in macros
+(set-in-all-evil-states-but-insert "\M-w" 'evil-find-char)
+(set-in-all-evil-states-but-insert "\M-f" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "\M-t" 'evil-repeat-find-char)
+
 ;;Line jump
-(set-in-all-evil-states "\M-f" 'evil-ace-jump-line-mode)
 (set-in-all-evil-states "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
@@ -430,8 +434,10 @@ go to that line."
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Makes ; an alias for :
-
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
+
+
+(lalopmak-evil-define-key evil-motion-state-map "0" 'evil-beginning-of-line)
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'lalopmak-evil-hints)

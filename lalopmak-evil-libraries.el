@@ -160,15 +160,12 @@ Frame size changers:
 
 (defun make-frame-tall (&optional frame)
   (interactive)
-  (set-frame-size-pixels (+ 70 (window-width-pixels))
-                         (display-pixel-height)
-                         frame))
+  (add-to-frame-size 70 nil frame))
 
 (defun add-to-frame-size (&optional dx dy frame)
-  (set-frame-size-pixels (+ (or dx 0)
-                            (window-width-pixels))
-                         (+ (or dy 0)
-                            (window-height-pixels))
+  "Adds dx to width, dy to height of frame.  If dx or dy nil, maximize that size."
+  (set-frame-size-pixels (if dx (+ dx (window-width-pixels)) (display-pixel-width))
+                         (if dy (+ dy (window-height-pixels)) (display-pixel-height))
                          frame))
 
 (defvar frame-stretch-pixels 100)
@@ -177,33 +174,31 @@ Frame size changers:
 (defun stretch-frame (&optional count pixels frame)
   (interactive)
   (add-to-frame-size (* (or count 1) (or pixels frame-stretch-pixels)) 
-                     nil 
+                     0 
                      frame)) 
 
 (defun unstretch-frame (&optional count pixels frame)
   (interactive)
   (stretch-frame count 
-                 (or pixels (- frame-stretch-pixels)) 
+                 (if pixels (- pixels) (- frame-stretch-pixels)) 
                  frame))
 
 (defun grow-frame (&optional count pixels frame)
   (interactive)
-  (add-to-frame-size nil 
+  (add-to-frame-size 0 
                      (* (or count 1) (or pixels frame-grow-pixels))
                      frame))
 
 (defun shrink-frame (&optional count pixels frame)
   (interactive)
   (grow-frame count 
-              (or pixels (- frame-grow-pixels))
+              (if pixels (- pixels) (- frame-grow-pixels))
               frame))
 
 (defun make-frame-wide (&optional frame)
   (interactive)
   (frame-to-top-left-corner)
-  (set-frame-size-pixels (display-pixel-width)
-                         (+ 30 (window-height-pixels))
-                         frame))
+  (add-to-frame-size nil 30 frame))
 
 (defun set-frame-size-pixels (x y &optional frame)
   (let* ((f (or frame

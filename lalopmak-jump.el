@@ -20,13 +20,15 @@
 ;;If the user wants to set a default number of lines to search for jumps
 (defvar lalopmak-evil-ace-jump-num-lines nil)
 
+(defun lalopmak-evil-set-ace-jump-num-lines (n)
+  (if (>= n 0)
+      (setq lalopmak-evil-ace-jump-num-lines n)
+    (setq lalopmak-evil-ace-jump-num-lines nil)))
 
 ;; Sets number of lines to search in an ace jump
 (evil-ex-define-cmd "acejumplines" (lambda (n) 
                                      (interactive "n# lines to search in ace jump (negative to unset): ")
-                                     (if (>= n 0)
-                                         (setq lalopmak-evil-ace-jump-num-lines n)
-                                       (setq lalopmak-evil-ace-jump-num-lines nil))))
+                                     (lalopmak-evil-set-ace-jump-num-lines n)))
 
 (defvar ace-query "Query Char:"
   "The query that ace-jump gives us")
