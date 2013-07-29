@@ -77,11 +77,15 @@
 (evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
   "Forward character, allowing you to fall to the next line"
   :type exclusive
-  (evil-forward-char count 'crosslines noerror))
+  (if (and (boundp 'paredit-mode) paredit-mode)
+      (paredit-forward)
+    (evil-forward-char count 'crosslines noerror)))
 
 (evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
   "Backward character, allowing you to rise to the previous line"
-  (evil-backward-char count 'crosslines noerror))
+  (if (and (boundp 'paredit-mode) paredit-mode)
+      (paredit-backward)
+    (evil-backward-char count 'crosslines noerror)))
 
 ;;Makes these compatible with undo-tree
 (when (boundp 'undo-tree-visualizer-mode-map)
@@ -89,6 +93,7 @@
     'undo-tree-visualize-switch-branch-left)
   (define-key undo-tree-visualizer-mode-map [remap lalopmak-evil-forward-char]
     'undo-tree-visualize-switch-branch-right))
+
 
 
 ;;; Up/down/left/right
@@ -142,16 +147,27 @@ If BIGWORD is non-nil, move by WORDS."
 ;;; Words forward/backward
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-end)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
+
+(lalopmak-evil-define-key evil-outer-text-objects-map "l" 'evil-a-word)
+(lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-word)
+(lalopmak-evil-define-key evil-inner-text-objects-map "l" 'evil-inner-word)
+(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
+
 ;;; WORD forward/backward
 (set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
 (set-in-all-evil-states-but-insert "\C-l" 'lalopmak-evil-backward-WORD-end)
+
+(lalopmak-evil-define-key evil-outer-text-objects-map "\C-l" 'evil-a-WORD)
+(lalopmak-evil-define-key evil-outer-text-objects-map "\C-y" 'evil-a-WORD)
+(lalopmak-evil-define-key evil-inner-text-objects-map "\C-l" 'evil-inner-WORD)
+(lalopmak-evil-define-key evil-inner-text-objects-map "\C-y" 'evil-inner-WORD)
 
 ;;; inneR text objects
 ;;; conflicts with find-char-backwards
 ;; (lalopmak-evil-define-key evil-visual-state-map "r" evil-inner-text-objects-map)
 ;; (lalopmak-evil-define-key evil-operator-state-map "r" evil-inner-text-objects-map)
-(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
-(lalopmak-evil-define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
 
 ;; Execute command: map : to ;
 (lalopmak-evil-define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
@@ -331,20 +347,33 @@ If BIGWORD is non-nil, move by WORDS."
 
 (set-in-all-evil-states-but-insert (kbd "\\")  'evil-indent)
 
+;;Unassigns previous object pending states
+(define-key evil-visual-state-map "a" nil)
+(define-key evil-visual-state-map "i" nil)
+(define-key evil-operator-state-map "a" nil)
+(define-key evil-operator-state-map "i" nil)
 
-;; Insert
+
+;; Insert / inner object pending state
 (set-in-all-evil-states-but-insert "r" 'evil-insert)
 (set-in-all-evil-states-but-insert "R" 'evil-insert-line)
+(lalopmak-evil-define-key evil-operator-state-map "r" evil-inner-text-objects-map)
+(lalopmak-evil-define-key evil-visual-state-map "r" evil-inner-text-objects-map)
 
-;;Append
+;;Append / outer object pending state
 (set-in-all-evil-states-but-insert "s" 'evil-append)
 (set-in-all-evil-states-but-insert "S" 'evil-append-line)
+(lalopmak-evil-define-key evil-operator-state-map "s" evil-outer-text-objects-map)
+(lalopmak-evil-define-key evil-visual-state-map "s" evil-outer-text-objects-map)
 
 ;;Change
 (set-in-all-evil-states-but-insert "T" 'evil-change-line)
 (set-in-all-evil-states-but-insert "t" 'evil-change)
-(set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
-(set-in-all-evil-states-but-insert "\C-p" 'evil-change-whole-line)
+
+;; (set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
+;; (set-in-all-evil-states-but-insert "\C-p" 'evil-change-whole-line)
+(set-in-all-evil-states-but-insert "\C-t" 'evil-jump-backward)   
+(set-in-all-evil-states-but-insert "\C-p" 'evil-jump-forward)
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
@@ -354,12 +383,12 @@ If BIGWORD is non-nil, move by WORDS."
 (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;old find char/reverse for use in macros
-(set-in-all-evil-states-but-insert "\M-w" 'evil-find-char)
-(set-in-all-evil-states-but-insert "\M-f" 'evil-find-char-backward)
+(set-in-all-evil-states-but-insert "\M-f" 'evil-find-char)
+(set-in-all-evil-states-but-insert "\M-w" 'evil-find-char-backward)
 (set-in-all-evil-states-but-insert "\M-t" 'evil-repeat-find-char)
 
 ;;Line jump
-(set-in-all-evil-states "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states-but-insert "p" 'evil-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)

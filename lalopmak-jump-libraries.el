@@ -24,11 +24,11 @@
 
 (defmacro save-excursion-point (movement)
   "Executes movement (a piece of code going somewhere), saves resulting point."
-    `(condition-case nil
-         (save-excursion ,movement (point))
-       ;;Accounts for buffer errors
-       (beginning-of-buffer (point-min))
-       (end-of-buffer (point-max))))
+  `(condition-case nil
+       (save-excursion ,movement (point))
+     ;;Accounts for buffer errors
+     (beginning-of-buffer (point-min))
+     (end-of-buffer (point-max))))
 
 (defmacro do-within-positions (start end &rest code)
   "Restricts to region determined by positions start, end, then executes code."
@@ -52,8 +52,8 @@ since often, but not always, one can be generated from the other."
                   `(,backward-movement (1+ ,n))
                 `(,forward-movement (- ,n))))
         (forwards (if forward-movement
-                  `(,forward-movement (1+ ,n))
-                `(,backward-movement (- ,n)))))
+                      `(,forward-movement (1+ ,n))
+                    `(,backward-movement (- ,n)))))
     `(do-within-movements ,back ,forwards ,@code)))
 
 (defmacro do-within-n-lines (n &rest code)
