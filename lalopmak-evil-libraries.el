@@ -26,16 +26,16 @@ Normal mode:
 |~ Case     |! ExtFlt>  |@ PlyMcr·  |#  <-=     |$  ->|     |% GoMatch  |^  <--     |+ Next<--  |[ Rep :s   |]  =->     |( |<-Sent  |) Sent->|  |_ LastLin  |
 |` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
-|           |           |           | Jump Line |           |           |           |           |           | PasteAbove|           |           |           |
-|  NextTab  |           | WinCmd    | Jump Char |ChangeToEOL| Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
-| <TAB>     |  RepState |JmpCharTill|JmpNbyChTil|Subs Line  | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
-| <TAB>     |  Replace  | Jump Char |JmpNrbyChar|Change     | Misc Cmds |[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
+|  NextTab  |           |WinCmd     |Jump Char  |           | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
+| <TAB>     |  RepState |JmpCharTill|JmpNbyChTil|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
+| <TAB>     |  Replace  |Jump Char  |JmpNrbyChar|AceJumpLine|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
- Meta-----> |SelectBlock|           |           |           |           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
+ Meta-----> |SelectBlock|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
  Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
- Shift----> |Select Line| Insert BOL| Append EOL|           ||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
- Normal---> |  Select   | Insert    | Append    |Substitute |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Shift----> |Select Line| Insert BOL| Append EOL|ChangeLine ||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
+ Normal---> |  Select   | Insert    | Append    |  Change   |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
@@ -81,6 +81,55 @@ Frame size changers:
 ")
 
 
+(defvar lalopmak-evil-mnemonic-hintstring "Mnemonic (less descriptive) hints for lalop's colemak-evil configuration.  Accessed via: :mnemonic
+
+To dismiss: retype one of the above commands or press q in the buffer.
+
+Normal mode:
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|~ Case     |! ExtFlt>  |@ PlyMcr·  |#  <-=     |$  ->|     |% GoMatch  |^  <--     |+ Next<--  |[ Rep :s   |]  =->     |( |<-Sent  |) Sent->|  |_ LastLin  |
+|` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+|           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
+|  NextTab  |           |WinCmd     |FindAllChar|           | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
+| <TAB>     |Quash State|WarpTilChar|FndTilNbyCh|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
+| <TAB>     |Quash Char |WarpToChar |FndNrbyChar|Propel2Line|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
++-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+ Meta-----> | Block Area|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
+ Ctrl-----> | All Area  | Redo      |  Search   |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
+ Shift----> | Area Line | Insert BOL|SucceedLine|TrnsfmToEOL||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
+ Normal---> |   Area    | Insert    |  Succeed  | Transform |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
+            +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+            |           |           |           |           |           |           |           |           |           |           |
+            |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
+            |   Redo    | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
+            |   Undo    |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
+            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
+            +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
+
+====Text Object Triggers====
+r = reduced   
+s = spread   
+
+====Text Objects====
+
+The usual (w)ord,(W)ORD,(s)entence,(p)aragraph still work.
+
+u = ubiquity
+e = entry
+n = nearby word
+i = interconnected word
+
+")
+
+;; l = limited word
+;; y = yinormous word
+;; n = note
+;; i = interconnected notes
+
+
 
 (require 'lalopmak-buffer)
 
@@ -90,6 +139,14 @@ Frame size changers:
   (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
                                        with-output-to-temp-buffer 
                                        (princ lalopmak-evil-hintstring)))
+
+
+(defun lalopmak-evil-mnemonic-hints ()
+  "Provides hints about this configuration, or closes said hints."
+  (interactive)
+  (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
+                                       with-output-to-temp-buffer 
+                                       (princ lalopmak-evil-mnemonic-hintstring)))
 
 (defun lalopmak-evil-scroll-then-center (count motion)
   "Does a motion, then centers"

@@ -148,27 +148,33 @@ If BIGWORD is non-nil, move by WORDS."
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-end)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 
-(lalopmak-evil-define-key evil-outer-text-objects-map "l" 'evil-a-word)
-(lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-word)
-(lalopmak-evil-define-key evil-inner-text-objects-map "l" 'evil-inner-word)
-(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
+
+;; word object maps from default
+;; (lalopmak-evil-define-key evil-outer-text-objects-map "l" 'evil-a-word)
+;; (lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-word)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "l" 'evil-inner-word)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
 
 ;;; WORD forward/backward
 (set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
 (set-in-all-evil-states-but-insert "\C-l" 'lalopmak-evil-backward-WORD-end)
 
-(lalopmak-evil-define-key evil-outer-text-objects-map "\C-l" 'evil-a-WORD)
-(lalopmak-evil-define-key evil-outer-text-objects-map "\C-y" 'evil-a-WORD)
-(lalopmak-evil-define-key evil-inner-text-objects-map "\C-l" 'evil-inner-WORD)
-(lalopmak-evil-define-key evil-inner-text-objects-map "\C-y" 'evil-inner-WORD)
+;; WORD object maps from default
+;; (lalopmak-evil-define-key evil-outer-text-objects-map "\C-l" 'evil-a-WORD)
+;; (lalopmak-evil-define-key evil-outer-text-objects-map "\C-y" 'evil-a-WORD)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "\C-l" 'evil-inner-WORD)
+;; (lalopmak-evil-define-key evil-inner-text-objects-map "\C-y" 'evil-inner-WORD)
 
 
-;;; inneR text objects
-;;; conflicts with find-char-backwards
-;; (lalopmak-evil-define-key evil-visual-state-map "r" evil-inner-text-objects-map)
-;; (lalopmak-evil-define-key evil-operator-state-map "r" evil-inner-text-objects-map)
-;; (lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-word)
-;; (lalopmak-evil-define-key evil-inner-text-objects-map "Y" 'evil-inner-WORD)
+;;directional object maps 
+(lalopmak-evil-define-key evil-inner-text-objects-map "n" 'evil-inner-word)
+(lalopmak-evil-define-key evil-outer-text-objects-map "n" 'evil-a-word)
+(lalopmak-evil-define-key evil-inner-text-objects-map "i" 'evil-inner-WORD)
+(lalopmak-evil-define-key evil-outer-text-objects-map "i" 'evil-a-WORD)
+(lalopmak-evil-define-key evil-inner-text-objects-map "e" 'evil-inner-sentence)
+(lalopmak-evil-define-key evil-outer-text-objects-map "e" 'evil-a-sentence)
+(lalopmak-evil-define-key evil-inner-text-objects-map "u" 'evil-inner-paragraph)
+(lalopmak-evil-define-key evil-outer-text-objects-map "u" 'evil-a-paragraph)
 
 ;; Execute command: map : to ;
 (lalopmak-evil-define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
@@ -472,6 +478,8 @@ go to that line."
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
 (evil-ex-define-cmd "ars" "hints")
+
+(evil-ex-define-cmd "mnemonic" 'lalopmak-evil-mnemonic-hints)
 
 ;;hooks for quitting/saving commands
 (evil-ex-define-cmd "w[rite]" 'evil-write)
