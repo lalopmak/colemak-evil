@@ -524,6 +524,16 @@ go to that line."
 ;; (with those quotations) at select point in snippet
 (lalopmak-evil-define-key evil-visual-state-map (kbd "<tab>") 'yas-insert-snippet)
 
+;;workaround for Issue #254
+(add-hook 'yas-before-expand-snippet-hook
+          #'(lambda()
+              (when (evil-visual-state-p)
+                (let ((p (point))
+                      (m (mark)))
+                  (evil-insert-state)
+                  (goto-char p)
+                  (set-mark m)))))
+
 (defun evil-snippet (name)
   (interactive "sSnippet shortcut:")
   (evil-insert 1)
