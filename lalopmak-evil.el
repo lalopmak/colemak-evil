@@ -162,6 +162,7 @@ If BIGWORD is non-nil, move by WORDS."
 (lalopmak-evil-define-key evil-inner-text-objects-map "\C-l" 'evil-inner-WORD)
 (lalopmak-evil-define-key evil-inner-text-objects-map "\C-y" 'evil-inner-WORD)
 
+
 ;;; inneR text objects
 ;;; conflicts with find-char-backwards
 ;; (lalopmak-evil-define-key evil-visual-state-map "r" evil-inner-text-objects-map)
@@ -517,6 +518,11 @@ go to that line."
 (evil-ex-define-cmd "spell" 'speck-mode)
 
 ;;Ya-snippets
+
+;; inserts yasnippet "around" the visual mode selection, where applicable.
+;; works with yas-wrap-around-region, or by inserting `yas/selected-text`
+;; (with those quotations) at select point in snippet
+(lalopmak-evil-define-key evil-visual-state-map (kbd "<tab>") 'yas-insert-snippet)
 
 (defun evil-snippet (name)
   (interactive "sSnippet shortcut:")
