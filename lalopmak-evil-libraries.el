@@ -145,7 +145,7 @@ i = WORD = 'interconnected word' / 'interword'
 (defun lalopmak-evil-mnemonic-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
-  (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
+  (close-visible-buffer-else-call-helper "Colemak-Evil Hints (Mnemonic)"
                                        with-output-to-temp-buffer 
                                        (princ lalopmak-evil-mnemonic-hintstring)))
 

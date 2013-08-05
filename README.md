@@ -3,7 +3,7 @@ Lalopmak Evil
 
 A variant of colemak-evil.el/colemak.vim that takes some of Shai's ideas even further.  This mapping aims to be even more geometric/movement-based, exploiting the directional intuition that makes us so good at playing games.  Ergonomicness is also a goal, while mnemonicness is not a primary goal (though I've attempted to bring some back).
 
-A draft diagram can be found near the top of [this file](https://raw.github.com/lalopmak/lalopmak-evil/master/lalopmak-evil-libraries.el).
+Draft diagrams can be found near the top of [this file](https://raw.github.com/lalopmak/lalopmak-evil/master/lalopmak-evil-libraries.el).
 
 
 
