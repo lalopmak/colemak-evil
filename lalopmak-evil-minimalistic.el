@@ -17,15 +17,16 @@
 (require 'lalopmak-evil-base)
 
 ;;; Up/down/left/right
-(set-in-all-evil-states-but-insert "h" 'evil-previous-line)
-(set-in-all-evil-states-but-insert "k" 'evil-next-line)
-(set-in-all-evil-states-but-insert "j" 'lalopmak-evil-backward-char)
+(set-in-all-evil-states-but-insert "h" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-forward-char)
 
+(set-in-all-evil-states-but-insert "e" 'evil-previous-line)
+(set-in-all-evil-states-but-insert "E" 'evil-scroll-up)
+(set-in-all-evil-states-but-insert "n" 'evil-next-line)
+(set-in-all-evil-states-but-insert "N" 'evil-scroll-down)
 
-(set-in-all-evil-states-but-insert "H" 'evil-scroll-up)
-(set-in-all-evil-states-but-insert "K" 'evil-scroll-down)
-
+(lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
+(lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
@@ -49,5 +50,7 @@
 (set-in-all-evil-states-but-insert "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
 
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
+
+(set-in-all-evil-states-but-insert "," 'ido-switch-buffer)
 
 (provide 'lalopmak-evil-minimalistic)
