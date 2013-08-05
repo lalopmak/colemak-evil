@@ -1,7 +1,7 @@
 Lalopmak Evil
 ============
 
-A variant of colemak-evil.el/colemak.vim that takes some of Shai's ideas even further.  This mapping aims to be even more geometric/movement-based, exploiting the directional intuition that makes us so good at playing games.  Ergonomicness is also a goal, while mnemonicness is not.
+A variant of colemak-evil.el/colemak.vim that takes some of Shai's ideas even further.  This mapping aims to be even more geometric/movement-based, exploiting the directional intuition that makes us so good at playing games.  Ergonomicness is also a goal, while mnemonicness is not a primary goal (though I've attempted to bring some back).
 
 A draft diagram can be found near the top of [this file](https://raw.github.com/lalopmak/lalopmak-evil/master/lalopmak-evil-libraries.el).
 
@@ -18,14 +18,14 @@ Depending on the package/your personal needs, you may have to initialize it in y
 2. Download lalopmak-evil and put it somewhere in your load path.
 3. Add `(require 'lalopmak-evil)` to your Emacs init file.
 
-Recommended: linum-relative, centered-cursor-mode, yasnippet, speck
+Recommended: linum-relative, centered-cursor-mode, yasnippet, speck, evil-surround
 
 
 Experimental: If you wish to use this with QWERTY, add `(defvar lalopmak-layout-map 'colemak-to-qwerty)` to your init.el file, prior to the load.  If you want to use it with another layout, you currently have to define your own colemak-to-layout map.
 
 Tips
 ----
-Type :hints or :ars to bring up the hint screen.
+Type :hints or :ars to bring up the hint screen.  Type :mnemonic to bring up mnemonic hintscreen.  Not all content is the same in both.
 
 Escape takes you into normal mode, an unfortunate historical accident.
 I recommend defining an easy AltGr mapping (I use AltGr+t) since it will

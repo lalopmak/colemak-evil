@@ -110,17 +110,18 @@ Normal mode:
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
 ====Text Object Triggers====
-r = reduced   
-s = spread   
+r = inner = 'reduced' 
+s = outer = 'spread'   
+o = surround = 'surrOundings'/'arOund' (for surround)
 
 ====Text Objects====
 
 The usual (w)ord,(W)ORD,(s)entence,(p)aragraph still work.
 
-u = ubiquity
-e = entry
-n = nearby word
-i = interconnected word
+u = paragraph = 'ubiquity'
+e = sentence = 'entry'
+n = word = 'nearby'
+i = WORD = 'interconnected word' / 'interword'
 
 ")
 
