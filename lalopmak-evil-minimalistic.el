@@ -50,4 +50,4 @@
 
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
 
-(provide 'minimalistic-lalopmak-evil)
+(provide 'lalopmak-evil-minimalistic)
