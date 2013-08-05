@@ -16,18 +16,38 @@
 
 (require 'lalopmak-evil-base)
 
-(defun set-in-all-evil-states (key def &optional maps)
-  (unless maps
-    (setq maps (list evil-normal-state-map
-                     evil-visual-state-map
-                     evil-insert-state-map
-                     evil-emacs-state-map
-		     evil-motion-state-map)))
-  (while maps
-    (define-key (pop maps) key def)))
-
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "h" 'evil-previous-line)
 (set-in-all-evil-states-but-insert "k" 'evil-next-line)
 (set-in-all-evil-states-but-insert "j" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-forward-char)
+
+
+(set-in-all-evil-states-but-insert "H" 'evil-scroll-up)
+(set-in-all-evil-states-but-insert "K" 'evil-scroll-down)
+
+
+;;Ace jump
+(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "t" 'evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-char-to-mode)
+;; (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
+
+(when (fboundp 'undo-tree-undo)
+  (lalopmak-evil-define-key evil-normal-state-map "u" 'undo-tree-undo)
+  (lalopmak-evil-define-key evil-normal-state-map "U" 'undo-tree-redo))
+
+
+;;; Make the space, return, and backspace keys work in normal mode
+;; Backspace in normal mode doesn't work in the terminal.
+(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
+
+;;Line jump
+(set-in-all-evil-states-but-insert "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
+
+(set-in-all-evil-states-but-insert ";" 'evil-ex)
+
+(provide 'minimalistic-lalopmak-evil)
