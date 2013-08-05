@@ -24,12 +24,19 @@
 (require 'lalopmak-layouts)
 (require 'lalopmak-jump)
 
-;; make undo more incremental (break into smaller chunks)
-(setq evil-want-fine-undo t)
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
     (setq lalopmak-layout-map 'colemak-to-colemak)) 
+
+
+;; remove all keybindings from insert-state keymap
+(setcdr evil-insert-state-map nil) 
+;; but [escape] should switch back to normal state
+(lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
+;; make undo more incremental (break into smaller chunks)
+(setq evil-want-fine-undo t)
+
 
 (defmacro lalopmak-evil-define-key (keymap key &rest def)
   "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
@@ -70,6 +77,13 @@
                                 evil-visual-state-map
                                 evil-emacs-state-map)))
 
+
+
+;;; Make the space, return, and backspace keys work in normal mode
+;; Backspace in normal mode doesn't work in the terminal.
+(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
+(lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 (evil-define-motion lalopmak-evil-backward-word-end (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.

@@ -41,17 +41,9 @@
   (lalopmak-evil-define-key evil-normal-state-map "U" 'undo-tree-redo))
 
 
-;;; Make the space, return, and backspace keys work in normal mode
-;; Backspace in normal mode doesn't work in the terminal.
-(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
-(lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
-(lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 ;;Line jump
 (set-in-all-evil-states-but-insert "j" 'evil-ace-jump-line-mode) ;temporary assignment
-
-;; Spare keys:
-;; x 
 
 (set-in-all-evil-states-but-insert "x" 'ido-switch-buffer)
 (set-in-all-evil-states-but-insert "X" 'ido-find-file)

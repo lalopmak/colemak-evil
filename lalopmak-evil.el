@@ -24,10 +24,6 @@
 
 ;;;;;;;;;;;;;;;;; Bindings ;;;;;;;;;;;;;;;;;;;
 
-;; remove all keybindings from insert-state keymap
-(setcdr evil-insert-state-map nil) 
-;; but [escape] should switch back to normal state
-(lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
 
 
 ;;; Up/down/left/right
@@ -65,18 +61,6 @@
 ;;; Page halfway up/down 
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
-
-(evil-define-motion lalopmak-evil-backward-word-end (count &optional bigword)
-  "Move the cursor to the end of the COUNT-th previous word.
-If BIGWORD is non-nil, move by WORDS."
-  :type inclusive
-  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
-    (evil-move-beginning (- (or count 1)) move)))
-
-(evil-define-motion lalopmak-evil-backward-WORD-end (count)
-  "Move the cursor to the end of the COUNT-th previous WORD."
-  :type inclusive
-  (lalopmak-evil-backward-word-end count t))
 
 ;;; Words forward/backward
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-end)
@@ -275,12 +259,6 @@ If BIGWORD is non-nil, move by WORDS."
 ;; (lalopmak-evil-define-key evil-normal-state-map "za" 'evil-toggle-fold)
 ;; (lalopmak-evil-define-key evil-normal-state-map "zr" 'evil-open-folds)
 ;; (lalopmak-evil-define-key evil-normal-state-map "zm" 'evil-close-folds)
-
-;;; Make the space, return, and backspace keys work in normal mode
-;; Backspace in normal mode doesn't work in the terminal.
-(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
-(lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
-(lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 ;;; Visual line navigation
 ;; In normal mode, use "ge" and "gu" when lines wrap.
