@@ -19,10 +19,7 @@
 ;;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-(require 'lalopmak-evil-libraries)
-(require 'lalopmak-layouts)
-(require 'lalopmak-jump)
-
+(require 'lalopmak-evil-base)
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
@@ -59,40 +56,6 @@
     (lalopmak-evil-define-key (pop maps) key def)))
 
 
-(defun set-in-all-evil-states-but-insert (key def)
-  (set-in-all-evil-states key 
-                          def 
-                          (list evil-normal-state-map
-                                evil-visual-state-map
-                                evil-emacs-state-map
-                                evil-motion-state-map)))
-
-(defun set-in-all-evil-states-but-insert-and-motion (key def)
-  (set-in-all-evil-states key
-                          def 
-                          (list evil-normal-state-map
-                                evil-visual-state-map
-                                evil-emacs-state-map)))
-
-(evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
-  "Forward character, allowing you to fall to the next line"
-  :type exclusive
-  (if (and (boundp 'paredit-mode) paredit-mode)
-      (paredit-forward)
-    (evil-forward-char count 'crosslines noerror)))
-
-(evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
-  "Backward character, allowing you to rise to the previous line"
-  (if (and (boundp 'paredit-mode) paredit-mode)
-      (paredit-backward)
-    (evil-backward-char count 'crosslines noerror)))
-
-;;Makes these compatible with undo-tree
-(when (boundp 'undo-tree-visualizer-mode-map)
-  (define-key undo-tree-visualizer-mode-map [remap lalopmak-evil-backward-char]
-    'undo-tree-visualize-switch-branch-left)
-  (define-key undo-tree-visualizer-mode-map [remap lalopmak-evil-forward-char]
-    'undo-tree-visualize-switch-branch-right))
 
 
 
