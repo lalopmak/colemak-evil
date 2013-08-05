@@ -14,6 +14,7 @@
 ;;  You should have received a copy of the GNU General Public License
 ;;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 (require 'lalopmak-evil-base)
 
 ;;; Up/down/left/right
@@ -21,9 +22,9 @@
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-forward-char)
 
 (set-in-all-evil-states-but-insert "e" 'evil-previous-line)
-(set-in-all-evil-states-but-insert "E" 'evil-scroll-up)
+(set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "n" 'evil-next-line)
-(set-in-all-evil-states-but-insert "N" 'evil-scroll-down)
+(set-in-all-evil-states-but-insert "\C-n" 'evil-scroll-down)
 
 (lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
 (lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
@@ -53,4 +54,4 @@
 
 (set-in-all-evil-states-but-insert "," 'ido-switch-buffer)
 
-(provide 'lalopmak-evil-minimalistic)
+(provide 'lalopmak-evil-mnemonic)

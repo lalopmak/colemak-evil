@@ -31,10 +31,10 @@ Escape takes you into normal mode, an unfortunate historical accident.
 I recommend defining an easy AltGr mapping (I use AltGr+t) since it will
 be used a lot.  Alternatively, see patbl's [advice on key chords](https://github.com/patbl/colemak-evil/blob/master/README.md).
 
-Minimalistic Mappings
+Mnemonic Mappings
 ----
 
-I am also experimenting with minimalistic layout changes, which try and preserve as many of vim's original keys as possible while still integrating some of these features.  To try this out, `(require 'lalopmak-evil-minimalistic)` instead.
+I am also experimenting with mnemonics-preserving minimal changes that integrate some of these features.  To try these out, `(require 'lalopmak-evil-mnemonic)` instead.
 
 Disclaimer
 ----
