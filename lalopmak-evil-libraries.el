@@ -29,7 +29,7 @@ Normal mode:
 |           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
 |  NextTab  |           |WinCmd     |Jump Char  |           | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
 | <TAB>     |  RepState |JmpCharTill|JmpNbyChTil|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
-| <TAB>     |  Replace  |Jump Char  |JmpNrbyChar|AceJumpLine|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+| <TAB>     |  Replace  |AceJumpChar|JmpNrbyChar|AceJumpLine|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> |SelectBlock|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
@@ -112,7 +112,7 @@ Normal mode:
 ====Text Object Triggers====
 r = inner = 'reduced' 
 s = outer = 'spread'   
-o = surround = 'surrOundings'/'arOund' (for surround)
+o = surround = 'surrOundings'/'arOund' 
 
 ====Text Objects====
 

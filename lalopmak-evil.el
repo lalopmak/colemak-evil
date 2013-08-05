@@ -235,6 +235,8 @@ If BIGWORD is non-nil, move by WORDS."
 ;;;evil-surround
 
 
+(setcdr surround-mode-map nil) ;removes previous "s" mappings
+
 (evil-define-key 'operator surround-mode-map "o" 'surround-edit)
 (evil-define-key 'visual surround-mode-map "o" 'surround-region)
 (evil-define-key 'visual surround-mode-map "O" 'Surround-region)
