@@ -176,6 +176,10 @@ If BIGWORD is non-nil, move by WORDS."
 (lalopmak-evil-define-key evil-inner-text-objects-map "u" 'evil-inner-paragraph)
 (lalopmak-evil-define-key evil-outer-text-objects-map "u" 'evil-a-paragraph)
 
+;; Not sure what this is, think it's an emacs definition.  Originally assigned to o
+(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-symbol)
+(lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-symbol)
+
 ;; Execute command: map : to ;
 (lalopmak-evil-define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
 

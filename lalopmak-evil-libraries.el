@@ -123,6 +123,7 @@ e = sentence = 'entry'
 n = word = 'nearby'
 i = WORD = 'interconnected word' / 'interword'
 
+y = sYmbol
 ")
 
 ;; l = limited word
