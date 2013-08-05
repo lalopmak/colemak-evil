@@ -50,8 +50,13 @@
 ;;Line jump
 (set-in-all-evil-states-but-insert "j" 'evil-ace-jump-line-mode) ;temporary assignment
 
-(set-in-all-evil-states-but-insert ";" 'evil-ex)
+;; Spare keys:
+;; x 
 
+(set-in-all-evil-states-but-insert "x" 'ido-switch-buffer)
+(set-in-all-evil-states-but-insert "X" 'ido-find-file)
+
+(set-in-all-evil-states-but-insert ";" 'evil-ex)
 (set-in-all-evil-states-but-insert "," 'ido-switch-buffer)
 
 (provide 'lalopmak-evil-mnemonic)
