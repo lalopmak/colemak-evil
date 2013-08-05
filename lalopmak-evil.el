@@ -230,6 +230,15 @@ If BIGWORD is non-nil, move by WORDS."
 (set-in-all-evil-states-but-insert "A" 'evil-visual-line)
 (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
 
+
+
+;;;evil-surround
+
+
+(evil-define-key 'operator surround-mode-map "o" 'surround-edit)
+(evil-define-key 'visual surround-mode-map "o" 'surround-region)
+(evil-define-key 'visual surround-mode-map "O" 'Surround-region)
+
 ;;; visual Block mode
 ;; Since the system clipboard is accessible by Emacs through the
 ;; regular paste command (v), a separate C-v mapping isn't needed.
