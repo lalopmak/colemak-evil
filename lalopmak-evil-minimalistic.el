@@ -47,7 +47,7 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 ;;Line jump
-(set-in-all-evil-states-but-insert "\C-t" 'evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states-but-insert "j" 'evil-ace-jump-line-mode) ;temporary assignment
 
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
 
