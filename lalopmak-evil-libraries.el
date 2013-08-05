@@ -29,13 +29,13 @@ Normal mode:
 |           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
 |  NextTab  |           |WinCmd     |Jump Char  |           | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
 | <TAB>     |  RepState |JmpCharTill|JmpNbyChTil|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
-| <TAB>     |  Replace  |AceJumpChar|JmpNrbyChar|AceJumpLine|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|ExpdSnippet|  Replace  |AceJumpChar|JmpNrbyChar|AceJumpLine|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> |SelectBlock|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
  Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
  Shift----> |Select Line| Insert BOL| Append EOL|ChangeLine ||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
- Normal---> |  Select   | Insert    | Append    |  Change   |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Normal---> |  Select   | Insert    | Append    |  Change   |  Delete>  |\  Indent  |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
@@ -93,13 +93,13 @@ Normal mode:
 |           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
 |  NextTab  |           |WinCmd     |FindAllChar|           | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
 | <TAB>     |Quash State|WarpTilChar|FndTilNbyCh|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  5Char |   EOL     |; z-Cmd·   |\" SetReg·  |
-| <TAB>     |Quash Char |WarpToChar |FndNrbyChar|Propel2Line|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|ExpdSnippet|Quash Char |WarpToChar |FndNrbyChar|Propel2Line|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> | Block Area|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
  Ctrl-----> | All Area  | Redo      |  Search   |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
  Shift----> | Area Line | Insert BOL|SucceedLine|TrnsfmToEOL||D Del->|  ||          |  ❚        |   5Char   |  |  5Char |   5Char   |O OpenUp   || GoCol1   |
- Normal---> |   Area    | Insert    |  Succeed  | Transform |  Delete>  |\          |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
+ Normal---> |   Area    | Insert    |  Succeed  | Transform |  Delete>  |\  Indent  |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  OpenDn   |\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
             |           |           |           |           |           |           |           |           |           |           |
