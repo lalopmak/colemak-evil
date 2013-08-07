@@ -27,8 +27,8 @@
 
 
 ;;; Up/down/left/right
-(set-in-all-evil-states-but-insert "u" 'evil-previous-line)
-(set-in-all-evil-states-but-insert "e" 'evil-next-line)
+(set-in-all-evil-states-but-insert "u" 'evil-previous-visual-line)
+(set-in-all-evil-states-but-insert "e" 'evil-next-visual-line)
 (set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
@@ -43,8 +43,8 @@
 ;; Use back-to-indentation instead of evil-beginning-of-line so that
 ;; cursor ends up at the first non-whitespace character of a line. 0
 ;; can be used to go to real beginning of line
-(set-in-all-evil-states-but-insert "L" 'back-to-indentation)
-(set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
+(set-in-all-evil-states-but-insert "L" 'evil-first-non-blank-of-visual-line)
+(set-in-all-evil-states-but-insert "Y" 'evil-end-of-visual-line)
 
 (evil-define-motion lalopmak-evil-scroll-page-up (count)
   "Scrolls page up, centers the cursor"

@@ -49,6 +49,8 @@
 (set-in-all-evil-states-but-insert "X" 'ido-find-file)
 
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
-(set-in-all-evil-states-but-insert "," 'ido-switch-buffer)
+
+
+;; (set-in-all-evil-states-but-insert "," 'ido-switch-buffer)
 
 (provide 'lalopmak-evil-mnemonic)
