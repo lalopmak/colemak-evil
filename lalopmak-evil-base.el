@@ -85,17 +85,17 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
-(evil-define-motion lalopmak-evil-backward-word-end (count &optional bigword)
+(evil-define-motion lalopmak-evil-backward-word-begin (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.
 If BIGWORD is non-nil, move by WORDS."
   :type inclusive
   (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
     (evil-move-beginning (- (or count 1)) move)))
 
-(evil-define-motion lalopmak-evil-backward-WORD-end (count)
+(evil-define-motion lalopmak-evil-backward-WORD-begin (count)
   "Move the cursor to the end of the COUNT-th previous WORD."
   :type inclusive
-  (lalopmak-evil-backward-word-end count t))
+  (lalopmak-evil-backward-word-begin count t))
 
 (evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
   "Forward character, allowing you to fall to the next line"

@@ -63,7 +63,7 @@
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
 ;;; Words forward/backward
-(set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-end)
+(set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-begin)
 (set-in-all-evil-states-but-insert "y" 'evil-forward-word-begin)
 
 
@@ -75,7 +75,7 @@
 
 ;;; WORD forward/backward
 (set-in-all-evil-states-but-insert "\C-y" 'evil-forward-WORD-begin)
-(set-in-all-evil-states-but-insert "\C-l" 'lalopmak-evil-backward-WORD-end)
+(set-in-all-evil-states-but-insert "\C-l" 'lalopmak-evil-backward-WORD-begin)
 
 ;; WORD object maps from default
 ;; (lalopmak-evil-define-key evil-outer-text-objects-map "\C-l" 'evil-a-WORD)
