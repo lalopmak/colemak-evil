@@ -29,6 +29,9 @@
 (if (not (boundp 'lalopmak-layout-map))
     (setq lalopmak-layout-map 'colemak-to-colemak)) 
 
+(defmacro lalopmak-evil-define-key (keymap key &rest def)
+  "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
+  `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,@def))
 
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
@@ -36,12 +39,6 @@
 (lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
-
-
-(defmacro lalopmak-evil-define-key (keymap key &rest def)
-  "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
-  `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,@def))
-
 
 (defmacro lalopmak-evil-local-set-key (keymap key)
   "Defines local key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
