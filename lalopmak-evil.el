@@ -404,6 +404,16 @@ go to that line."
 ;; (set-in-all-evil-states-but-insert "o" 'evil-ex)
 ;; (set-in-all-evil-states-but-insert "O" 'evil-ex)
 
+;; (evil-define-key 'normal evil-paredit-mode-map
+;;   (kbd "d") 'evil-paredit-delete
+;;   (kbd "t") 'evil-paredit-change
+;;   (kbd "c") 'evil-paredit-yank
+;;   (kbd "D") 'evil-paredit-delete-line
+;;   (kbd "T") 'evil-paredit-change-line
+;;   (kbd "C") 'evil-paredit-yank-line
+;;   (kbd "x") 'paredit-backward-delete
+;;   (kbd "X") 'paredit-forward-delete)
+
 (provide 'lalopmak-evil)
 
 

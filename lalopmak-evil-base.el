@@ -180,6 +180,10 @@ If BIGWORD is non-nil, move by WORDS."
 
 (evil-ex-define-cmd "spell" 'speck-mode)
 
+;; M-x keyfreq mode (key frequency analysis)
+
+(evil-ex-define-cmd "keyfreq" 'keyfreq-show)
+
 ;;Ya-snippets
 
 ;; inserts yasnippet "around" the visual mode selection, where applicable.
