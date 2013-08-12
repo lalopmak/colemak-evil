@@ -118,6 +118,21 @@ If BIGWORD is non-nil, move by WORDS."
   (define-key undo-tree-visualizer-mode-map [remap lalopmak-evil-forward-char]
     'undo-tree-visualize-switch-branch-right))
 
+(defmacro create_lalopmak-evil-if-count-else (then-name else-name docstring then &rest else)
+  "Creates evil-motion lalopmak-evil-if-count-[then-name]-else-[else-name]"
+  `(evil-define-motion ,(intern (format "lalopmak-evil-%s-if-count-else-%s" then-name else-name)) (count)
+     ,docstring
+     (if count
+         ,then
+       ,@else)))
+
+
+;;creates lalopmak-evil-goto-line-if-count-else-open-below
+(create_lalopmak-evil-if-count-else "goto-line"
+                                    "open-below" 
+                                    "if count goes to line, otherwise opens below"
+                                    (evil-goto-line count)
+                                    (evil-open-below 1))
 
 
 (defun lalopmak-evil-write (beg end &optional type filename bang)

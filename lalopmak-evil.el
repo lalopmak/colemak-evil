@@ -363,13 +363,6 @@
   (evil-end-of-line) 
   (evil-paste-after 1))
 
-(evil-define-motion lalopmak-evil-goto-line-if-count-else-open-below (count)
-  "evil-open-below unless preceded by number, in which case
-go to that line."
-  (if count
-      (evil-goto-line count)
-    (evil-open-below 1)))
-
 ;;o to open in line above/below, or [number]o to go to line [number]
 (set-in-all-evil-states-but-insert "o" 'lalopmak-evil-goto-line-if-count-else-open-below)
 (set-in-all-evil-states-but-insert "O" 'evil-open-above)
