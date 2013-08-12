@@ -84,7 +84,8 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 
-(set-in-all-evil-states (kbd "C-a") 'er/expand-region)
+(set-in-all-evil-states (kbd "C-f") 'er/expand-region)
+(setq expand-region-contract-fast-key "w")
 
 (evil-define-motion lalopmak-evil-backward-word-begin (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.
@@ -118,22 +119,29 @@ If BIGWORD is non-nil, move by WORDS."
   (define-key undo-tree-visualizer-mode-map [remap lalopmak-evil-forward-char]
     'undo-tree-visualize-switch-branch-right))
 
+
 (defmacro create_lalopmak-evil-if-count-else (then-name else-name docstring then &rest else)
   "Creates evil-motion lalopmak-evil-if-count-[then-name]-else-[else-name]"
-  `(evil-define-motion ,(intern (format "lalopmak-evil-%s-if-count-else-%s" then-name else-name)) (count)
+  `(evil-define-motion ,(intern (format "lalopmak-evil-if-count-%s-else-%s" then-name else-name)) (count)
      ,docstring
      (if count
          ,then
        ,@else)))
 
 
-;;creates lalopmak-evil-goto-line-if-count-else-open-below
+;;creates lalopmak-evil-if-count-goto-line-else-open-below
 (create_lalopmak-evil-if-count-else "goto-line"
                                     "open-below" 
                                     "if count goes to line, otherwise opens below"
                                     (evil-goto-line count)
                                     (evil-open-below 1))
 
+;;creates lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode
+(create_lalopmak-evil-if-count-else "goto-line"
+                                    "ace-jump-line-mode" 
+                                    "if count goes to line, otherwise ace-jump line"
+                                    (evil-goto-line count)
+                                    (lalopmak-evil-ace-jump-line-mode))
 
 (defun lalopmak-evil-write (beg end &optional type filename bang)
   (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)  

@@ -128,10 +128,10 @@
 
 
 ;;; Undo/redo
-(lalopmak-evil-define-key evil-normal-state-map "z" 'undo)
+(lalopmak-evil-define-key evil-normal-state-map "p" 'undo)
 (when (fboundp 'undo-tree-undo)
-  (lalopmak-evil-define-key evil-normal-state-map "z" 'undo-tree-undo)
-  (lalopmak-evil-define-key evil-normal-state-map "Z" 'undo-tree-redo))
+  (lalopmak-evil-define-key evil-normal-state-map "p" 'undo-tree-undo)
+  (lalopmak-evil-define-key evil-normal-state-map "\C-p" 'undo-tree-redo))
 
 ;;; Cursor position jumplist
 (set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
@@ -150,7 +150,7 @@
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-line)
-;; (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
+(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
 
 
 
@@ -159,9 +159,9 @@
 
 (setcdr surround-mode-map nil) ;removes previous "s" mappings
 
-(evil-define-key 'operator surround-mode-map "o" 'surround-edit)
-(evil-define-key 'visual surround-mode-map "o" 'surround-region)
-(evil-define-key 'visual surround-mode-map "O" 'Surround-region)
+(evil-define-key 'operator surround-mode-map "z" 'surround-edit)
+(evil-define-key 'visual surround-mode-map "z" 'surround-region)
+(evil-define-key 'visual surround-mode-map "Z" 'Surround-region)
 
 ;;; visual Block mode
 ;; Since the system clipboard is accessible by Emacs through the
@@ -306,15 +306,16 @@
 
 ;; (set-in-all-evil-states-but-insert "p" 'evil-substitute)   ;tentative assignment
 ;; (set-in-all-evil-states-but-insert "\C-p" 'evil-change-whole-line)
-(set-in-all-evil-states-but-insert "\C-t" 'evil-jump-backward)   
-(set-in-all-evil-states-but-insert "\C-p" 'evil-jump-forward)
+
+;;conflicts with undo
+;; (set-in-all-evil-states-but-insert "\C-t" 'evil-jump-backward)   
+;; (set-in-all-evil-states-but-insert "\C-p" 'evil-jump-forward)
 
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-narrowed-ace-jump-char-mode)
 (set-in-all-evil-states-but-insert "F" 'lalopmak-evil-narrowed-ace-jump-char-to-mode)
 (set-in-all-evil-states-but-insert "w" 'lalopmak-evil-ace-jump-char-mode)
 (set-in-all-evil-states-but-insert "W" 'lalopmak-evil-ace-jump-char-to-mode)
-(set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;old find char/reverse for use in macros
 (set-in-all-evil-states-but-insert "\M-f" 'evil-find-char)
@@ -322,7 +323,7 @@
 (set-in-all-evil-states-but-insert "\M-t" 'evil-repeat-find-char)
 
 ;;Line jump
-(set-in-all-evil-states-but-insert "p" 'lalopmak-evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states-but-insert "o" 'lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
@@ -364,8 +365,8 @@
   (evil-paste-after 1))
 
 ;;o to open in line above/below, or [number]o to go to line [number]
-(set-in-all-evil-states-but-insert "o" 'lalopmak-evil-goto-line-if-count-else-open-below)
-(set-in-all-evil-states-but-insert "O" 'evil-open-above)
+(set-in-all-evil-states-but-insert "z" 'evil-open-below)
+(set-in-all-evil-states-but-insert "Z" 'evil-open-above)
 
 ;;M-[direction] to paste in that direction
 (set-in-all-evil-states-but-insert "\M-u" 'lalopmak-evil-paste-above-then-normal)
