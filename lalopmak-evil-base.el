@@ -37,6 +37,7 @@
 (setcdr evil-insert-state-map nil) 
 ;; but [escape] should switch back to normal state
 (lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
+
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
 

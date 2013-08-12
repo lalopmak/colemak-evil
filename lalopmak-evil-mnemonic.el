@@ -30,10 +30,10 @@
 (lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
 
 ;;Ace jump
-(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
-(set-in-all-evil-states-but-insert "t" 'evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "T" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-narrowed-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-narrowed-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "t" 'lalopmak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "T" 'lalopmak-evil-ace-jump-char-to-mode)
 ;; (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 (when (fboundp 'undo-tree-undo)

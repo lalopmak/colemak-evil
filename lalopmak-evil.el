@@ -310,10 +310,10 @@
 (set-in-all-evil-states-but-insert "\C-p" 'evil-jump-forward)
 
 ;;Ace jump
-(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-ace-jump-char-to-mode)
-(set-in-all-evil-states-but-insert "w" 'evil-ace-jump-char-mode)
-(set-in-all-evil-states-but-insert "W" 'evil-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "f" 'lalopmak-evil-narrowed-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "F" 'lalopmak-evil-narrowed-ace-jump-char-to-mode)
+(set-in-all-evil-states-but-insert "w" 'lalopmak-evil-ace-jump-char-mode)
+(set-in-all-evil-states-but-insert "W" 'lalopmak-evil-ace-jump-char-to-mode)
 (set-in-all-evil-states "\C-f" 'evil-ace-jump-char-mode)
 
 ;;old find char/reverse for use in macros

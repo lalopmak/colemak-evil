@@ -45,6 +45,16 @@
   "Number of characters on the screen before we switch to word search;
 should depend on ace-jump-max-chars.")
 
+(defvar lalopmak-jump-timing t
+  "Whether or not we want to time our ace-jumps")
+
+(defmacro with-stopwatch-if-timing (message &rest body)
+  "Only calls with-stopwatch macro if it exists and we're timing.
+message and body as in with-stopwatch." 
+  `(if (and lalopmak-jump-timing
+            (fboundp 'with-stopwatch))
+       (with-stopwatch ,message ,@body)      
+     ,@body))
 
 (defmacro max-regions-for-one-ace-jump (char region-restrictor regions-search-limit)
   "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
@@ -69,24 +79,29 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
                           (max-regions-for-one-ace-jump char
                                                         ,region-restrictor
                                                         ,max-regions))))
-     (evil-enclose-ace-jump-for-motion 
-      (ace-jump-char-within-n-regions char ,region-restrictor numRegions)))) 
+       (evil-enclose-ace-jump-for-motion 
+        (ace-jump-char-within-n-regions char ,region-restrictor numRegions)))) 
 
-(evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
+(evil-define-motion lalopmak-evil-narrowed-ace-jump-char-mode (count)
   "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
   :type inclusive
   :repeat abort
   ;;Three possible search regions so far: chars, words, lines, in increasing granuity.
-  (cond ((or count 
-             lalopmak-evil-ace-jump-num-lines) 
-         ;;if user provided restriction input we assume it's in lines
-         (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines))
-        ((< (chars-in-window) jump-word-search-threshold)
-         ;;there are few enough characters for a char search to cover it
-         (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
-        ;;there are too many characters, default to word search to cover more area
-        (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))))
+  (with-stopwatch-if-timing "Ace-jump one-step"
+    (cond ((or count 
+               lalopmak-evil-ace-jump-num-lines) 
+           ;;if user provided restriction input we assume it's in lines
+           (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines))
+          ((< (chars-in-window) jump-word-search-threshold)
+           ;;there are few enough characters for a char search to cover it
+           (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
+          ;;there are too many characters, default to word search to cover more area
+          (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))) ))
 
+
+(evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
+  (with-stopwatch-if-timing "Ace-jump"
+    (evil-ace-jump-char-mode count)))
 
 ;;;
 ;;; "jump-to" mode
@@ -98,8 +113,13 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
   :type inclusive
   :repeat abort
   (search-to-searchTo (evil-ace-jump-char-mode count)))
+
  
 (evil-define-motion lalopmak-evil-ace-jump-char-to-mode (count)
+  (with-stopwatch-if-timing "Ace-jump"
+    (evil-ace-jump-char-to-mode count)))
+
+(evil-define-motion lalopmak-evil-narrowed-ace-jump-char-to-mode (count)
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
   :repeat abort
