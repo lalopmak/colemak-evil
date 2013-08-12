@@ -322,7 +322,7 @@
 (set-in-all-evil-states-but-insert "\M-t" 'evil-repeat-find-char)
 
 ;;Line jump
-(set-in-all-evil-states-but-insert "p" 'evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states-but-insert "p" 'lalopmak-evil-ace-jump-line-mode) ;temporary assignment
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)

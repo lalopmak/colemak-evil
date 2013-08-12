@@ -56,6 +56,10 @@ message and body as in with-stopwatch."
        (with-stopwatch ,message ,@body)      
      ,@body))
 
+(evil-define-motion lalopmak-evil-ace-jump-line-mode (count)
+  (with-stopwatch-if-timing "Ace Line Jump"
+                            (evil-ace-jump-line-mode count)))
+
 (defmacro max-regions-for-one-ace-jump (char region-restrictor regions-search-limit)
   "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
 Limited by ace-jump-max-lines or regions-search-limit, our search bound."

@@ -43,7 +43,7 @@
 
 
 ;;Line jump
-(set-in-all-evil-states-but-insert "j" 'evil-ace-jump-line-mode) ;temporary assignment
+(set-in-all-evil-states-but-insert "j" 'lalopmak-evil-ace-jump-line-mode) ;temporary assignment
 
 (set-in-all-evil-states-but-insert "x" 'ido-switch-buffer)
 (set-in-all-evil-states-but-insert "X" 'ido-find-file)
