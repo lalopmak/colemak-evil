@@ -34,10 +34,10 @@
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;;; Turbo navigation mode
-(set-in-all-evil-states-but-insert "I" '(lambda () (interactive) (evil-forward-char 5)))
-(set-in-all-evil-states-but-insert "N" '(lambda () (interactive) (evil-backward-char 5)))
-(set-in-all-evil-states-but-insert "E" '(lambda () (interactive) (evil-next-line 5)))
-(set-in-all-evil-states-but-insert "U" '(lambda () (interactive) (evil-previous-line 5)))
+(set-in-all-evil-states-but-insert "I" 'evil-backward-paragraph)
+(set-in-all-evil-states-but-insert "N" 'evil-forward-paragraph)
+(set-in-all-evil-states-but-insert "E" 'evil-backward-sentence)
+(set-in-all-evil-states-but-insert "U" 'evil-forward-sentence)
 
 ;;; Beginning/end of line (home/end)
 ;; Use back-to-indentation instead of evil-beginning-of-line so that
