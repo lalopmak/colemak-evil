@@ -108,17 +108,12 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
 ;;;
 
 ;;Corrects repositories; might not be needed if fixed
-(evil-define-motion evil-ace-jump-char-to-mode (count)
+(evil-define-motion lalopmak-evil-ace-jump-char-to-mode (count)
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
   :repeat abort
-  (search-to-searchTo (evil-ace-jump-char-mode count)))
-
+  (search-to-searchTo (lalopmak-evil-ace-jump-char-mode count)))
  
-(evil-define-motion lalopmak-evil-ace-jump-char-to-mode (count)
-  (with-stopwatch-if-timing "Ace-jump"
-    (evil-ace-jump-char-to-mode count)))
-
 (evil-define-motion lalopmak-evil-narrowed-ace-jump-char-to-mode (count)
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
