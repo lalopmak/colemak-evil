@@ -83,6 +83,9 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
+
+(set-in-all-evil-states (kbd "C-a") 'er/expand-region)
+
 (evil-define-motion lalopmak-evil-backward-word-begin (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.
 If BIGWORD is non-nil, move by WORDS."

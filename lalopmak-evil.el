@@ -114,7 +114,7 @@
 
 
 ;;; Cut/copy/paste
-(set-in-all-evil-states-but-insert "x" 'evil-delete-char)
+(set-in-all-evil-states-but-insert "x" 'evil-substitute)
 (set-in-all-evil-states-but-insert "X" 'evil-delete-line)  ; delete to end of line; use dd to delete whole line
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
@@ -150,7 +150,7 @@
 ;;; Visual mode
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-line)
-(set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
+;; (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
 
 
 
