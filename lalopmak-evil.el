@@ -27,8 +27,8 @@
 
 
 ;;; Up/down/left/right
-(set-in-all-evil-states-but-insert "u" 'evil-previous-visual-line)
-(set-in-all-evil-states-but-insert "e" 'evil-next-visual-line)
+(set-in-all-evil-states-but-insert "u" 'evil-previous-line)
+(set-in-all-evil-states-but-insert "e" 'evil-next-line)
 (set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
