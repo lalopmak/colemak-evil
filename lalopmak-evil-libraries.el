@@ -91,9 +91,9 @@ Normal mode:
 |` Go Mk·   |1          |2          |3          |4          |5          |6          |= Format>  |7          |8          |9          |0  |<-     |- TopLine  |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 |           |           |◀--FindChar|FindChar--▶|           |           |           |           |           | PasteAbove|           |           |           |
-|  NextTab  |           |WinCmd     |FloatRegion|RePractcing| Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
+|  NextTab  |           |WinCmd     |FloatRegion| NextState | Abort Cmd |           |  ▲        |   WORD    |  ▲  ScrlUp|   WORD    |           |  GoMk·|<  |
 | <TAB>     |Quash State|WarpTilChar|FndTilNbyCh|           | EOF/GotoLn|{          |  ❚        |Back2Indent|  |  Pargph|   EOL     |; z-Cmd·   |\" SetReg·  |
-|ExpdSnippet|Quash Char |WarpToChar |FndNrbyChar|JusPractcng|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
+|ExpdSnippet|Quash Char |WarpToChar |FndNrbyChar|PreviousSte|Go Commands|[          |  ❚  PageUp|   word    |  |  Char  |   word    |: z-Cmd·   |' RunMacro |
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> | Block Area|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
