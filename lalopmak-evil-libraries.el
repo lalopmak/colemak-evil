@@ -33,7 +33,7 @@ Normal mode:
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> |SelectBlock|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
- Ctrl-----> |Select All | Redo      | Search    |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
+ Ctrl-----> |Select All | Search Bkw| Search Fwd|           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |  JmpOldr  |           |
  Shift----> |Select Line| Insert BOL| Append EOL|ChangeLine ||D Del->|  ||          |  ❚        | Sentence  |  |  Pargph| Sentence  |           || GoCol1   |
  Normal---> |  Select   | Insert    | Append    |  Change   |  Delete>  |\  Indent  |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |AceJumpLine|\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |
@@ -97,7 +97,7 @@ Normal mode:
 |           |     Q     |     W     |     F     |     P     |     G     |           |     J     |  ◀▬▬▬ L   |     U     |   Y ▬▬▬▶  |           |           |
 +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
  Meta-----> | Block Area|           |           |RptFindChar|           |           |           | PasteAtBOL| PasteBelow| PasteAtEOL|           |           |
- Ctrl-----> | All Area  | Redo      |  Search   |           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |           |           |
+ Ctrl-----> | All Area  | Search Bwd|Search Fwrd|           |  DelWord  |           |  ❚        |   =<Dn>   |  |  ScrlDn|   =<Tab>  |           |           |
  Shift----> | Area Line | Insert BOL|SucceedLine|TrnsfmToEOL||D Del->|  ||          |  ❚        | Sentence  |  |  Pargph| Sentence  |           || GoCol1   |
  Normal---> |   Area    | Insert    |  Succeed  | Transform |  Delete>  |\  Indent  |  ▼  PgDown|   Char    |  ▼  Char  |   Char    |  JumpOver |\\: (usr)·  |
  Ltr/Direc->|     A     |  ◀--R     |     S--▶  |     T     |     D     |           |     H     |  ◀--- N   |     E     |   I ---▶  |     O     |           |

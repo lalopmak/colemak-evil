@@ -20,7 +20,7 @@ Introduction
 
 NB: This is NOT an expert opinion - I am an amateur when it comes to these subjects.  I am mainly writing this down so that I don't forget later.
 
-This document gives some explanations as to why I chose current positions over, say, default colemak.vim/colemak-evil.  Though it has the classic unei movement keys that distinguish this class of mappings, colemak.vim is still overly reliant on mnenomics, leading to questionable key placements like r (replace) and o (open).  I attempt to improve upon these at the further cost of mnemonics, aiming for ergonomicness and geometric suggestiveness (though the latter has been reduced since find-char was made redundant).  
+This document gives some explanations as to why I chose current positions over, say, default colemak.vim/colemak-evil.  Though I adopted the classic unei movement keys that distinguish this class of mappings, colemak.vim is still overly reliant on mnenomics, leading to questionable key placements like r (replace) and o (open).  I attempt to improve upon these at the further cost of mnemonics, aiming for ergonomicness and geometric suggestiveness (though the latter has been reduced since find-char was made redundant).  
 
 Overview
 ============

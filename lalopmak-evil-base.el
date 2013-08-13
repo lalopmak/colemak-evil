@@ -84,6 +84,9 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 
+(set-in-all-evil-states (kbd "C-r") 'isearch-backward)
+
+;;expand-region
 (set-in-all-evil-states (kbd "C-f") 'er/expand-region)
 (setq expand-region-contract-fast-key "w")
 
