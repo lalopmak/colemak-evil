@@ -119,19 +119,33 @@
 (set-in-all-evil-states-but-insert "c" 'evil-yank)
 (set-in-all-evil-states-but-insert "C" 'evil-yank-line)
 
+;; "Original" paste v/undo p
+;; =====
 (set-in-all-evil-states-but-insert "V" 'evil-paste-before)
 (set-in-all-evil-states-but-insert "v" 'evil-paste-after)
-
 (set-in-all-evil-states-but-insert "\C-v" 'evil-paste-pop)
-
-
-
 
 ;;; Undo/redo
 (lalopmak-evil-define-key evil-normal-state-map "p" 'undo)
 (when (fboundp 'undo-tree-undo)
   (lalopmak-evil-define-key evil-normal-state-map "p" 'undo-tree-undo)
   (lalopmak-evil-define-key evil-normal-state-map "\C-p" 'undo-tree-redo))
+;; =====
+
+;; Experimental swapped paste p/undo v
+;; =====
+;; (set-in-all-evil-states-but-insert "P" 'evil-paste-before)
+;; (set-in-all-evil-states-but-insert "p" 'evil-paste-after)
+;; (set-in-all-evil-states-but-insert "\C-p" 'evil-paste-pop)
+
+;; ;;; Undo/redo
+;; (lalopmak-evil-define-key evil-normal-state-map "v" 'undo)
+;; (when (fboundp 'undo-tree-undo)
+;;   (lalopmak-evil-define-key evil-normal-state-map "v" 'undo-tree-undo)
+;;   (lalopmak-evil-define-key evil-normal-state-map "\C-v" 'undo-tree-redo))
+;; =====
+
+
 
 ;;; Cursor position jumplist
 (set-in-all-evil-states-but-insert "(" 'evil-jump-backward)

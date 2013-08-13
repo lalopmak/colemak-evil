@@ -52,5 +52,21 @@ open above/below are not used nearly often enough to deserve home row spots.  Cu
 
 open's old "o" position was replaced by ace-jump-line. Its an improvement over its original p position, which is awkward for a "flowing command", since it requires reaching back the index-finger.  It's also not paired with <RET>, eliminating a possibility of repeated finger, though the repeated possibility does come up in the ace-jumping itself.
 
-substitute currently at x.  Questionable placement, though one advantage is that x works as a cut.  Alternatives include q and o.  Will depend on usage frequencies.
+substitute currently at x.  Questionable placement, though one advantage is that x works "as expected" as a selection "cut".  Alternatives include q and o.  Will depend on usage frequencies.
+
+Possible Improvements
+============
+
+Swapping paste/undo to p/v
+----
+Call paste/undo at v/p "default", p/v "swapped".
+
+Undo is generally used much more often than paste (though usually in succession rather than randomly, which might affect the analysis) , so it should get "the better key".  It's questionable, however, just which key that is.
+
+p is harder to reach than v, on a random basis [swapped].  The p requires awkward repositioning.  Once repositoned, however, repeat-pressing does not seem to be an issue [neutral].  In practice, I had trouble repeat-pressing v, whereas not p [default].  This contrasts severely with repeating k, which suggests this might be a matter of practice.
+
+v is farther than p from all modifiers [swapped].  However, when pressing v the pinkie seems to curl to more easily press the shift, suggesting that V is next-most easlily pressed, then C-v.  By contrast, when moving up to press p, the pinkie is positioned to press C-p, and P seems harder to press at.  This suggests that v is the better key for using with both modifiers [default].
+
+
+
 
