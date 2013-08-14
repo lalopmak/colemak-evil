@@ -85,18 +85,18 @@
 
 
 ;;directional object maps 
-(lalopmak-evil-define-key evil-inner-text-objects-map "n" 'evil-inner-word)
-(lalopmak-evil-define-key evil-outer-text-objects-map "n" 'evil-a-word)
-(lalopmak-evil-define-key evil-inner-text-objects-map "i" 'evil-inner-WORD)
-(lalopmak-evil-define-key evil-outer-text-objects-map "i" 'evil-a-WORD)
+(lalopmak-evil-define-key evil-inner-text-objects-map "l" 'evil-inner-word)
+(lalopmak-evil-define-key evil-outer-text-objects-map "l" 'evil-a-word)
+(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-WORD)
+(lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-WORD)
 (lalopmak-evil-define-key evil-inner-text-objects-map "e" 'evil-inner-sentence)
 (lalopmak-evil-define-key evil-outer-text-objects-map "e" 'evil-a-sentence)
 (lalopmak-evil-define-key evil-inner-text-objects-map "u" 'evil-inner-paragraph)
 (lalopmak-evil-define-key evil-outer-text-objects-map "u" 'evil-a-paragraph)
 
 ;; Not sure what this is, think it's an emacs definition.  Originally assigned to o
-(lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-symbol)
-(lalopmak-evil-define-key evil-outer-text-objects-map "y" 'evil-a-symbol)
+(lalopmak-evil-define-key evil-inner-text-objects-map "n" 'evil-inner-symbol)
+(lalopmak-evil-define-key evil-outer-text-objects-map "n" 'evil-a-symbol)
 
 ;; Execute command: map : to ;
 (lalopmak-evil-define-key evil-motion-state-map ";" 'evil-ex);;; End of word forward/backward
