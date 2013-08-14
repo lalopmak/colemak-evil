@@ -104,6 +104,8 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
 
 
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
+  "Jump visually directly to a char using ace-jump.  Has stopwatch and exclusive."
+  :type inclusive
   (with-stopwatch-if-timing "Ace-jump"
     (evil-ace-jump-char-mode count)))
 
