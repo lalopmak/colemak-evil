@@ -95,19 +95,12 @@
 If BIGWORD is non-nil, move by WORDS."
   :type inclusive
   (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
-    ;; if changing a one-letter word, don't move point to the
-    ;; next word (which would change two words)
-    (if (and (evil-operator-state-p)
-             (looking-at "[[:word:]]"))
-        (prog1 (evil-move-end count move)
-          ;; (unless (bobp) (backward-char))
-)
-      (evil-move-end count move nil t))))
+    (evil-move-end count move nil t)))
 
 (evil-define-motion lalopmak-evil-forward-WORD-end (count)
   "Move the cursor to the end of the COUNT-th next WORD."
   :type inclusive
-  (evil-forward-word-end count t))
+  (lalopmak-evil-forward-word-end count t))
 
 (evil-define-motion lalopmak-evil-backward-word-begin (count &optional bigword)
   "Move the cursor to the end of the COUNT-th previous word.
