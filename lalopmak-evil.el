@@ -43,8 +43,8 @@
 ;; Use back-to-indentation instead of evil-beginning-of-line so that
 ;; cursor ends up at the first non-whitespace character of a line. 0
 ;; can be used to go to real beginning of line
-(set-in-all-evil-states-but-insert "L" 'evil-first-non-blank-of-visual-line)
-(set-in-all-evil-states-but-insert "Y" 'evil-end-of-visual-line)
+(set-in-all-evil-states-but-insert "L" 'back-to-indentation)
+(set-in-all-evil-states-but-insert "Y" 'evil-end-of-line)
 
 (evil-define-motion lalopmak-evil-scroll-page-up (count)
   "Scrolls page up, centers the cursor"
