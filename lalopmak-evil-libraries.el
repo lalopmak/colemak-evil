@@ -41,7 +41,7 @@ Normal mode:
             |           |           |           |           |           |           |           |           |           |           |
             |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
             |  OpenUp   | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
-            |  OpenDn   |   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
+            |  OpenDn   | Substitute|  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
             |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
@@ -105,7 +105,7 @@ Normal mode:
             |           |           |           |           |           |           |           |           |           |           |
             |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
             |ZigZag Up  | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
-            |ZigZag Down|   Cut->   |  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
+            |ZigZag Down| Substitute|  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
             |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
