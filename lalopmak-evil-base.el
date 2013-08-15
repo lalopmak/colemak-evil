@@ -135,10 +135,12 @@ If BIGWORD is non-nil, move by WORDS."
     'undo-tree-visualize-switch-branch-right))
 
 
-(defmacro create_lalopmak-evil-if-count-else (then-name else-name docstring then &rest else)
-  "Creates evil-motion lalopmak-evil-if-count-[then-name]-else-[else-name]"
+(defmacro create_lalopmak-evil-if-count-else (then-name else-name docstring metadata then &rest else)
+  "Creates evil-motion lalopmak-evil-if-count-[then-name]-else-[else-name]
+metadata should be a list, e.g. (:type line :repeat abort) or nil"
   `(evil-define-motion ,(intern (format "lalopmak-evil-if-count-%s-else-%s" then-name else-name)) (count)
      ,docstring
+     ,@metadata
      (if count
          ,then
        ,@else)))
@@ -148,6 +150,7 @@ If BIGWORD is non-nil, move by WORDS."
 (create_lalopmak-evil-if-count-else "goto-line"
                                     "open-below" 
                                     "if count goes to line, otherwise opens below"
+                                    nil
                                     (evil-goto-line count)
                                     (evil-open-below 1))
 
@@ -155,6 +158,7 @@ If BIGWORD is non-nil, move by WORDS."
 (create_lalopmak-evil-if-count-else "goto-line"
                                     "ace-jump-line-mode" 
                                     "if count goes to line, otherwise ace-jump line"
+                                    (:type line :repeat abort)
                                     (evil-goto-line count)
                                     (lalopmak-evil-ace-jump-line-mode))
 
