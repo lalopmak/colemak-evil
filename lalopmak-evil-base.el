@@ -145,22 +145,29 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
          ,then
        ,@else)))
 
+(defmacro create_lalopmak-evil-if-count-goto-line-else (else-name docstring metadata &rest else)
+  "Creates evil-motion lalopmak-evil-if-count-goto-line-else-[else-name]
+which goes to line-number count if it exists, otherwise executes else.
+
+metadata should be a list, e.g. (:type line :repeat abort) or nil"
+  `(create_lalopmak-evil-if-count-else "goto-line"
+                                       ,else-name
+                                       ,docstring
+                                       ,metadata
+                                       (evil-goto-line count)
+                                       ,@else))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-open-below
-(create_lalopmak-evil-if-count-else "goto-line"
-                                    "open-below" 
-                                    "if count goes to line, otherwise opens below"
-                                    nil
-                                    (evil-goto-line count)
-                                    (evil-open-below 1))
+(create_lalopmak-evil-if-count-goto-line-else "open-below" 
+                                              "if count goes to line, otherwise opens below"
+                                              nil
+                                              (evil-open-below 1))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode
-(create_lalopmak-evil-if-count-else "goto-line"
-                                    "ace-jump-line-mode" 
-                                    "if count goes to line, otherwise ace-jump line"
-                                    (:type line :repeat abort)
-                                    (evil-goto-line count)
-                                    (lalopmak-evil-ace-jump-line-mode))
+(create_lalopmak-evil-if-count-goto-line-else "ace-jump-line-mode" 
+                                              "if count goes to line, otherwise ace-jump line"
+                                              (:type line :repeat abort)
+                                              (lalopmak-evil-ace-jump-line-mode))
 
 (defun lalopmak-evil-write (beg end &optional type filename bang)
   (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)  
