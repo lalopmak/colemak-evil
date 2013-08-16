@@ -274,11 +274,6 @@
 ;; (lalopmak-evil-define-key evil-normal-state-map "zr" 'evil-open-folds)
 ;; (lalopmak-evil-define-key evil-normal-state-map "zm" 'evil-close-folds)
 
-;;; Visual line navigation
-;; In normal mode, use "ge" and "gu" when lines wrap.
-(set-in-all-evil-states-but-insert "ge" 'evil-next-visual-line)
-(set-in-all-evil-states-but-insert "gu" 'evil-previous-visual-line)
-
 ;;; Window handling
 ;; C-w (not C-r as in Shai's mappings) prefixes window commands
 
