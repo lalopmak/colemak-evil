@@ -107,7 +107,9 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
   "Jump visually directly to a char using ace-jump.  Has stopwatch and exclusive."
   :type inclusive
   (with-stopwatch-if-timing "Ace-jump"
-    (evil-ace-jump-char-mode count)))
+                            (evil-without-repeat 
+                              (evil-enclose-ace-jump-for-motion 
+                                (call-interactively #'ace-jump-char-mode)))))
 
 ;;;
 ;;; "jump-to" mode
