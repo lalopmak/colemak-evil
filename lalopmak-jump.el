@@ -100,7 +100,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
            ;;there are few enough characters for a char search to cover it
            (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
           ;;there are too many characters, default to word search to cover more area
-          (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words))) ))
+          (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words)))))
 
 
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
@@ -126,7 +126,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
   "Ace jumps within count lines, or default.  Stops one character short of result."
   :type inclusive
   :repeat abort
-  (search-to-searchTo (lalopmak-evil-ace-jump-char-mode count)))
+  (search-to-searchTo (lalopmak-evil-narrowed-ace-jump-char-mode count)))
 
 
 (provide 'lalopmak-jump)
