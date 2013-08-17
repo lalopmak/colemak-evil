@@ -125,6 +125,9 @@ adds 'motion bindings to that lisp mode map."
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
+                                   " a" "cs(" ;;select outside parens
+                                   " A" "cr(" ;;select inside parens
+
                                    " c" "cs(" ;;copy outside parens
                                    " C" "cr(" ;;copy inside parens
 
