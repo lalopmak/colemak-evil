@@ -125,7 +125,7 @@ adds 'motion bindings to that lisp mode map."
                                    " [" 'paredit-open-square
                                    " <" 'paredit-open-angled
 
-                                   " )" 'paredit-close-sexp
+                                   " )" 'paredit-close-round
                                    " }" 'paredit-close-curly
                                    " ]" 'paredit-close-square
                                    " >" 'paredit-close-angled
