@@ -237,8 +237,8 @@
 (lalopmak-evil-define-key evil-normal-state-map "m" 'evil-record-macro)
 ;; (lalopmak-evil-define-key evil-normal-state-map "\"" 'evil-execute-macro)
 
+(lalopmak-evil-define-key evil-normal-state-map "M" 'evil-set-marker)
 
-(define-key evil-normal-state-map "M" 'evil-set-marker)
 
 (define-key evil-motion-state-map (kbd "C-'") 'evil-goto-mark-line)
 ;;; Duplicate line

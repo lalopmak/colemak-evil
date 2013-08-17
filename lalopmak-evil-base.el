@@ -29,9 +29,9 @@
 (if (not (boundp 'lalopmak-layout-map))
     (setq lalopmak-layout-map 'colemak-to-colemak)) 
 
-(defmacro lalopmak-evil-define-key (keymap key &rest def)
+(defmacro lalopmak-evil-define-key (keymap key def &optional modes)
   "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
-  `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,@def))
+  `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,def))
 
 ;; remove all keybindings from insert-state keymap
 (setcdr evil-insert-state-map nil) 
@@ -83,9 +83,47 @@
   "Deletes all entries in evil-motion-state-map with key char"
   (lalopmak-evil-unmap char evil-motion-state-map))
 
-;;; Make the space, return, and backspace keys work in normal mode
+;; Experiment: make space into a "leader" key
+(lalopmak-evil-unmap-motion ? )  ;;unmap it so that it can be leader
+
+(lalopmak-evil-define-key evil-motion-state-map " e" 'evil-forward-section-begin)
+
+;;double space does a space
+(lalopmak-evil-define-key evil-motion-state-map "  " (lambda () (interactive) (insert " ")))
+
+;; (lalopmak-evil-define-key evil-motion-state-map " (" 'evil-previous-open-paren)
+;; (lalopmak-evil-define-key evil-motion-state-map " )" 'evil-next-close-paren)
+;; (lalopmak-evil-define-key evil-motion-state-map " {" 'evil-previous-open-brace)
+;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
+
+
+(lalopmak-evil-define-key evil-motion-state-map " (" 'paredit-wrap-sexp)
+(lalopmak-evil-define-key evil-motion-state-map " {" 'paredit-wrap-curly)
+(lalopmak-evil-define-key evil-motion-state-map " [" 'paredit-wrap-square)
+(lalopmak-evil-define-key evil-motion-state-map " <" 'paredit-wrap-angled)
+
+(lalopmak-evil-define-key evil-motion-state-map " n" 'paredit-backward-slurp-sexp)
+(lalopmak-evil-define-key evil-motion-state-map " l" 'paredit-backward-barf-sexp)
+
+(lalopmak-evil-define-key evil-motion-state-map " y" 'paredit-forward-barf-sexp)
+(lalopmak-evil-define-key evil-motion-state-map " i" 'paredit-forward-slurp-sexp)
+
+;;seems the same
+;; (lalopmak-evil-define-key evil-motion-state-map " h" 'paredit-join-with-previous-list)
+;; (lalopmak-evil-define-key evil-motion-state-map " o" 'paredit-join-with-next-list)
+
+(lalopmak-evil-define-key evil-motion-state-map " e" 'paredit-join-sexps)
+(lalopmak-evil-define-key evil-motion-state-map " u" 'paredit-split-sexp)
+
+
+(lalopmak-evil-define-key evil-motion-state-map " q" 'raise-sexp)
+(lalopmak-evil-define-key evil-motion-state-map " w" 'paredit-splice-sexp-killing-backward)
+(lalopmak-evil-define-key evil-motion-state-map " f" 'paredit-splice-sexp)
+(lalopmak-evil-define-key evil-motion-state-map " p" 'paredit-splice-sexp-killing-forward)
+(lalopmak-evil-define-key evil-motion-state-map " g" 'paredit-convolute-sexp)
+
+;;; Make the return and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
-(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 (lalopmak-evil-define-key evil-motion-state-map (kbd "RET") (lambda () (interactive) (newline)))
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
