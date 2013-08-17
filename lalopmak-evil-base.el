@@ -106,6 +106,14 @@ adds 'motion bindings to that lisp mode map."
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
+                                   " c" "cs(" ;;copy outside parens
+                                   " C" "cr(" ;;copy inside parens
+
+                                   " t" "tr(" ;;change in parens
+                                   " v" "ts(" ;;change all parens
+
+                                   " d" "dr(" ;;delete in parens
+                                   " b" "ds(" ;;delete all parens
 
                                    " r(" 'paredit-wrap-sexp
                                    " r{" 'paredit-wrap-curly
