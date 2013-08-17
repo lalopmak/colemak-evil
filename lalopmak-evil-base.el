@@ -118,22 +118,38 @@ adds 'motion bindings to that lisp mode map."
                                    " [" 'paredit-wrap-square
                                    " <" 'paredit-wrap-angled
 
-                                   " n" 'paredit-backward-slurp-sexp
-                                   " l" 'paredit-backward-barf-sexp
+                                   ;;navigation on the inside
+                                   " l" 'paredit-backward-up
+                                   " n" 'paredit-backward
+                                   " k" 'paredit-backward-down
 
-                                   " y" 'paredit-forward-barf-sexp
-                                   " i" 'paredit-forward-slurp-sexp
+                                   " y" 'paredit-forward-up
+                                   " i" 'paredit-forward
+                                   " ." 'paredit-forward-down
+
+                                   " j" 'paredit-backward-barf-sexp
+                                   " h" 'paredit-backward-slurp-sexp
+
+                                   " ;" 'paredit-forward-barf-sexp
+                                   " o" 'paredit-forward-slurp-sexp
+
+                                   ;;navigation on the outside
+                                   ;; " j" 'paredit-backward-up
+                                   ;; " h" 'paredit-backward
+                                   ;; " k" 'paredit-backward-down
+
+                                   ;; " ;" 'paredit-forward-up
+                                   ;; " o" 'paredit-forward
+                                   ;; " ." 'paredit-forward-down
+
+                                   ;; " n" 'paredit-backward-slurp-sexp
+                                   ;; " l" 'paredit-backward-barf-sexp
+
+                                   ;; " y" 'paredit-forward-barf-sexp
+                                   ;; " i" 'paredit-forward-slurp-sexp
 
                                    " e" 'paredit-join-sexps
                                    " u" 'paredit-split-sexp
-
-                                   " j" 'paredit-backward-up
-                                   " h" 'paredit-backward
-                                   " k" 'paredit-backward-down
-
-                                   " ;" 'paredit-forward-up
-                                   " o" 'paredit-forward
-                                   " ." 'paredit-forward-down
 
                                    " q" 'raise-sexp
                                    " w" 'paredit-splice-sexp-killing-backward
