@@ -89,7 +89,7 @@
 ;; (lalopmak-evil-define-key evil-motion-state-map " {" 'evil-previous-open-brace)
 ;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
 
-(defmacro lalopmak-evil-define-mode-bindings (state-symbols hook-and-maps-symbols &rest bindings)
+(defmacro lalopmak-evil-define-mode-bindings (hook-and-maps-symbols state-symbols &rest bindings)
   "Given lists of state-symbols and hook-and-maps-symbols, as well as some number of key bindings, 
 binds them via evil-define-key for those states in those modes. 
 
@@ -119,7 +119,7 @@ where hook can be nil if the maps already exist and can be added to right away."
   "For each lisp mode map represented in lalopmak-evil-lisp-mode-hook-and-map-symbols,
 
 adds 'motion bindings to that lisp mode map."
-  `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-hook-and-map-symbols ,@bindings))
+  `(lalopmak-evil-define-mode-bindings lalopmak-evil-lisp-mode-hook-and-map-symbols '(motion) ,@bindings))
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
