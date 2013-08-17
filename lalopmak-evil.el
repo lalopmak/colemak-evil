@@ -62,6 +62,9 @@
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
+
+(set-in-all-evil-states-but-insert "\C-\\" 'evil-scroll-line-to-center)
+
 ;;; Words forward/backward
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-begin)
 (set-in-all-evil-states-but-insert "y" 'lalopmak-evil-forward-word-end)
