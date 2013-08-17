@@ -25,7 +25,9 @@
 (require 'lalopmak-jump)
 
 (defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
-                                                       (clojure-mode-hook (clojure-mode-map))))
+                                                       (clojure-mode-hook (clojure-mode-map)))
+"List with entries of the form (hook (mode-map1 mode-map2 ...)) where hook are lisp-mode hooks and the mode-maps
+are those to add a keybinding to upon hook being triggered.")
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
