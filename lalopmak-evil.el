@@ -388,8 +388,8 @@
 
 
 ;;necessary or we get errors when trying to map "EE", "UE", etc
-(lalopmak-evil-unmap-motion ?E)
-(lalopmak-evil-unmap-motion ?U)
+(lalopmak-evil-define-key evil-motion-state-map "E" nil)
+(lalopmak-evil-define-key evil-motion-state-map "U" nil)
 
 (lalopmak-evil-define-key evil-motion-state-map "EU" 'evil-forward-section-begin)
 (lalopmak-evil-define-key evil-motion-state-map "EE" 'evil-forward-section-end)
