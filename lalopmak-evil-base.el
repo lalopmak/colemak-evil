@@ -24,6 +24,8 @@
 (require 'lalopmak-layouts)
 (require 'lalopmak-jump)
 
+(defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
+                                              (clojure-mode-hook (clojure-mode-map))))
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
@@ -87,22 +89,28 @@
 ;; (lalopmak-evil-define-key evil-motion-state-map " {" 'evil-previous-open-brace)
 ;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
 
-(defvar lalopmak-evil-lisp-mode-map-symbols '(emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
-
-(defmacro lalopmak-evil-define-mode-bindings (state-symbols mode-symbols &rest bindings)
+(defmacro lalopmak-evil-define-mode-bindings (state-symbols hook-and-maps-symbols &rest bindings)
   "Given lists of state-symbols and mode-symbols, as well as some number of key bindings,
 binds them via evil-define-key for those states in those modes."
-  `(mapc (lambda (mode-symbol) 
-           (mapc (lambda (state-symbol)
-                   (evil-define-key state-symbol (symbol-value mode-symbol) ,@bindings))
-                 ,state-symbols))
-         ,mode-symbols))
+  `(mapc (lambda (hook-and-maps-symbol) 
+           (lexical-let* ((hook-symbol (car hook-and-maps-symbol))
+                          (map-symbols (cadr hook-and-maps-symbol))
+                          (define-key-func (lambda ()
+                                             (mapc (lambda (map-symbol) 
+                                                     (mapc (lambda (state-symbol)
+                                                             (evil-define-key state-symbol (symbol-value map-symbol) ,@bindings))
+                                                           ,state-symbols))
+                                                   map-symbols))))
+             (if hook-symbol
+                 (add-hook hook-symbol define-key-func)
+               (funcall define-key-func))))
+           ,hook-and-maps-symbols))
 
 (defmacro lalopmak-evil-define-lisp-motions (&rest bindings)
-  "For each lisp mode map represented in lalopmak-evil-lisp-mode-map-symbols,
+  "For each lisp mode map represented in lalopmak-evil-lisp-mode-hook-and-map-symbols,
 
 adds 'motion bindings to that lisp mode map."
-    `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-map-symbols ,@bindings))
+    `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-hook-and-map-symbols ,@bindings))
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
@@ -110,20 +118,17 @@ adds 'motion bindings to that lisp mode map."
                                    " C" "cr(" ;;copy inside parens
 
                                    " t" "tr(" ;;change in parens
-                                   " v" "ts(" ;;change all parens
+                                   " d" "ds(" ;;delete all parens
 
-                                   " d" "dr(" ;;delete in parens
-                                   " b" "ds(" ;;delete all parens
+                                   " (" 'paredit-wrap-sexp
+                                   " {" 'paredit-wrap-curly
+                                   " [" 'paredit-wrap-square
+                                   " <" 'paredit-wrap-angled
 
-                                   " r(" 'paredit-wrap-sexp
-                                   " r{" 'paredit-wrap-curly
-                                   " r[" 'paredit-wrap-square
-                                   " r<" 'paredit-wrap-angled
-
-                                   " (" 'paredit-open-round
-                                   " {" 'paredit-open-curly
-                                   " [" 'paredit-open-square
-                                   " <" 'paredit-open-angled
+                                   " r(" 'paredit-open-round
+                                   " r{" 'paredit-open-curly
+                                   " r[" 'paredit-open-square
+                                   " r<" 'paredit-open-angled
 
                                    " )" 'paredit-close-round
                                    " }" 'paredit-close-curly
