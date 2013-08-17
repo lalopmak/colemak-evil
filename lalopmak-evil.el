@@ -33,11 +33,11 @@
 (set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
 
-;;; Turbo navigation mode
-(set-in-all-evil-states-but-insert "I" 'evil-backward-paragraph)
-(set-in-all-evil-states-but-insert "N" 'evil-forward-paragraph)
-(set-in-all-evil-states-but-insert "E" 'evil-backward-sentence)
-(set-in-all-evil-states-but-insert "U" 'evil-forward-sentence)
+;; ;;; Turbo navigation mode
+;; (set-in-all-evil-states-but-insert "I" 'evil-backward-paragraph)
+;; (set-in-all-evil-states-but-insert "N" 'evil-forward-paragraph)
+;; (set-in-all-evil-states-but-insert "E" 'evil-backward-sentence)
+;; (set-in-all-evil-states-but-insert "U" 'evil-forward-sentence)
 
 ;;; Beginning/end of line (home/end)
 ;; Use back-to-indentation instead of evil-beginning-of-line so that
@@ -148,8 +148,8 @@
 
 
 ;;; Cursor position jumplist
-(set-in-all-evil-states-but-insert "(" 'evil-jump-backward)
-(set-in-all-evil-states-but-insert ")" 'evil-jump-forward)
+(set-in-all-evil-states-but-insert "N" 'evil-jump-backward)
+(set-in-all-evil-states-but-insert "I" 'evil-jump-forward)
 
 
 ;;; Move cursor to top/bottom of screen
@@ -211,12 +211,6 @@
 ;;not motion for compatiblilty with undo-tree
 (set-in-all-evil-states-but-insert-and-motion "q" 'evil-replace)
 (set-in-all-evil-states-but-insert-and-motion "Q" 'evil-replace-state)
-
-
-(lalopmak-evil-define-key evil-motion-state-map "\C-e" 'evil-scroll-line-down)
-(lalopmak-evil-define-key evil-motion-state-map "\C-f" 'evil-scroll-page-down)
-(lalopmak-evil-define-key evil-motion-state-map "\C-o" 'evil-jump-backward)
-(lalopmak-evil-define-key evil-motion-state-map "\C-y" 'evil-scroll-line-up)
 
 ;;; Scroll in place
 (lalopmak-evil-define-key evil-motion-state-map (kbd "C-<up>") 'evil-scroll-line-up)
@@ -387,11 +381,26 @@
 
 
 
+(lalopmak-evil-define-key evil-motion-state-map "0" 'evil-beginning-of-line)
+
+
+;;necessary or we get errors when trying to map "EE", "UE", etc
+(lalopmak-evil-unmap-motion ?E)
+(lalopmak-evil-unmap-motion ?U)
+
+(lalopmak-evil-define-key evil-motion-state-map "EU" 'evil-forward-section-begin)
+(lalopmak-evil-define-key evil-motion-state-map "EE" 'evil-forward-section-end)
+(lalopmak-evil-define-key evil-motion-state-map "UU" 'evil-backward-section-begin)
+(lalopmak-evil-define-key evil-motion-state-map "UE" 'evil-backward-section-end)
+(lalopmak-evil-define-key evil-motion-state-map "U(" 'evil-previous-open-paren)
+(lalopmak-evil-define-key evil-motion-state-map "E)" 'evil-next-close-paren)
+(lalopmak-evil-define-key evil-motion-state-map "U{" 'evil-previous-open-brace)
+(lalopmak-evil-define-key evil-motion-state-map "E}" 'evil-next-close-brace)
+
+
 ;; Makes ; an alias for :
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
 
-
-(lalopmak-evil-define-key evil-motion-state-map "0" 'evil-beginning-of-line)
 
 ;;hooks for hints
 (evil-ex-define-cmd "hints" 'lalopmak-evil-hints)
@@ -416,6 +425,9 @@
 ;;   (kbd "C") 'evil-paredit-yank-line
 ;;   (kbd "x") 'paredit-backward-delete
 ;;   (kbd "X") 'paredit-forward-delete)
+
+;;experiment
+(setq evil-cross-lines t)
 
 (provide 'lalopmak-evil)
 

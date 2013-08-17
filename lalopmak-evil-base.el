@@ -75,7 +75,13 @@
                                 evil-visual-state-map
                                 evil-emacs-state-map)))
 
+(defun lalopmak-evil-unmap (char map)
+  "Given association list map, deletes all entries with key char"
+  (setq map (assq-delete-all char map)))
 
+(defun lalopmak-evil-unmap-motion (char)
+  "Deletes all entries in evil-motion-state-map with key char"
+  (lalopmak-evil-unmap char evil-motion-state-map))
 
 ;;; Make the space, return, and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
