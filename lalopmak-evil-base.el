@@ -25,7 +25,7 @@
 (require 'lalopmak-jump)
 
 (defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
-                                              (clojure-mode-hook (clojure-mode-map))))
+                                                       (clojure-mode-hook (clojure-mode-map))))
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
@@ -104,13 +104,13 @@ binds them via evil-define-key for those states in those modes."
              (if hook-symbol
                  (add-hook hook-symbol define-key-func)
                (funcall define-key-func))))
-           ,hook-and-maps-symbols))
+         ,hook-and-maps-symbols))
 
 (defmacro lalopmak-evil-define-lisp-motions (&rest bindings)
   "For each lisp mode map represented in lalopmak-evil-lisp-mode-hook-and-map-symbols,
 
 adds 'motion bindings to that lisp mode map."
-    `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-hook-and-map-symbols ,@bindings))
+  `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-hook-and-map-symbols ,@bindings))
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
@@ -362,11 +362,11 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 (evil-define-motion lalopmak-evil-stretch (count)
   "Stretches the frame count times"
-   (stretch-frame count))
+  (stretch-frame count))
 
 (evil-define-motion lalopmak-evil-unstretch (count)
   "Unstretches the frame count times"
-   (unstretch-frame count))
+  (unstretch-frame count))
 
 (evil-ex-define-cmd "stretch" 'lalopmak-evil-stretch)
 (evil-ex-define-cmd "unstretch" 'lalopmak-evil-unstretch)
@@ -374,11 +374,11 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 (evil-define-motion lalopmak-evil-grow (count)
   "Growes the frame count times"
-   (grow-frame count))
+  (grow-frame count))
 
 (evil-define-motion lalopmak-evil-shrink (count)
   "Shrinkes the frame count times"
-   (shrink-frame count))
+  (shrink-frame count))
 
 (evil-ex-define-cmd "grow" 'lalopmak-evil-grow)
 (evil-ex-define-cmd "shrink" 'lalopmak-evil-shrink)
