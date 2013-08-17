@@ -84,12 +84,11 @@
   (lalopmak-evil-unmap char evil-motion-state-map))
 
 ;; Experiment: make space into a "leader" key
-(lalopmak-evil-unmap-motion ? )  ;;unmap it so that it can be leader
 
-(lalopmak-evil-define-key evil-motion-state-map " e" 'evil-forward-section-begin)
+;;default: space does one space, unless remapped in a mode
+(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 
-;;double space does a space
-(lalopmak-evil-define-key evil-motion-state-map "  " (lambda () (interactive) (insert " ")))
+
 
 ;; (lalopmak-evil-define-key evil-motion-state-map " (" 'evil-previous-open-paren)
 ;; (lalopmak-evil-define-key evil-motion-state-map " )" 'evil-next-close-paren)
@@ -98,15 +97,23 @@
 
 (defvar lalopmak-evil-lisp-mode-map-symbols '(emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
 
+(defmacro lalopmak-evil-define-mode-bindings (state-symbols mode-symbols &rest bindings)
+  "Given lists of state-symbols and mode-symbols, as well as some number of key bindings,
+binds them via evil-define-key for those states in those modes."
+  `(mapc (lambda (mode-symbol) 
+           (mapc (lambda (state-symbol)
+                   (evil-define-key state-symbol (symbol-value mode-symbol) ,@bindings))
+                 ,state-symbols))
+         ,mode-symbols))
+
 (defmacro lalopmak-evil-define-lisp-motions (&rest bindings)
   "For each lisp mode map represented in lalopmak-evil-lisp-mode-map-symbols,
 
 adds 'motion bindings to that lisp mode map."
-  `(mapc (lambda (mode-symbol) (evil-define-key 'motion (symbol-value mode-symbol) ,@bindings))
-         lalopmak-evil-lisp-mode-map-symbols))
+    `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-map-symbols ,@bindings))
 
-
-(lalopmak-evil-define-lisp-motions " (" 'paredit-wrap-sexp
+(lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
+                                   " (" 'paredit-wrap-sexp
                                    " {" 'paredit-wrap-curly
                                    " [" 'paredit-wrap-square
                                    " <" 'paredit-wrap-angled
