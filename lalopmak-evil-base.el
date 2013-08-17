@@ -113,10 +113,22 @@ adds 'motion bindings to that lisp mode map."
     `(lalopmak-evil-define-mode-bindings '(motion) lalopmak-evil-lisp-mode-map-symbols ,@bindings))
 
 (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
-                                   " (" 'paredit-wrap-sexp
-                                   " {" 'paredit-wrap-curly
-                                   " [" 'paredit-wrap-square
-                                   " <" 'paredit-wrap-angled
+
+
+                                   " r(" 'paredit-wrap-sexp
+                                   " r{" 'paredit-wrap-curly
+                                   " r[" 'paredit-wrap-square
+                                   " r<" 'paredit-wrap-angled
+
+                                   " (" 'paredit-open-round
+                                   " {" 'paredit-open-curly
+                                   " [" 'paredit-open-square
+                                   " <" 'paredit-open-angled
+
+                                   " )" 'paredit-close-sexp
+                                   " }" 'paredit-close-curly
+                                   " ]" 'paredit-close-square
+                                   " >" 'paredit-close-angled
 
                                    ;;navigation on the inside
                                    " l" 'paredit-backward-up
