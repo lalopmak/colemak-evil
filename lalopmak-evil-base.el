@@ -96,31 +96,41 @@
 ;; (lalopmak-evil-define-key evil-motion-state-map " {" 'evil-previous-open-brace)
 ;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
 
+(defvar lalopmak-evil-lisp-mode-map-symbols '(emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
 
-(lalopmak-evil-define-key evil-motion-state-map " (" 'paredit-wrap-sexp)
-(lalopmak-evil-define-key evil-motion-state-map " {" 'paredit-wrap-curly)
-(lalopmak-evil-define-key evil-motion-state-map " [" 'paredit-wrap-square)
-(lalopmak-evil-define-key evil-motion-state-map " <" 'paredit-wrap-angled)
+(defmacro lalopmak-evil-define-lisp-motions (&rest bindings)
+  "For each lisp mode map represented in lalopmak-evil-lisp-mode-map-symbols,
 
-(lalopmak-evil-define-key evil-motion-state-map " n" 'paredit-backward-slurp-sexp)
-(lalopmak-evil-define-key evil-motion-state-map " l" 'paredit-backward-barf-sexp)
-
-(lalopmak-evil-define-key evil-motion-state-map " y" 'paredit-forward-barf-sexp)
-(lalopmak-evil-define-key evil-motion-state-map " i" 'paredit-forward-slurp-sexp)
-
-;;seems the same
-;; (lalopmak-evil-define-key evil-motion-state-map " h" 'paredit-join-with-previous-list)
-;; (lalopmak-evil-define-key evil-motion-state-map " o" 'paredit-join-with-next-list)
-
-(lalopmak-evil-define-key evil-motion-state-map " e" 'paredit-join-sexps)
-(lalopmak-evil-define-key evil-motion-state-map " u" 'paredit-split-sexp)
+adds 'motion bindings to that lisp mode map."
+  `(mapc (lambda (mode-symbol) (evil-define-key 'motion (symbol-value mode-symbol) ,@bindings))
+         lalopmak-evil-lisp-mode-map-symbols))
 
 
-(lalopmak-evil-define-key evil-motion-state-map " q" 'raise-sexp)
-(lalopmak-evil-define-key evil-motion-state-map " w" 'paredit-splice-sexp-killing-backward)
-(lalopmak-evil-define-key evil-motion-state-map " f" 'paredit-splice-sexp)
-(lalopmak-evil-define-key evil-motion-state-map " p" 'paredit-splice-sexp-killing-forward)
-(lalopmak-evil-define-key evil-motion-state-map " g" 'paredit-convolute-sexp)
+(lalopmak-evil-define-lisp-motions " (" 'paredit-wrap-sexp
+                                   " {" 'paredit-wrap-curly
+                                   " [" 'paredit-wrap-square
+                                   " <" 'paredit-wrap-angled
+
+                                   " n" 'paredit-backward-slurp-sexp
+                                   " l" 'paredit-backward-barf-sexp
+
+                                   " y" 'paredit-forward-barf-sexp
+                                   " i" 'paredit-forward-slurp-sexp
+
+                                   " e" 'paredit-join-sexps
+                                   " u" 'paredit-split-sexp
+
+                                   " j" 'paredit-backward-up
+                                   " h" 'paredit-backward-down
+
+                                   " ;" 'paredit-forward-up
+                                   " o" 'paredit-forward-down
+
+                                   " q" 'raise-sexp
+                                   " w" 'paredit-splice-sexp-killing-backward
+                                   " f" 'paredit-splice-sexp
+                                   " p" 'paredit-splice-sexp-killing-forward
+                                   " g" 'paredit-convolute-sexp)
 
 ;;; Make the return and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
