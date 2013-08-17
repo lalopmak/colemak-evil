@@ -90,8 +90,17 @@
 ;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
 
 (defmacro lalopmak-evil-define-mode-bindings (state-symbols hook-and-maps-symbols &rest bindings)
-  "Given lists of state-symbols and mode-symbols, as well as some number of key bindings,
-binds them via evil-define-key for those states in those modes."
+  "Given lists of state-symbols and hook-and-maps-symbols, as well as some number of key bindings, 
+binds them via evil-define-key for those states in those modes. 
+
+hook-and-maps-symbols should be a list of the form:
+
+'((hook1 (map1 map2)) (hook2 (map3 map4))...)
+
+e.g. '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
+       (clojure-mode-hook (clojure-mode-map)))
+
+where hook can be nil if the maps already exist and can be added to right away."
   `(mapc (lambda (hook-and-maps-symbol) 
            (lexical-let* ((hook-symbol (car hook-and-maps-symbol))
                           (map-symbols (cadr hook-and-maps-symbol))
