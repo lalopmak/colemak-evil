@@ -128,10 +128,12 @@ adds 'motion bindings to that lisp mode map."
                                    " u" 'paredit-split-sexp
 
                                    " j" 'paredit-backward-up
-                                   " h" 'paredit-backward-down
+                                   " h" 'paredit-backward
+                                   " k" 'paredit-backward-down
 
                                    " ;" 'paredit-forward-up
-                                   " o" 'paredit-forward-down
+                                   " o" 'paredit-forward
+                                   " ." 'paredit-forward-down
 
                                    " q" 'raise-sexp
                                    " w" 'paredit-splice-sexp-killing-backward
