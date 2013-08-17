@@ -120,18 +120,18 @@ If BIGWORD is non-nil, move by WORDS."
   :type inclusive
   (lalopmak-evil-backward-word-begin count t))
 
-(evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
-  "Forward character, allowing you to fall to the next line"
-  :type exclusive
-  (if (and (boundp 'paredit-mode) paredit-mode)
-      (paredit-forward)
-    (evil-forward-char count 'crosslines noerror)))
+;; (evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
+;;   "Forward character, allowing you to fall to the next line"
+;;   :type exclusive
+;;   (if (and (boundp 'paredit-mode) paredit-mode)
+;;       (paredit-forward)
+;;     (evil-forward-char count 'crosslines noerror)))
 
-(evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
-  "Backward character, allowing you to rise to the previous line"
-  (if (and (boundp 'paredit-mode) paredit-mode)
-      (paredit-backward)
-    (evil-backward-char count 'crosslines noerror)))
+;; (evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
+;;   "Backward character, allowing you to rise to the previous line"
+;;   (if (and (boundp 'paredit-mode) paredit-mode)
+;;       (paredit-backward)
+;;     (evil-backward-char count 'crosslines noerror)))
 
 ;;Makes these compatible with undo-tree
 (when (boundp 'undo-tree-visualizer-mode-map)

@@ -29,8 +29,8 @@
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
-(set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
-(set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
+(set-in-all-evil-states-but-insert "n" 'evil-backward-char)
+(set-in-all-evil-states-but-insert "i" 'evil-forward-char)
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;; ;;; Turbo navigation mode
@@ -393,10 +393,16 @@
 (lalopmak-evil-define-key evil-motion-state-map "UU" 'evil-backward-section-begin)
 (lalopmak-evil-define-key evil-motion-state-map "UE" 'evil-backward-section-end)
 (lalopmak-evil-define-key evil-motion-state-map "U(" 'evil-previous-open-paren)
+(lalopmak-evil-define-key evil-motion-state-map "U)" 'evil-previous-open-paren)
+(lalopmak-evil-define-key evil-motion-state-map "E(" 'evil-next-close-paren)
 (lalopmak-evil-define-key evil-motion-state-map "E)" 'evil-next-close-paren)
 (lalopmak-evil-define-key evil-motion-state-map "U{" 'evil-previous-open-brace)
+(lalopmak-evil-define-key evil-motion-state-map "U}" 'evil-previous-open-brace)
+(lalopmak-evil-define-key evil-motion-state-map "E}" 'evil-next-close-brace)
 (lalopmak-evil-define-key evil-motion-state-map "E}" 'evil-next-close-brace)
 
+;;tentative assignment; for the key in top middle
+(lalopmak-evil-define-key evil-motion-state-map "!" 'evil-jump-item)
 
 ;; Makes ; an alias for :
 (set-in-all-evil-states-but-insert ";" 'evil-ex)
