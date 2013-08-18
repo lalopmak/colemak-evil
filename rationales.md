@@ -69,6 +69,17 @@ p is harder to reach than v, on a random basis [swapped].  The p requires awkwar
 
 v is farther than p from all modifiers [swapped].  However, when pressing v the pinkie seems to curl to more easily press the shift, suggesting that V is next-most easlily pressed, then C-v.  By contrast, when moving up to press p, the pinkie is positioned to press C-p, and P seems harder to press at.  This suggests that v is the better key for using with both modifiers [default].
 
+Redoing the movement keys
+====
 
+h and j (scroll up/down) are very common, much moreso than forward/backward char and especially forward/backward word.  A possible improvement would be to change them to reflect the "browsing" setup:
+
+scroll up/down - ni
+arrow keys: luye
+forward/backward word: jh
+
+That way, one would not have to leave the home-row to enact the most common scrolling.
+
+Against this, one should note that jh are, similarly to undo, "inflated", not used very often in tandem with other keys, but rather "spammed" by a strong finger once the hand position is shifted.  As of now, I'm inclined to say this is good enough, and ideal in terms of geometric suggestiveness.
 
 
