@@ -46,7 +46,9 @@ Change was moved to t, due to its very common usage, especially comboed with ace
 ozxp, and possibly q
 ----
 
-undo moved to p/C-p.  z/Z is viable and has nice shift properties.  It helps that z is not used often (most usage is in bundles) - that is also why p was chosen over, say, v.  However, z/Z requires too much folding of the ring finger which, while strong, could eventually be problematic.  Also, p is a good choice for a consecutive, "nonflowing command", since it is awkward to move from it. 
+undo moved to p/C-p.  z/Z is okay and has nice shift properties.  But it might not be very good considering the frequency of usage.
+
+The stats for undo are sort of inflated because I spam it so much to get rid of a bunch of changes, but it's not really used in tandem with other commands, so an out-of-the-way key is okay.  What is required is that the key be used by a strong finger (one that, once the hand positioning has been shifted, is easy to press repeatedly.  z/Z requires too much folding of the ring finger to make this happen, and v did not work well in practice (though its mirror, k, is spammed a lot, so this might just be due to practice).  The fact that it is awkward to move away from p to other letters reduces its opportunity cost. 
 
 open above/below are not used nearly often enough to deserve home row spots.  Currently, the spots open are qzx, of which x is out of the question.  z/Z is not a bad spot, especially for such a "nonflowing command", and moves finger toward shift which is somewhat common when opening new line, but it is an open question whether it is preferable over q/C-q, and also whether the relative frequencies justify best placement.
 
