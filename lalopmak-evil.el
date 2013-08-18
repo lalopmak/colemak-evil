@@ -168,7 +168,11 @@
 (set-in-all-evil-states-but-insert "a" 'evil-visual-char)
 (set-in-all-evil-states-but-insert "A" 'evil-visual-line)
 (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
+(lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
+;;switching sides in visual mode
+(define-key evil-visual-state-map " a" 'exchange-point-and-mark)
+(define-key evil-visual-state-map " A" 'evil-visual-exchange-corners)
 
 
 ;;;evil-surround
@@ -335,7 +339,6 @@
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
 (lalopmak-evil-define-key evil-motion-state-map "B" 'find-file)
 
-(lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
 (evil-define-motion lalopmak-evil-paste-below (count)
