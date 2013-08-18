@@ -75,7 +75,9 @@ Redoing the movement keys
 h and j (scroll up/down) are very common, much moreso than forward/backward char and especially forward/backward word.  A possible improvement would be to change them to reflect the "browsing" setup:
 
 scroll up/down - ni
+
 arrow keys: luye
+
 forward/backward word: jh
 
 That way, one would not have to leave the home-row to enact the most common scrolling.
@@ -83,3 +85,8 @@ That way, one would not have to leave the home-row to enact the most common scro
 Against this, one should note that jh are, similarly to undo, "inflated", not used very often in tandem with other keys, but rather "spammed" by a strong finger once the hand position is shifted.  As of now, I'm inclined to say this is good enough, and ideal in terms of geometric suggestiveness.
 
 
+Switch copy and paste?
+====
+Copy is a motion (though probably one of the lesser-used ones), hence more likely to be paired with others keys.  v provides a better position for this than c.
+
+Ultimately, the defeater of this position is that C-c seems to be used for other keybindings, hence not leaving room for paste-pop.  Thankfully, copy's use frequency (1.3% as of this writing vs about 1.7% for the pastes; many of these also probably require visual mode, negating this issue) is low enough that this is probably not a big deal.  If this ever changes, I may have to consider more drastic action.
