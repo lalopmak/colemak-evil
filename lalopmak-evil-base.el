@@ -134,6 +134,7 @@ adds 'motion bindings to that lisp mode map."
                                    " t" "tr(" ;;change in parens
                                    " d" "ds(" ;;delete all parens
 
+                                   " ," ",s(" ;;comment all s-exp
                                    " (" 'paredit-wrap-sexp
                                    " {" 'paredit-wrap-curly
                                    " [" 'paredit-wrap-square
