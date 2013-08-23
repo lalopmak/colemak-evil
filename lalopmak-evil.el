@@ -62,9 +62,6 @@
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
-
-(set-in-all-evil-states-but-insert "\C-\\" 'evil-scroll-line-to-center)
-
 ;;; Words forward/backward
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-backward-word-begin)
 (set-in-all-evil-states-but-insert "y" 'lalopmak-evil-forward-word-end)
@@ -170,10 +167,17 @@
 (set-in-all-evil-states-but-insert "\C-a" 'mark-whole-buffer)
 (lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
+
 ;;switching sides in visual mode
 (define-key evil-visual-state-map " a" 'exchange-point-and-mark)
 (define-key evil-visual-state-map " A" 'evil-visual-exchange-corners)
 
+;;space-prefixed motions
+(define-key evil-motion-state-map " " nil)
+(define-key evil-motion-state-map "  " (lambda () (interactive) (insert " ")))
+(define-key evil-motion-state-map " /" 'evil-scroll-line-to-bottom)
+(define-key evil-motion-state-map " \\" 'evil-scroll-line-to-center)
+(define-key evil-motion-state-map " !" 'evil-scroll-line-to-top)
 
 ;;;evil-surround
 
