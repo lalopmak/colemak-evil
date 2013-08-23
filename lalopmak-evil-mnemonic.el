@@ -29,6 +29,13 @@
 (lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
 (lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
 
+
+(lalopmak-evil-define-key evil-motion-state-map "b" 'lalopmak-evil-backward-word-begin)
+(lalopmak-evil-define-key evil-motion-state-map "B" 'lalopmak-evil-backward-WORD-begin)
+
+(lalopmak-evil-define-key evil-motion-state-map "e" 'lalopmak-evil-forward-word-end)
+(lalopmak-evil-define-key evil-motion-state-map "E" 'lalopmak-evil-forward-WORD-end)
+
 ;;Ace jump
 (set-in-all-evil-states-but-insert "f" 'lalopmak-evil-narrowed-ace-jump-char-mode)
 (set-in-all-evil-states-but-insert "F" 'lalopmak-evil-narrowed-ace-jump-char-to-mode)
@@ -40,7 +47,8 @@
   (lalopmak-evil-define-key evil-normal-state-map "u" 'undo-tree-undo)
   (lalopmak-evil-define-key evil-normal-state-map "U" 'undo-tree-redo))
 
-
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-b") 'lalopmak-evil-evil-scroll-page-up)
+(lalopmak-evil-define-key evil-motion-state-map (kbd "C-d") 'lalopmak-evil-evil-scroll-down)
 
 ;;Line jump
 (set-in-all-evil-states-but-insert "j" 'lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode) ;temporary assignment
