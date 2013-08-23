@@ -157,6 +157,27 @@ y = sYmbol
     (funcall motion 1))
   (move-to-window-line nil))
 
+;;;;;;;;;;;; Idle actions ;;;;;;;;;;;;;;
+
+(defun lalopmak-evil-add-trailing-whitespace-to-line ()
+  "Adds a trailing whitespace to the line unless one exists already"
+  (interactive)
+  (save-excursion (end-of-line)
+                  (unless (eq ?\s
+                              (char-before))
+                    (insert-char ?\s))))
+
+(defun lalopmak-evil-add-trailing-whitespace-to-window ()
+  "Adds a trailing whitespace to all lines on the page"
+  (interactive)
+  (save-excursion (goto-char (window-start))
+                  (let ((limit (window-end)))
+                    (while (and (not (eobp)) (<= (point) limit))
+                      (lalopmak-evil-add-trailing-whitespace-to-line)
+                      (forward-line)))))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;;;;;;;;;;;; Buffer Manipulation macros/functions ;;;;;;;;;;;;;;
 
 
@@ -283,5 +304,7 @@ y = sYmbol
 ;;          (max (or max-width 1000))
 ;;          (height (window-height))
 ;;          (width 
+
+
 
 (provide 'lalopmak-evil-libraries)
