@@ -31,16 +31,16 @@ are those to add a keybinding to upon hook being triggered.")
 
 ;; we're using the colemak layout by default
 (if (not (boundp 'lalopmak-layout-map))
-    (setq lalopmak-layout-map 'colemak-to-colemak)) 
+    (setq lalopmak-layout-map 'colemak-to-colemak))
 
 (defmacro lalopmak-evil-define-key (keymap key def &optional modes)
   "Defines key given the lalopmak-evil keymap, in accordance to the lalopmak-layout-map"
   `(define-key ,keymap (key-to-layout ,key lalopmak-layout-map) ,def))
 
 ;; remove all keybindings from insert-state keymap
-(setcdr evil-insert-state-map nil) 
+(setcdr evil-insert-state-map nil)
 ;; but [escape] should switch back to normal state
-(lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state) 
+(lalopmak-evil-define-key evil-insert-state-map [escape] 'evil-normal-state)
 
 ;; make undo more incremental (break into smaller chunks)
 (setq evil-want-fine-undo t)
@@ -65,8 +65,8 @@ are those to add a keybinding to upon hook being triggered.")
 
 
 (defun set-in-all-evil-states-but-insert (key def)
-  (set-in-all-evil-states key 
-                          def 
+  (set-in-all-evil-states key
+                          def
                           (list evil-normal-state-map
                                 evil-visual-state-map
                                 evil-emacs-state-map
@@ -74,10 +74,11 @@ are those to add a keybinding to upon hook being triggered.")
 
 (defun set-in-all-evil-states-but-insert-and-motion (key def)
   (set-in-all-evil-states key
-                          def 
+                          def
                           (list evil-normal-state-map
                                 evil-visual-state-map
                                 evil-emacs-state-map)))
+
 
 ;; Experiment: make space into a "leader" key
 
@@ -92,8 +93,8 @@ are those to add a keybinding to upon hook being triggered.")
 ;; (lalopmak-evil-define-key evil-motion-state-map " }" 'evil-next-close-brace)
 
 (defmacro lalopmak-evil-define-mode-bindings (hook-and-maps-symbols state-symbols &rest bindings)
-  "Given lists of state-symbols and hook-and-maps-symbols, as well as some number of key bindings, 
-binds them via evil-define-key for those states in those modes. 
+  "Given lists of state-symbols and hook-and-maps-symbols, as well as some number of key bindings,
+binds them via evil-define-key for those states in those modes.
 
 hook-and-maps-symbols should be a list of the form:
 
@@ -103,11 +104,11 @@ e.g. '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
        (clojure-mode-hook (clojure-mode-map)))
 
 where hook can be nil if the maps already exist and can be added to right away."
-  `(mapc (lambda (hook-and-maps-symbol) 
+  `(mapc (lambda (hook-and-maps-symbol)
            (lexical-let* ((hook-symbol (car hook-and-maps-symbol))
                           (map-symbols (cadr hook-and-maps-symbol))
                           (define-key-func (lambda ()
-                                             (mapc (lambda (map-symbol) 
+                                             (mapc (lambda (map-symbol)
                                                      (mapc (lambda (state-symbol)
                                                              (evil-define-key state-symbol (symbol-value map-symbol) ,@bindings))
                                                            ,state-symbols))
@@ -197,6 +198,11 @@ adds 'motion bindings to that lisp mode map."
 
 (set-in-all-evil-states (kbd "C-r") 'isearch-backward)
 
+;; ;;multiple cursors
+;; (lalopmak-evil-define-key evil-visual-state-map " i" 'mc/mark-next-like-this)
+;; (lalopmak-evil-define-key evil-visual-state-map " n" 'mc/mark-previous-like-this)
+;; (lalopmak-evil-define-key evil-visual-state-map " e" 'mc/mark-all-symbols-like-this)
+
 ;;expand-region
 (set-in-all-evil-states (kbd "C-f") 'er/expand-region)
 (setq expand-region-contract-fast-key "w")
@@ -269,26 +275,26 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
                                        ,@else))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-open-below
-(create_lalopmak-evil-if-count-goto-line-else "open-below" 
+(create_lalopmak-evil-if-count-goto-line-else "open-below"
                                               "if count goes to line, otherwise opens below"
                                               nil
                                               (evil-open-below 1))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode
-(create_lalopmak-evil-if-count-goto-line-else "ace-jump-line-mode" 
+(create_lalopmak-evil-if-count-goto-line-else "ace-jump-line-mode"
                                               "if count goes to line, otherwise ace-jump line"
                                               (:type line :repeat abort)
                                               (lalopmak-evil-ace-jump-line-mode))
 
 (defun lalopmak-evil-write (beg end &optional type filename bang)
-  (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)  
-      (edit-server-save) 
+  (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)
+      (edit-server-save)
     (evil-write beg end type filename bang)))
 
-;; (defadvice evil-write (around check-edit-server 
+;; (defadvice evil-write (around check-edit-server
 ;;                               (beg end &optional type filename bang))
-;;   (if (edit-server-edit-mode-running) 
-;;       (edit-server-save) 
+;;   (if (edit-server-edit-mode-running)
+;;       (edit-server-save)
 ;;     ad-do-it))
 
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
@@ -340,6 +346,15 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 ;;M-x speck-mode (spell checking)
 
 (evil-ex-define-cmd "spell" 'speck-mode)
+
+;;multiple cursors
+(evil-ex-define-cmd "cursor" (lambda ()
+                               (interactive)
+                               (when (boundp 'multiple-cursors-mode)
+                                 (if (evil-visual-state-p)
+                                     (mc/edit-lines)
+                                   ;; (mc/add-cursor-on-click)
+                                   ))))
 
 ;; M-x keyfreq mode (key frequency analysis)
 
