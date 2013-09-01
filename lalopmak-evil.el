@@ -29,8 +29,8 @@
 ;;; Up/down/left/right
 (set-in-all-evil-states-but-insert "u" 'evil-previous-line)
 (set-in-all-evil-states-but-insert "e" 'evil-next-line)
-(set-in-all-evil-states-but-insert "n" 'evil-backward-char)
-(set-in-all-evil-states-but-insert "i" 'evil-forward-char)
+(set-in-all-evil-states-but-insert "n" 'lalopmak-evil-backward-char)
+(set-in-all-evil-states-but-insert "i" 'lalopmak-evil-forward-char)
 ;; (lalopmak-evil-define-key evil-operator-state-map "i" 'evil-forward-char)
 
 ;; ;;; Turbo navigation mode
@@ -58,7 +58,7 @@
 (lalopmak-evil-define-key evil-motion-state-map "j" 'lalopmak-evil-scroll-page-up)
 (lalopmak-evil-define-key evil-motion-state-map "h" 'lalopmak-evil-scroll-page-down)
 
-;;; Page halfway up/down 
+;;; Page halfway up/down
 (set-in-all-evil-states-but-insert "\C-u" 'evil-scroll-up)
 (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-down)
 
@@ -84,7 +84,7 @@
 ;; (lalopmak-evil-define-key evil-inner-text-objects-map "\C-y" 'evil-inner-WORD)
 
 
-;;directional object maps 
+;;directional object maps
 (lalopmak-evil-define-key evil-inner-text-objects-map "l" 'evil-inner-word)
 (lalopmak-evil-define-key evil-outer-text-objects-map "l" 'evil-a-word)
 (lalopmak-evil-define-key evil-inner-text-objects-map "y" 'evil-inner-WORD)
@@ -168,16 +168,16 @@
 (lalopmak-evil-define-key evil-motion-state-map "\M-a" 'evil-visual-block)
 
 
-;;switching sides in visual mode
-(define-key evil-visual-state-map " a" 'exchange-point-and-mark)
-(define-key evil-visual-state-map " A" 'evil-visual-exchange-corners)
+;; ;;switching sides in visual mode
+;; (define-key evil-visual-state-map " a" 'exchange-point-and-mark)
+;; (define-key evil-visual-state-map " A" 'evil-visual-exchange-corners)
 
-;;space-prefixed motions
-(define-key evil-motion-state-map " " nil)
-(define-key evil-motion-state-map "  " (lambda () (interactive) (insert " ")))
-(define-key evil-motion-state-map " /" 'evil-scroll-line-to-bottom)
-(define-key evil-motion-state-map " \\" 'evil-scroll-line-to-center)
-(define-key evil-motion-state-map " !" 'evil-scroll-line-to-top)
+;; ;;space-prefixed motions
+;; (define-key evil-motion-state-map " " nil)
+;; (define-key evil-motion-state-map "  " (lambda () (interactive) (insert " ")))
+;; (define-key evil-motion-state-map " /" 'evil-scroll-line-to-bottom)
+;; (define-key evil-motion-state-map " \\" 'evil-scroll-line-to-center)
+;; (define-key evil-motion-state-map " !" 'evil-scroll-line-to-top)
 
 ;;;evil-surround
 
@@ -322,7 +322,7 @@
 ;; (set-in-all-evil-states-but-insert "\C-p" 'evil-change-whole-line)
 
 ;;conflicts with undo
-;; (set-in-all-evil-states-but-insert "\C-t" 'evil-jump-backward)   
+;; (set-in-all-evil-states-but-insert "\C-t" 'evil-jump-backward)
 ;; (set-in-all-evil-states-but-insert "\C-p" 'evil-jump-forward)
 
 ;;Ace jump
@@ -347,7 +347,7 @@
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
 (evil-define-motion lalopmak-evil-paste-below (count)
   "Pastes in the line below."
-  (evil-open-below 1) 
+  (evil-open-below 1)
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1))
 
@@ -358,7 +358,7 @@
 
 (evil-define-motion lalopmak-evil-paste-above (count)
   "Pastes in the line above."
-  (evil-open-above 1) 
+  (evil-open-above 1)
   ;; (newline count) ;;TODO count indicates number of lines until the paste
   (evil-paste-after 1))
 
@@ -369,12 +369,12 @@
 
 (evil-define-motion lalopmak-evil-paste-at-bol (count)
   "Pastes at beginning of line."
-  (back-to-indentation) 
+  (back-to-indentation)
   (evil-paste-before 1))
 
 (evil-define-motion lalopmak-evil-paste-at-eol (count)
   "Pastes at end of line."
-  (evil-end-of-line) 
+  (evil-end-of-line)
   (evil-paste-after 1))
 
 ;;o to open in line above/below, or [number]o to go to line [number]
@@ -384,7 +384,7 @@
 ;;M-[direction] to paste in that direction
 (set-in-all-evil-states-but-insert "\M-u" 'lalopmak-evil-paste-above-then-normal)
 (set-in-all-evil-states-but-insert "\M-e" 'lalopmak-evil-paste-below-then-normal)
-(lalopmak-evil-define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above) 
+(lalopmak-evil-define-key evil-insert-state-map "\M-u" 'lalopmak-evil-paste-above)
 (lalopmak-evil-define-key evil-insert-state-map "\M-e" 'lalopmak-evil-paste-below)
 (set-in-all-evil-states "\M-n" 'lalopmak-evil-paste-at-bol)
 (set-in-all-evil-states "\M-i" 'lalopmak-evil-paste-at-eol)
@@ -446,5 +446,3 @@
 (setq evil-cross-lines t)
 
 (provide 'lalopmak-evil)
-
-

@@ -83,7 +83,7 @@ are those to add a keybinding to upon hook being triggered.")
 ;; Experiment: make space into a "leader" key
 
 ;;default: space does one space, unless remapped in a mode
-(lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
+;; (lalopmak-evil-define-key evil-motion-state-map " " (lambda () (interactive) (insert " ")))
 
 
 
@@ -124,71 +124,71 @@ where hook can be nil if the maps already exist and can be added to right away."
 adds 'motion bindings to that lisp mode map."
   `(lalopmak-evil-define-mode-bindings lalopmak-evil-lisp-mode-hook-and-map-symbols '(motion) ,@bindings))
 
-(lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
+;; (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
-                                   " a" "as(" ;;select outside parens
-                                   " A" "ar(" ;;select inside parens
+;;                                    " a" "as(" ;;select outside parens
+;;                                    " A" "ar(" ;;select inside parens
 
-                                   " c" "cs(" ;;copy outside parens
-                                   " C" "cr(" ;;copy inside parens
+;;                                    " c" "cs(" ;;copy outside parens
+;;                                    " C" "cr(" ;;copy inside parens
 
-                                   " t" "tr(" ;;change in parens
-                                   " d" "ds(" ;;delete all parens
+;;                                    " t" "tr(" ;;change in parens
+;;                                    " d" "ds(" ;;delete all parens
 
-                                   " ," ",s(" ;;comment all s-exp
-                                   " (" 'paredit-wrap-sexp
-                                   " {" 'paredit-wrap-curly
-                                   " [" 'paredit-wrap-square
-                                   " <" 'paredit-wrap-angled
+;;                                    " ," ",s(" ;;comment all s-exp
+;;                                    " (" 'paredit-wrap-sexp
+;;                                    " {" 'paredit-wrap-curly
+;;                                    " [" 'paredit-wrap-square
+;;                                    " <" 'paredit-wrap-angled
 
-                                   " r(" 'paredit-open-round
-                                   " r{" 'paredit-open-curly
-                                   " r[" 'paredit-open-square
-                                   " r<" 'paredit-open-angled
+;;                                    " r(" 'paredit-open-round
+;;                                    " r{" 'paredit-open-curly
+;;                                    " r[" 'paredit-open-square
+;;                                    " r<" 'paredit-open-angled
 
-                                   " )" 'paredit-close-round
-                                   " }" 'paredit-close-curly
-                                   " ]" 'paredit-close-square
-                                   " >" 'paredit-close-angled
+;;                                    " )" 'paredit-close-round
+;;                                    " }" 'paredit-close-curly
+;;                                    " ]" 'paredit-close-square
+;;                                    " >" 'paredit-close-angled
 
-                                   ;;navigation on the inside
-                                   " l" 'paredit-backward-up
-                                   " n" 'paredit-backward
-                                   " k" 'paredit-backward-down
+;;                                    ;;navigation on the inside
+;;                                    " l" 'paredit-backward-up
+;;                                    " n" 'paredit-backward
+;;                                    " k" 'paredit-backward-down
 
-                                   " y" 'paredit-forward-up
-                                   " i" 'paredit-forward
-                                   " ." 'paredit-forward-down
+;;                                    " y" 'paredit-forward-up
+;;                                    " i" 'paredit-forward
+;;                                    " ." 'paredit-forward-down
 
-                                   " j" 'paredit-backward-barf-sexp
-                                   " h" 'paredit-backward-slurp-sexp
+;;                                    " j" 'paredit-backward-barf-sexp
+;;                                    " h" 'paredit-backward-slurp-sexp
 
-                                   " ;" 'paredit-forward-barf-sexp
-                                   " o" 'paredit-forward-slurp-sexp
+;;                                    " ;" 'paredit-forward-barf-sexp
+;;                                    " o" 'paredit-forward-slurp-sexp
 
-                                   ;;navigation on the outside
-                                   ;; " j" 'paredit-backward-up
-                                   ;; " h" 'paredit-backward
-                                   ;; " k" 'paredit-backward-down
+;;                                    ;;navigation on the outside
+;;                                    ;; " j" 'paredit-backward-up
+;;                                    ;; " h" 'paredit-backward
+;;                                    ;; " k" 'paredit-backward-down
 
-                                   ;; " ;" 'paredit-forward-up
-                                   ;; " o" 'paredit-forward
-                                   ;; " ." 'paredit-forward-down
+;;                                    ;; " ;" 'paredit-forward-up
+;;                                    ;; " o" 'paredit-forward
+;;                                    ;; " ." 'paredit-forward-down
 
-                                   ;; " n" 'paredit-backward-slurp-sexp
-                                   ;; " l" 'paredit-backward-barf-sexp
+;;                                    ;; " n" 'paredit-backward-slurp-sexp
+;;                                    ;; " l" 'paredit-backward-barf-sexp
 
-                                   ;; " y" 'paredit-forward-barf-sexp
-                                   ;; " i" 'paredit-forward-slurp-sexp
+;;                                    ;; " y" 'paredit-forward-barf-sexp
+;;                                    ;; " i" 'paredit-forward-slurp-sexp
 
-                                   " e" 'paredit-join-sexps
-                                   " u" 'paredit-split-sexp
+;;                                    " e" 'paredit-join-sexps
+;;                                    " u" 'paredit-split-sexp
 
-                                   " q" 'raise-sexp
-                                   " w" 'paredit-splice-sexp-killing-backward
-                                   " f" 'paredit-splice-sexp
-                                   " p" 'paredit-splice-sexp-killing-forward
-                                   " g" 'paredit-convolute-sexp)
+;;                                    " q" 'raise-sexp
+;;                                    " w" 'paredit-splice-sexp-killing-backward
+;;                                    " f" 'paredit-splice-sexp
+;;                                    " p" 'paredit-splice-sexp-killing-forward
+;;                                    " g" 'paredit-convolute-sexp)
 
 ;;; Make the return and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
@@ -206,6 +206,28 @@ adds 'motion bindings to that lisp mode map."
 ;;expand-region
 (set-in-all-evil-states (kbd "C-f") 'er/expand-region)
 (setq expand-region-contract-fast-key "w")
+
+(evil-define-motion lalopmak-evil-forward-char (count &optional crosslines noerror)
+  "Forward character, adds a space to the end of the line if one doesn't already exist."
+  :type exclusive
+  (interactive "<c>" (list evil-cross-lines
+                           (evil-kbd-macro-suppress-motion-error)))
+  (save-excursion (forward-char)
+                  (if (and (eolp)
+                           (not (eq ?\s (char-before)))
+                           (insert " "))))
+  (evil-forward-char count crosslines noerror))
+
+(evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
+  "Backward character, adds a space to the end of the previous line if one doesn't already exist."
+  :type exclusive
+  (interactive "<c>" (list evil-cross-lines
+                           (evil-kbd-macro-suppress-motion-error)))
+  (save-excursion (backward-char)
+                  (if (and (eolp)
+                           (not (eq ?\s (char-before)))
+                           (insert " "))))
+  (evil-backward-char count 'crosslines noerror))
 
 (evil-define-motion lalopmak-evil-forward-word-end (count &optional bigword)
   "Move the cursor to the end of the COUNT-th next word.
