@@ -17,6 +17,13 @@
 
 ;;; Misc library called by lalopmak-evil.
 
+
+(defvar height-buffer 45
+  "How much less than the full resolution the maximizing functions should go")
+
+(defvar width-buffer 45
+  "How much less than the full resolution the maximizing functions should go")
+
 (defvar lalopmak-evil-hintstring "Hints for lalop's colemak-evil configuration.  Accessed via: :hints, :h, :ars, or M-x lalopmak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
@@ -42,7 +49,7 @@ Normal mode:
             |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
             |  OpenUp   | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
             |  OpenDn   | Substitute|  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
-            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
+            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
 ====Commands====
@@ -106,12 +113,12 @@ Normal mode:
             |           |           |           | Paste-Pop |           |           |           |           |           |           |    · = char arg.
             |ZigZag Up  | Cut To EOL| Copy Line |  <-Paste  | Find File | ? <-Find§ |RpetFndBkwd|  Set Mk·  | < ◀-Dedent| > Indent-▶|    > = move arg.
             |ZigZag Down| Substitute|  Copy >   |  Paste->  |  Buffers  | / Find§-> |Repeat Find|CreateMacro| ,         | .         |
-            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |                        
+            |     Z     |     X     |     C     |     V     |     B     |           |     K     |     M     |           |           |
             +-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+
 
 ====Text Object Triggers====
-r = inner = 'reduced' 
-s = outer = 'spread'   
+r = inner = 'reduced'
+s = outer = 'spread'
 z = surround = zurround?
 
 ====Text Objects====
@@ -131,15 +138,13 @@ y = sYmbol
 ;; n = note
 ;; i = interconnected notes
 
-
-
 (require 'lalopmak-buffer)
 
 (defun lalopmak-evil-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
   (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
-                                       with-output-to-temp-buffer 
+                                       with-output-to-temp-buffer
                                        (princ lalopmak-evil-hintstring)))
 
 
@@ -147,13 +152,13 @@ y = sYmbol
   "Provides hints about this configuration, or closes said hints."
   (interactive)
   (close-visible-buffer-else-call-helper "Colemak-Evil Hints (Mnemonic)"
-                                       with-output-to-temp-buffer 
+                                       with-output-to-temp-buffer
                                        (princ lalopmak-evil-mnemonic-hintstring)))
 
 (defun lalopmak-evil-scroll-then-center (count motion)
   "Does a motion, then centers"
   (if count
-      (funcall motion count) 
+      (funcall motion count)
     (funcall motion 1))
   (move-to-window-line nil))
 
@@ -191,15 +196,15 @@ y = sYmbol
 (defun sole-terminal-window ()
   "Creates or reopens a unique terminal window."
   (interactive)
-  (close-visible-window-else-call-helper "Sole Terminal" 
-                                       do-in-buffer 
+  (close-visible-window-else-call-helper "Sole Terminal"
+                                       do-in-buffer
                                        (terminal-command)))
 
 (defun ielm-window ()
   "Open or close a visible ielm buffer."
-  (interactive) 
-  (close-visible-window-else-call-helper "*ielm*" 
-                                       do-func-in-buffer 
+  (interactive)
+  (close-visible-window-else-call-helper "*ielm*"
+                                       do-func-in-buffer
                                        'ielm))
 
 ;;;Experimental for web server editing
@@ -214,8 +219,8 @@ y = sYmbol
 (defun frame-to-top-left-corner (&optional frame)
   (interactive)
   (set-frame-position (or frame (selected-frame)) 0 0))
- 
-;;todo: find out how to get default 
+
+;;todo: find out how to get default
 (defun set-frame-to-default-size (&optional frame)
   (interactive)
   (set-frame-size (or frame (selected-frame)) 80 31))
@@ -244,8 +249,8 @@ y = sYmbol
 
 (defun add-to-frame-size (&optional dx dy frame)
   "Adds dx to width, dy to height of frame.  If dx or dy nil, maximize that size."
-  (set-frame-size-pixels (if dx (+ dx (window-width-pixels)) (display-pixel-width))
-                         (if dy (+ dy (window-height-pixels)) (display-pixel-height))
+  (set-frame-size-pixels (if dx (+ dx (window-width-pixels)) (- (display-pixel-width) width-buffer))
+                         (if dy (+ dy (window-height-pixels)) (- (display-pixel-height) height-buffer))
                          frame))
 
 (defvar frame-stretch-pixels 100)
@@ -253,25 +258,25 @@ y = sYmbol
 
 (defun stretch-frame (&optional count pixels frame)
   (interactive)
-  (add-to-frame-size (* (or count 1) (or pixels frame-stretch-pixels)) 
-                     0 
-                     frame)) 
+  (add-to-frame-size (* (or count 1) (or pixels frame-stretch-pixels))
+                     0
+                     frame))
 
 (defun unstretch-frame (&optional count pixels frame)
   (interactive)
-  (stretch-frame count 
-                 (if pixels (- pixels) (- frame-stretch-pixels)) 
+  (stretch-frame count
+                 (if pixels (- pixels) (- frame-stretch-pixels))
                  frame))
 
 (defun grow-frame (&optional count pixels frame)
   (interactive)
-  (add-to-frame-size 0 
+  (add-to-frame-size 0
                      (* (or count 1) (or pixels frame-grow-pixels))
                      frame))
 
 (defun shrink-frame (&optional count pixels frame)
   (interactive)
-  (grow-frame count 
+  (grow-frame count
               (if pixels (- pixels) (- frame-grow-pixels))
               frame))
 
@@ -286,12 +291,12 @@ y = sYmbol
          (x-chars (width-pixels-to-chars x f))
          (y-chars (height-pixels-to-chars y f)))
     (set-frame-size f x-chars y-chars)))
-   
-(defun maximize-frame (&optional frame width-buffer height-buffer)
+
+(defun maximize-frame (&optional frame)
   (interactive)
   (frame-to-top-left-corner)
-  (set-frame-size-pixels (- (display-pixel-width) (or width-buffer 0))
-                         (- (display-pixel-height) (or height-buffer 0))
+  (set-frame-size-pixels (- (display-pixel-width) width-buffer)
+                         (- (display-pixel-height) height-buffer)
                          frame))
 
 (defun maximize-frame-except-some-width (&optional frame width-buffer)
@@ -303,7 +308,7 @@ y = sYmbol
 ;;          (min (or min-width 80))
 ;;          (max (or max-width 1000))
 ;;          (height (window-height))
-;;          (width 
+;;          (width
 
 
 
