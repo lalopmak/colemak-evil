@@ -458,9 +458,10 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
                    (or (not (boundp 'ns-initialized))
                        (with-no-warnings ns-initialized))
                    (not (eq evil-visual-selection 'block)))
-          (x-set-selection 'PRIMARY (buffer-substring-no-properties
-                                     evil-visual-beginning
-                                     evil-visual-end))
+          (when (display-graphic-p)
+            (x-set-selection 'PRIMARY (buffer-substring-no-properties
+                                       evil-visual-beginning
+                                       evil-visual-end)))
           (setq x-last-selected-text-primary ))))))
 
 (provide 'lalopmak-evil-base)

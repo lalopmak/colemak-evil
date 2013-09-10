@@ -18,7 +18,7 @@
 ;;; Misc library called by lalopmak-evil.
 
 
-(defvar height-buffer 45
+(defvar height-buffer 50
   "How much less than the full resolution the maximizing functions should go")
 
 (defvar width-buffer 45
