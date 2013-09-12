@@ -448,6 +448,33 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 (evil-ex-define-cmd "corner" 'frame-to-top-left-corner)
 
 
+(evil-define-operator lalopmak-evil-strikethrough (beg end type)
+  "Strikes through text.
+
+If strikethroughs make up at least half the region (most commonly when the
+entire region has been struck through) unstrikes region."
+  (let (char)
+    (if (eq type 'block)
+        (evil-apply-on-block #'lalopmak-evil-strikethrough beg end nil)
+      (let ((strikethrough-char #x336))
+        (if (>= (do-within-positions beg end (count-char-in-buffer strikethrough-char))
+                (/ (- end beg) 2))
+            (do-within-positions beg end
+                                 (replace-string (make-string 1 strikethrough-char)
+                                                 ""))
+          (save-excursion
+            (while (< beg end)
+              (goto-char (1+ beg))
+              (setq char (following-char))
+              (if (eq char strikethrough-char)
+                  (setq beg (1+ beg))
+                (setq beg (+ 2 beg))
+                (setq end (1+ end))
+                (insert-char strikethrough-char 1)))))))))
+
+
+(evil-ex-define-cmd "strikethrough" 'lalopmak-evil-strikethrough)
+
 ;; (ad-activate-all)  ;activates all advice
 
 ;;FRAGILE

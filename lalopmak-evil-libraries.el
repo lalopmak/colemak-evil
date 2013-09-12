@@ -310,6 +310,4 @@ y = sYmbol
 ;;          (height (window-height))
 ;;          (width
 
-
-
 (provide 'lalopmak-evil-libraries)
