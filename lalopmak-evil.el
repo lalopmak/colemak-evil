@@ -124,6 +124,8 @@
 (set-in-all-evil-states-but-insert "V" 'evil-paste-before)
 (set-in-all-evil-states-but-insert "v" 'evil-paste-after)
 (set-in-all-evil-states-but-insert "\C-v" 'evil-paste-pop)
+(set-in-all-evil-states-but-insert "\C-V" 'evil-paste-pop-next)
+(set-in-all-evil-states-but-insert "\M-v" 'evil-paste-pop-next)
 
 ;;; Undo/redo
 (lalopmak-evil-define-key evil-normal-state-map "p" 'undo)

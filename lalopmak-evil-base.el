@@ -365,6 +365,11 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 (evil-ex-define-cmd "describe-variable" 'describe-variable)
 (evil-ex-define-cmd "variable" "describe-variable")
 
+;;registers
+(evil-ex-define-cmd "increment" 'increment-register)
+;; (evil-ex-define-cmd "registers" (kbd "C-x r"))
+;; (evil-ex-define-cmd "showregisters" 'evil-show-registers)
+
 ;;M-x speck-mode (spell checking)
 
 (evil-ex-define-cmd "spell" 'speck-mode)
@@ -458,7 +463,7 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
                    (or (not (boundp 'ns-initialized))
                        (with-no-warnings ns-initialized))
                    (not (eq evil-visual-selection 'block)))
-          (when (display-graphic-p)
+          (when (display-graphic-p) ;;(equal (window-system) x)??
             (x-set-selection 'PRIMARY (buffer-substring-no-properties
                                        evil-visual-beginning
                                        evil-visual-end)))
