@@ -196,6 +196,7 @@ adds 'motion bindings to that lisp mode map."
 (lalopmak-evil-define-key evil-motion-state-map (kbd "<backspace>") 'delete-backward-char)
 
 
+(lalopmak-evil-define-key evil-insert-state-map "\C-o" 'evil-execute-in-normal-state)
 (set-in-all-evil-states (kbd "C-r") 'isearch-backward)
 
 ;; ;;multiple cursors
@@ -369,6 +370,13 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 (evil-ex-define-cmd "increment" 'increment-register)
 ;; (evil-ex-define-cmd "registers" (kbd "C-x r"))
 ;; (evil-ex-define-cmd "showregisters" 'evil-show-registers)
+
+(defun lalopmak-evil-copy-register (source destination)
+  "Copies content of source register to destination register"
+  (interactive "*cSource Register: \ncDestination Register:")
+  (evil-set-register destination (evil-get-register source 'noerror)))
+
+(evil-ex-define-cmd "rc" 'lalopmak-evil-copy-register)
 
 ;;M-x speck-mode (spell checking)
 
