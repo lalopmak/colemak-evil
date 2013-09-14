@@ -26,7 +26,7 @@
 
 (defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
                                                        (clojure-mode-hook (clojure-mode-map)))
-"List with entries of the form (hook (mode-map1 mode-map2 ...)) where hook are lisp-mode hooks and the mode-maps
+  "List with entries of the form (hook (mode-map1 mode-map2 ...)) where hook are lisp-mode hooks and the mode-maps
 are those to add a keybinding to upon hook being triggered.")
 
 ;; we're using the colemak layout by default
@@ -278,6 +278,7 @@ If BIGWORD is non-nil, move by WORDS."
 (defmacro create_lalopmak-evil-if-count-else (then-name else-name docstring metadata then &rest else)
   "Creates evil-motion lalopmak-evil-if-count-[then-name]-else-[else-name]
 metadata should be a list, e.g. (:type line :repeat abort) or nil"
+  (declare (indent 2))
   `(evil-define-motion ,(intern (format "lalopmak-evil-if-count-%s-else-%s" then-name else-name)) (count)
      ,docstring
      ,@metadata
@@ -290,24 +291,25 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 which goes to line-number count if it exists, otherwise executes else.
 
 metadata should be a list, e.g. (:type line :repeat abort) or nil"
+  (declare (indent defun))
   `(create_lalopmak-evil-if-count-else "goto-line"
-                                       ,else-name
-                                       ,docstring
-                                       ,metadata
-                                       (evil-goto-line count)
-                                       ,@else))
+       ,else-name
+     ,docstring
+     ,metadata
+     (evil-goto-line count)
+     ,@else))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-open-below
 (create_lalopmak-evil-if-count-goto-line-else "open-below"
-                                              "if count goes to line, otherwise opens below"
-                                              nil
-                                              (evil-open-below 1))
+  "if count goes to line, otherwise opens below"
+  nil
+  (evil-open-below 1))
 
 ;;creates lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode
 (create_lalopmak-evil-if-count-goto-line-else "ace-jump-line-mode"
-                                              "if count goes to line, otherwise ace-jump line"
-                                              (:type line :repeat abort)
-                                              (lalopmak-evil-ace-jump-line-mode))
+  "if count goes to line, otherwise ace-jump line"
+  (:type line :repeat abort)
+  (lalopmak-evil-ace-jump-line-mode))
 
 (defun lalopmak-evil-write (beg end &optional type filename bang)
   (if  (and (boundp 'edit-server-edit-mode) edit-server-edit-mode)
@@ -365,6 +367,10 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 (evil-ex-define-cmd "describe-variable" 'describe-variable)
 (evil-ex-define-cmd "variable" "describe-variable")
+
+;;calculator
+(evil-ex-define-cmd "ca[lculator]" 'calc)
+(evil-ex-define-cmd "ec[alculator]" 'calc-embedded)
 
 ;;registers
 (evil-ex-define-cmd "increment" 'increment-register)

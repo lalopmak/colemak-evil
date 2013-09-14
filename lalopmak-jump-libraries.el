@@ -94,7 +94,7 @@ since often, but not always, one can be generated from the other."
 
 (defun count-char-in-buffer (char)
   "Counts the number of char in buffer"
-  (save-excursion (goto-char (point-min)) 
+  (save-excursion (goto-char (point-min))
                   (count-matches (char-to-escaped-regex char))))
 
 (defmacro max-regions-for-one-jump (char region-restrictor regions-search-limit jumper-limit)
@@ -103,23 +103,24 @@ regions-search-limit is our search bound."
   `(loop for r from 0 to ,regions-search-limit
          until (> (,region-restrictor r (count-char-in-buffer ,char))
                   ,jumper-limit)
-         finally return (if (eq r 0)  
+         finally return (if (eq r 0)
                             r         ;zero is the lowest we can go
                           (1- r))))
 
 (defmacro if-point-changed (action &optional decreasedAction increasedAction samePlaceAction)
   "Checks whether the point decreased, increased, or stayed the same as a result of action,
 executes the resulting actions"
+  (declare (indent 2))
   `(let ((old-point (point)))
      ,action
      (cond ((> old-point (point)) ,decreasedAction)
-           ((< old-point (point)) ,increasedAction) 
+           ((< old-point (point)) ,increasedAction)
            ((= old-point (point)) ,samePlaceAction))))
 
 (defmacro search-to-searchTo (search)
   "Converts a search to a search that lands right before the target"
   `(if-point-changed ,search
-                     (forward-char)
-                     (backward-char)))
+       (forward-char)
+     (backward-char)))
 
 (provide 'lalopmak-jump-libraries)

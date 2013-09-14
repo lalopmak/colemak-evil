@@ -144,16 +144,16 @@ y = sYmbol
   "Provides hints about this configuration, or closes said hints."
   (interactive)
   (close-visible-buffer-else-call-helper "Colemak-Evil Hints"
-                                       with-output-to-temp-buffer
-                                       (princ lalopmak-evil-hintstring)))
+    with-output-to-temp-buffer
+    (princ lalopmak-evil-hintstring)))
 
 
 (defun lalopmak-evil-mnemonic-hints ()
   "Provides hints about this configuration, or closes said hints."
   (interactive)
   (close-visible-buffer-else-call-helper "Colemak-Evil Hints (Mnemonic)"
-                                       with-output-to-temp-buffer
-                                       (princ lalopmak-evil-mnemonic-hintstring)))
+    with-output-to-temp-buffer
+    (princ lalopmak-evil-mnemonic-hintstring)))
 
 (defun lalopmak-evil-scroll-then-center (count motion)
   "Does a motion, then centers"
@@ -197,15 +197,15 @@ y = sYmbol
   "Creates or reopens a unique terminal window."
   (interactive)
   (close-visible-window-else-call-helper "Sole Terminal"
-                                       do-in-buffer
-                                       (terminal-command)))
+    do-in-buffer
+    (terminal-command)))
 
 (defun ielm-window ()
   "Open or close a visible ielm buffer."
   (interactive)
   (close-visible-window-else-call-helper "*ielm*"
-                                       do-func-in-buffer
-                                       'ielm))
+    do-func-in-buffer
+    'ielm))
 
 ;;;Experimental for web server editing
 (defmacro minor-mode-running (mode)
@@ -292,11 +292,13 @@ y = sYmbol
          (y-chars (height-pixels-to-chars y f)))
     (set-frame-size f x-chars y-chars)))
 
-(defun maximize-frame (&optional frame)
+(defun maximize-frame (&optional frame custom-width-buffer custom-height-buffer)
   (interactive)
   (frame-to-top-left-corner)
-  (set-frame-size-pixels (- (display-pixel-width) width-buffer)
-                         (- (display-pixel-height) height-buffer)
+  (set-frame-size-pixels (- (display-pixel-width) (or custom-width-buffer
+                                                      width-buffer))
+                         (- (display-pixel-height) (or custom-height-buffer
+                                                       height-buffer))
                          frame))
 
 (defun maximize-frame-except-some-width (&optional frame width-buffer)
