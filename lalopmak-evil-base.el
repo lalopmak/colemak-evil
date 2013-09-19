@@ -322,6 +322,17 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 ;;       (edit-server-save)
 ;;     ad-do-it))
 
+(defun lalopmak-evil-execute-process (processName &rest processArgs)
+  "Executes a process with given args, all strings.  Returns status (check with zerop)"
+  (let ((process (or (executable-find processName)
+                     (error (concat "Unable to find " processName)))))
+    (apply 'call-process
+           process
+           nil
+           nil
+           nil
+           processArgs)))
+
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -383,6 +394,24 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
   (evil-set-register destination (evil-get-register source 'noerror)))
 
 (evil-ex-define-cmd "rc" 'lalopmak-evil-copy-register)
+
+;;file managers
+(defmacro lalopmak-evil-file-manager-cmd (manager &optional func-name cmd)
+  "Defines a function that runs file manager MANAGER, as well as its evil-ex command.
+
+Example usage: (lalopmak-evil-file-manager-cmd \"nemo\")"
+  (let ((func-symbol (intern (or func-name
+                                 (concat "lalopmak-evil-"
+                                         manager)))))
+  `(progn
+     (defun ,func-symbol (&optional dir)
+       (interactive)
+       (lalopmak-evil-execute-process
+        ,manager
+        (or dir
+            (buffer-directory)
+            "")))
+     (evil-ex-define-cmd ,(or cmd manager) ',func-symbol))))
 
 ;;M-x speck-mode (spell checking)
 
@@ -487,7 +516,7 @@ entire region has been struck through) unstrikes region."
                 (insert-char strikethrough-char 1)))))))))
 
 
-(evil-ex-define-cmd "strikethrough" 'lalopmak-evil-strikethrough)
+(set-in-all-evil-states-but-insert "gs" 'lalopmak-evil-strikethrough)
 
 ;; (ad-activate-all)  ;activates all advice
 
