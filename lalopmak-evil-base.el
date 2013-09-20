@@ -323,13 +323,13 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 ;;     ad-do-it))
 
 (defun lalopmak-evil-execute-process (processName &rest processArgs)
-  "Executes a process with given args, all strings.  Returns status (check with zerop)"
+  "Executes a process with given args, all strings.  Does not wait for PROCESSNAME to terminate; returns nil."
   (let ((process (or (executable-find processName)
                      (error (concat "Unable to find " processName)))))
     (apply 'call-process
            process
            nil
-           nil
+           0
            nil
            processArgs)))
 
@@ -395,23 +395,73 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 (evil-ex-define-cmd "rc" 'lalopmak-evil-copy-register)
 
-;;file managers
-(defmacro lalopmak-evil-file-manager-cmd (manager &optional func-name cmd)
-  "Defines a function that runs file manager MANAGER, as well as its evil-ex command.
 
-Example usage: (lalopmak-evil-file-manager-cmd \"nemo\")"
-  (let ((func-symbol (intern (or func-name
-                                 (concat "lalopmak-evil-"
-                                         manager)))))
-  `(progn
-     (defun ,func-symbol (&optional dir)
-       (interactive)
-       (lalopmak-evil-execute-process
-        ,manager
-        (or dir
-            (buffer-directory)
-            "")))
-     (evil-ex-define-cmd ,(or cmd manager) ',func-symbol))))
+;;open external program
+
+;; (evil-define-operator evil-yank (beg end type register yank-handler)
+;;   "Saves the characters in motion into the kill-ring."
+;;   :move-point nil
+;;   :repeat nil
+;;   (interactive "<R><x><y>")
+;;   (cond
+;;    ((and (fboundp 'cua--global-mark-active)
+;;          (fboundp 'cua-copy-region-to-global-mark)
+;;          (cua--global-mark-active))
+;;     (cua-copy-region-to-global-mark beg end))
+;;    ((eq type 'block)
+;;     (evil-yank-rectangle beg end register yank-handler))
+;;    ((eq type 'line)
+;;     (evil-yank-lines beg end register yank-handler))
+;;    (t
+;;     (evil-yank-characters beg end register yank-handler))))
+
+(evil-ex-define-cmd "cmd" 'shell-command)
+
+;;Directory-dependent external processes (e.g. file managers, shells)
+(defmacro lalopmak-evil-directory-process (process &optional dir-str format-dir-str func-name cmd)
+  "Defines a function that runs PROCESS. Returns nil; does not wait for PROCESS to terminate.
+
+If format-dir-str is nil, the function is given (concat DIR-STR DIRECTORY) as its argument.
+If non-nil, it is given (format DIR-STR DIRECTORY).
+
+If not given, FUNC-NAME defaults to lalopmak-evil-PROCESS.
+
+Finally, stores this function into evil-ex CMD, which defaults to PROCESS.
+
+All arguments are strings.
+
+Example usage: (lalopmak-evil-directory-process \"gnome-terminal\"
+                 \"--working-directory=\"
+                 nil
+                 \"shell\")
+
+Ranger in gnome-terminal: (lalopmak-evil-directory-process \"gnome-terminal\"
+                            \"--command=ranger \\\"%s\\\"\"
+                            t
+                            \"lalopmak-evil-ranger\"
+                            \"ranger\") "
+  (declare (indent 1))
+  (let* ((str-fun (if format-dir-str `format `concat))
+         (dir-str (or dir-str ""))
+         (func-symbol (intern (or func-name
+                                  (concat "lalopmak-evil-"
+                                          process))))
+         (docstring (concat "Executes process "
+                            process
+                            " with sole argument "
+                            (funcall str-fun dir-str "DIR")
+                            ".  If not given, DIR defaults to buffer directory or ~/.  Does not block.")))
+    `(progn
+       (defun ,func-symbol (&optional dir)
+         ,docstring
+         (interactive)
+         (lalopmak-evil-execute-process ,process
+                                        (,str-fun ,dir-str
+                                                  (or dir
+                                                      (buffer-directory)
+                                                      (file-truename "~/")))))
+
+       (evil-ex-define-cmd ,(or cmd process) ',func-symbol))))
 
 ;;M-x speck-mode (spell checking)
 
