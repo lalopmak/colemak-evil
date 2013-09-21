@@ -326,11 +326,10 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
   "Executes a process with given args, all strings.  Does not wait for PROCESSNAME to terminate; returns nil."
   (let ((process (or (executable-find processName)
                      (error (concat "Unable to find " processName)))))
-    (apply 'call-process
+    (apply 'start-process
            process
            nil
-           0
-           nil
+           process
            processArgs)))
 
 ;;;;;;;;;;;;;;;;;; Custom : commands ;;;;;;;;;;;;;;;;;;;;;;;
