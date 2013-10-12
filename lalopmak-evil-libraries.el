@@ -181,7 +181,9 @@ y = sYmbol
                       (lalopmak-evil-add-trailing-whitespace-to-line)
                       (forward-line)))))
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;;some programs, e.g. vimlike configs like ranger, still depend on
+;; trailing whitespace
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;;;;;;;;;;; Buffer Manipulation macros/functions ;;;;;;;;;;;;;;
 

@@ -342,7 +342,8 @@
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
-(lalopmak-evil-define-key evil-motion-state-map "\C-b" 'ido-write-file)
+(lalopmak-evil-define-key evil-motion-state-map "\M-b" 'ido-write-file)
+(lalopmak-evil-define-key evil-motion-state-map "\C-b" 'fiplr-find-file)
 (lalopmak-evil-define-key evil-motion-state-map "B" 'find-file)
 
 

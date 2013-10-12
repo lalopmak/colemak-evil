@@ -124,71 +124,76 @@ where hook can be nil if the maps already exist and can be added to right away."
 adds 'motion bindings to that lisp mode map."
   `(lalopmak-evil-define-mode-bindings lalopmak-evil-lisp-mode-hook-and-map-symbols '(motion) ,@bindings))
 
-;; (lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
+(lalopmak-evil-define-lisp-motions "  " (lambda () (interactive) (insert " "))  ;;two spaces for a space
 
-;;                                    " a" "as(" ;;select outside parens
-;;                                    " A" "ar(" ;;select inside parens
+                                   " a" "as(" ;;select outside parens
+                                   " A" "ar(" ;;select inside parens
 
-;;                                    " c" "cs(" ;;copy outside parens
-;;                                    " C" "cr(" ;;copy inside parens
+                                   " c" "cs(" ;;copy outside parens
+                                   " C" "cr(" ;;copy inside parens
 
-;;                                    " t" "tr(" ;;change in parens
-;;                                    " d" "ds(" ;;delete all parens
+                                   " t" "ts(" ;;change all parens
+                                   " T" "tr(" ;;change inside parens
 
-;;                                    " ," ",s(" ;;comment all s-exp
-;;                                    " (" 'paredit-wrap-sexp
-;;                                    " {" 'paredit-wrap-curly
-;;                                    " [" 'paredit-wrap-square
-;;                                    " <" 'paredit-wrap-angled
+                                   " d" "ds(" ;;delete all parens
+                                   " D" "dr(" ;;delete inside parens
 
-;;                                    " r(" 'paredit-open-round
-;;                                    " r{" 'paredit-open-curly
-;;                                    " r[" 'paredit-open-square
-;;                                    " r<" 'paredit-open-angled
+                                   " \\" "\\s(" ;;indent all parens
 
-;;                                    " )" 'paredit-close-round
-;;                                    " }" 'paredit-close-curly
-;;                                    " ]" 'paredit-close-square
-;;                                    " >" 'paredit-close-angled
+                                   " ," ",s(" ;;comment all s-exp
+                                   " (" 'paredit-wrap-sexp
+                                   " {" 'paredit-wrap-curly
+                                   " [" 'paredit-wrap-square
+                                   " <" 'paredit-wrap-angled
 
-;;                                    ;;navigation on the inside
-;;                                    " l" 'paredit-backward-up
-;;                                    " n" 'paredit-backward
-;;                                    " k" 'paredit-backward-down
+                                   " r(" 'paredit-open-round
+                                   " r{" 'paredit-open-curly
+                                   " r[" 'paredit-open-square
+                                   " r<" 'paredit-open-angled
 
-;;                                    " y" 'paredit-forward-up
-;;                                    " i" 'paredit-forward
-;;                                    " ." 'paredit-forward-down
+                                   " )" 'paredit-close-round
+                                   " }" 'paredit-close-curly
+                                   " ]" 'paredit-close-square
+                                   " >" 'paredit-close-angled
 
-;;                                    " j" 'paredit-backward-barf-sexp
-;;                                    " h" 'paredit-backward-slurp-sexp
+                                   ;;navigation on the inside
+                                   " l" 'paredit-backward-up
+                                   " n" 'paredit-backward
+                                   " k" 'paredit-backward-down
 
-;;                                    " ;" 'paredit-forward-barf-sexp
-;;                                    " o" 'paredit-forward-slurp-sexp
+                                   " y" 'paredit-forward-up
+                                   " i" 'paredit-forward
+                                   " ." 'paredit-forward-down
 
-;;                                    ;;navigation on the outside
-;;                                    ;; " j" 'paredit-backward-up
-;;                                    ;; " h" 'paredit-backward
-;;                                    ;; " k" 'paredit-backward-down
+                                   " j" 'paredit-backward-barf-sexp
+                                   " h" 'paredit-backward-slurp-sexp
 
-;;                                    ;; " ;" 'paredit-forward-up
-;;                                    ;; " o" 'paredit-forward
-;;                                    ;; " ." 'paredit-forward-down
+                                   " ;" 'paredit-forward-barf-sexp
+                                   " o" 'paredit-forward-slurp-sexp
 
-;;                                    ;; " n" 'paredit-backward-slurp-sexp
-;;                                    ;; " l" 'paredit-backward-barf-sexp
+                                   ;;navigation on the outside
+                                   ;; " j" 'paredit-backward-up
+                                   ;; " h" 'paredit-backward
+                                   ;; " k" 'paredit-backward-down
 
-;;                                    ;; " y" 'paredit-forward-barf-sexp
-;;                                    ;; " i" 'paredit-forward-slurp-sexp
+                                   ;; " ;" 'paredit-forward-up
+                                   ;; " o" 'paredit-forward
+                                   ;; " ." 'paredit-forward-down
 
-;;                                    " e" 'paredit-join-sexps
-;;                                    " u" 'paredit-split-sexp
+                                   ;; " n" 'paredit-backward-slurp-sexp
+                                   ;; " l" 'paredit-backward-barf-sexp
 
-;;                                    " q" 'raise-sexp
-;;                                    " w" 'paredit-splice-sexp-killing-backward
-;;                                    " f" 'paredit-splice-sexp
-;;                                    " p" 'paredit-splice-sexp-killing-forward
-;;                                    " g" 'paredit-convolute-sexp)
+                                   ;; " y" 'paredit-forward-barf-sexp
+                                   ;; " i" 'paredit-forward-slurp-sexp
+
+                                   " e" 'paredit-join-sexps
+                                   " u" 'paredit-split-sexp
+
+                                   " q" 'raise-sexp
+                                   " w" 'paredit-splice-sexp-killing-backward
+                                   " f" 'paredit-splice-sexp
+                                   " p" 'paredit-splice-sexp-killing-forward
+                                   " g" 'paredit-convolute-sexp) 
 
 ;;; Make the return and backspace keys work in normal mode
 ;; Backspace in normal mode doesn't work in the terminal.
@@ -420,7 +425,9 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 (defmacro lalopmak-evil-directory-process (process &optional dir-str format-dir-str func-name cmd)
   "Defines a function that runs PROCESS. Returns nil; does not wait for PROCESS to terminate.
 
-If format-dir-str is nil, the function is given (concat DIR-STR DIRECTORY) as its argument.
+If DIR-STR is nil, defaults to PROCESS.
+
+If FORMAT-DIR-STR is nil, the function is given (concat DIR-STR DIRECTORY) as its argument.
 If non-nil, it is given (format DIR-STR DIRECTORY).
 
 If not given, FUNC-NAME defaults to lalopmak-evil-PROCESS.
