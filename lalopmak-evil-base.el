@@ -355,7 +355,7 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 
 ;;comment
-(evil-ex-define-cmd "comment" 'comment-or-uncomment-region)
+(evil-ex-define-cmd "comment" 'evilnc-comment-operator)
 (evil-ex-define-cmd "c" "comment")
 
 ;;M-:
@@ -593,6 +593,6 @@ entire region has been struck through) unstrikes region."
             (x-set-selection 'PRIMARY (buffer-substring-no-properties
                                        evil-visual-beginning
                                        evil-visual-end)))
-          (setq x-last-selected-text-primary ))))))
+          (setq x-last-selected-text-primary))))))
 
 (provide 'lalopmak-evil-base)

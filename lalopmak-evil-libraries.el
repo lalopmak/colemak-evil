@@ -18,12 +18,6 @@
 ;;; Misc library called by lalopmak-evil.
 
 
-(defvar height-buffer 45
-  "How much less than the full resolution the maximizing functions should go")
-
-(defvar width-buffer 45
-  "How much less than the full resolution the maximizing functions should go")
-
 (defvar lalopmak-evil-hintstring "Hints for lalop's colemak-evil configuration.  Accessed via: :hints, :h, :ars, or M-x lalopmak-evil-hints.
 
 To dismiss: retype one of the above commands or press q in the buffer.
@@ -137,6 +131,12 @@ y = sYmbol
 ;; y = yinormous word
 ;; n = note
 ;; i = interconnected notes
+
+(defvar height-buffer 45
+  "How much less than the full resolution the maximizing functions should go")
+
+(defvar width-buffer 45
+  "How much less than the full resolution the maximizing functions should go")
 
 (require 'lalopmak-buffer)
 
