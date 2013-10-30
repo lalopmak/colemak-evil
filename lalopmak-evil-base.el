@@ -219,9 +219,9 @@ adds 'motion bindings to that lisp mode map."
   (interactive "<c>" (list evil-cross-lines
                            (evil-kbd-macro-suppress-motion-error)))
   (save-excursion (forward-char)
-                  (if (and (eolp)
-                           (not (eq ?\s (char-before)))
-                           (insert " "))))
+                  (when (and (eolp)
+                             (not (eq ?\s (char-before))))
+                    (insert " ")))
   (evil-forward-char count crosslines noerror))
 
 (evil-define-motion lalopmak-evil-backward-char (count &optional crosslines noerror)
@@ -230,9 +230,9 @@ adds 'motion bindings to that lisp mode map."
   (interactive "<c>" (list evil-cross-lines
                            (evil-kbd-macro-suppress-motion-error)))
   (save-excursion (backward-char)
-                  (if (and (eolp)
-                           (not (eq ?\s (char-before)))
-                           (insert " "))))
+                  (when (and (eolp)
+                             (not (eq ?\s (char-before))))
+                    (insert " ")))
   (evil-backward-char count 'crosslines noerror))
 
 (evil-define-motion lalopmak-evil-forward-word-end (count &optional bigword)
