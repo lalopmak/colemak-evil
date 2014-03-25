@@ -315,8 +315,8 @@
 (lalopmak-evil-define-key evil-operator-state-map "s" evil-outer-text-objects-map)
 (lalopmak-evil-define-key evil-visual-state-map "s" evil-outer-text-objects-map)
 
-(lalopmak-evil-define-key evil-visual-state-map "R" 'evil-append)
-(lalopmak-evil-define-key evil-visual-state-map "S" 'evil-insert)
+(lalopmak-evil-define-key evil-visual-state-map "R" 'evil-insert)
+(lalopmak-evil-define-key evil-visual-state-map "S" 'evil-append)
 
 ;;Change
 (set-in-all-evil-states-but-insert "T" 'evil-change-line)
