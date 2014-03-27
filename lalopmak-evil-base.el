@@ -1,4 +1,5 @@
 
+
 ;;  Colemak Evil: A set of optimized Vim-like key bindings for Emacs.
 ;;  Copyright (C) 2013 Patrick Brinich-Langlois
 
@@ -392,6 +393,42 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 ;; (evil-ex-define-cmd "registers" (kbd "C-x r"))
 ;; (evil-ex-define-cmd "showregisters" 'evil-show-registers)
 
+(evil-ex-define-cmd "li[nes]" 'list-matching-lines) 
+
+(evil-ex-define-cmd "gr[ep]" 'grep-find) 
+(evil-ex-define-cmd "rgr[ep]" 'rgrep) 
+
+(defun dired-in-current-directory (&optional wdired)
+  "Opens dired in current directory.
+
+If wdired true, opens wdired as well."
+  (interactive)
+  (unless (equal major-mode 'dired-mode)
+    (dired default-directory))
+  (when wdired
+    (wdired-change-to-wdired-mode) 
+    (evil-normal-state))) 
+
+(defun wdired-in-current-directory ()
+  "Opens wdired in current directory"
+  (interactive)
+  (dired-in-current-directory t))
+
+(evil-ex-define-cmd "d[ired]" 'dired-in-current-directory)
+(evil-ex-define-cmd "wd[ired]" 'wdired-in-current-directory) 
+
+(defun clip-abs-path ()
+  "Put the current absolute path on the clipboard"
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      (dired-current-directory)
+                    (buffer-file-name))))
+    (when filename
+        (x-select-text filename)))) 
+
+
+(evil-ex-define-cmd "abs" 'clip-abs-path)
+
 (defun lalopmak-evil-copy-register (source destination)
   "Copies content of source register to destination register"
   (interactive "*cSource Register: \ncDestination Register:")
@@ -536,7 +573,7 @@ Ranger in gnome-terminal: (lalopmak-evil-directory-process \"gnome-terminal\"
   "Shrinkes the frame count times"
   (shrink-frame count))
 
-(evil-ex-define-cmd "grow" 'lalopmak-evil-grow)
+(evil-ex-define-cmd "gro[w]" 'lalopmak-evil-grow)
 (evil-ex-define-cmd "shrink" 'lalopmak-evil-shrink)
 (evil-ex-define-cmd "tall" 'make-frame-tall)
 
@@ -595,4 +632,6 @@ entire region has been struck through) unstrikes region."
                                        evil-visual-end)))
           (setq x-last-selected-text-primary))))))
 
+(setq evil-search-module 'evil-search)
+ 
 (provide 'lalopmak-evil-base)
