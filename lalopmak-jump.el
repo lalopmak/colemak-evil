@@ -20,6 +20,11 @@
 ;;If the user wants to set a default number of lines to search for jumps
 (defvar lalopmak-evil-ace-jump-num-lines nil)
 
+(defvar lalopmak-evil-ace-jump-num-input-chars 2,
+  "The default number of input chars to search.")
+(defvar lalopmak-evil-narrowed-ace-jump-num-input-chars 1,
+  "The default number of input chars to search in narrowed mode.")
+
 (defun lalopmak-evil-set-ace-jump-num-lines (n)
   (if (>= n 0)
       (setq lalopmak-evil-ace-jump-num-lines n)
@@ -29,9 +34,6 @@
 (evil-ex-define-cmd "acejumplines" (lambda (n) 
                                      (interactive "n# lines to search in ace jump (negative to unset): ")
                                      (lalopmak-evil-set-ace-jump-num-lines n)))
-
-(defvar ace-query "Query Char:"
-  "The query that ace-jump gives us")
 
 ;;max lines, words, chars to search
 (defvar ace-jump-max-lines 20
@@ -48,6 +50,23 @@ should depend on ace-jump-max-chars.")
 (defvar lalopmak-jump-timing t
   "Whether or not we want to time our ace-jumps")
 
+(defun lalopmak-evil-ace-jump-char-mode-replacement (&rest query-chars)
+  "Custom (non-interactive) AceJump char mode that accepts any number of query chars"
+
+  ;; We should prevent recursion call this function.  This can happen
+  ;; when you trigger the key for ace jump again when already in ace
+  ;; jump mode.  So we stop the previous one first.
+  (if ace-jump-current-mode (ace-jump-done))
+  
+  (when (some (lambda (char) (eq (ace-jump-char-category char) 'other))
+              query-chars)
+    (error "[AceJump] Non-printable character"))
+
+  ;; others : digit , alpha, punc
+  (setq ace-jump-query-char (car query-chars)) 
+  (setq ace-jump-current-mode 'ace-jump-char-mode)
+  (ace-jump-do (regexp-quote (apply #'string query-chars)))) 
+
 (defmacro with-stopwatch-if-timing (message &rest body)
   "Only calls with-stopwatch macro if it exists and we're timing.
 message and body as in with-stopwatch." 
@@ -60,31 +79,30 @@ message and body as in with-stopwatch."
   (with-stopwatch-if-timing "Ace Line Jump"
                             (evil-ace-jump-line-mode count)))
 
-(defmacro max-regions-for-one-ace-jump (char region-restrictor regions-search-limit)
-  "Max number of lines around cursor for which we can limit an ace jump of char so that it completes in a single step.
+(defmacro max-regions-for-one-ace-jump (string region-restrictor regions-search-limit)
+  "Max number of lines around cursor for which we can limit an ace jump of input string so that it completes in a single step.
 Limited by ace-jump-max-lines or regions-search-limit, our search bound."
-  `(max-regions-for-one-jump ,char ,region-restrictor ,regions-search-limit (length ace-jump-mode-move-keys)))
+  `(max-regions-for-one-jump ,string ,region-restrictor ,regions-search-limit (length ace-jump-mode-move-keys)))
 
 
 ;;;
 ;;; normal jump mode
 ;;;
-
-(defmacro ace-jump-char-within-n-regions (char region-restrictor &optional n)
-  "Calls ace-jump-char on char, limiting possible results to within n (default 0) lines of the pointer."
+(defmacro ace-jump-char-within-n-regions (string region-restrictor &optional n)
+  "Calls ace-jump-char on string, limiting possible results to within n (default 0) lines of the pointer."
   `(let ((ace-jump-mode-scope 'window))        ;;makes sure we don't leak to other scopes
-     (,region-restrictor (or ,n 0) (ace-jump-char-mode ,char))))
+     (,region-restrictor (or ,n 0) (apply #'lalopmak-evil-ace-jump-char-mode-replacement (string-to-list ,string))))) 
                                   
-(defmacro lalopmak-evil-ace-char-jump-mode-for-region (count region-restrictor max-regions)
+(defmacro lalopmak-evil-ace-char-jump-mode-for-region (count region-restrictor max-regions &optional num-chars)
   "Ace-jumps within the largest region where you would result in a single ace-search."
-  `(let* ((char (get-user-input-character ace-query))
+  `(let* ((ace-user-input (get-ace-user-input (or ,num-chars 1)))
           (numRegions (or ,count 
                           lalopmak-evil-ace-jump-num-lines
-                          (max-regions-for-one-ace-jump char
+                          (max-regions-for-one-ace-jump ace-user-input
                                                         ,region-restrictor
                                                         ,max-regions))))
-       (evil-enclose-ace-jump-for-motion 
-        (ace-jump-char-within-n-regions char ,region-restrictor numRegions)))) 
+     (evil-enclose-ace-jump-for-motion 
+       (ace-jump-char-within-n-regions ace-user-input ,region-restrictor numRegions)))) 
 
 (evil-define-motion lalopmak-evil-narrowed-ace-jump-char-mode (count)
   "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
@@ -95,12 +113,22 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
     (cond ((or count 
                lalopmak-evil-ace-jump-num-lines) 
            ;;if user provided restriction input we assume it's in lines
-           (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-lines ace-jump-max-lines))
+           (lalopmak-evil-ace-char-jump-mode-for-region count 
+                                                        do-within-n-lines 
+                                                        ace-jump-max-lines 
+                                                        lalopmak-evil-narrowed-ace-jump-num-input-chars))
           ((< (chars-in-window) jump-word-search-threshold)
            ;;there are few enough characters for a char search to cover it
-           (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-chars ace-jump-max-chars))
+           (lalopmak-evil-ace-char-jump-mode-for-region count 
+                                                        do-within-n-chars 
+                                                        ace-jump-max-chars 
+                                                        lalopmak-evil-narrowed-ace-jump-num-input-chars))
           ;;there are too many characters, default to word search to cover more area
-          (t (lalopmak-evil-ace-char-jump-mode-for-region count do-within-n-words ace-jump-max-words)))))
+          (t (lalopmak-evil-ace-char-jump-mode-for-region count 
+                                                          do-within-n-words 
+                                                          ace-jump-max-words 
+                                                          lalopmak-evil-narrowed-ace-jump-num-input-chars))))) 
+
 
 
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
@@ -109,7 +137,8 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
   (with-stopwatch-if-timing "Ace-jump"
                             (evil-without-repeat 
                               (evil-enclose-ace-jump-for-motion 
-                                (call-interactively #'ace-jump-char-mode)))))
+                                (apply #'lalopmak-evil-ace-jump-char-mode-replacement 
+                                       (string-to-list (get-ace-user-input lalopmak-evil-ace-jump-num-input-chars))))))) 
 
 ;;;
 ;;; "jump-to" mode

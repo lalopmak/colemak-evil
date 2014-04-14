@@ -18,6 +18,16 @@
 ;;; Misc library called by lalopmak-jump.
 
 
+(defun jump-query (&optional current max)
+  "The query with which to prompt the user upon jump
+
+If this jump accepts MAX characters and we're currently on CURRENT, includes that in prompt" 
+  (if (and current
+           max 
+           (> max 1))
+      (concat "Query Char (" (number-to-string current) "/" (number-to-string max) "):")
+    "Query Char:"))
+
 ;;;
 ;;; Useful region macros
 ;;;
@@ -82,26 +92,23 @@ since often, but not always, one can be generated from the other."
   (interactive "p")
   (read-char prompt))
 
-(defvar special-regex-chars
-  '( ?- ?. ?[ ?] ?+ ?* ?^ ?$ ?\\ )
-  "List of characters that have to be escaped in a regex")
+(defun get-ace-user-input (num-chars) 
+  "Prompts, gets NUM-CHARS characters as input, concats them into single string."
+  (apply #'concat 
+         (loop for i from 0 below num-chars
+               collect
+               (list (get-user-input-character (jump-query i num-chars))))))
 
-(defun char-to-escaped-regex (char)
-  "Converts a character to escaped regex"
-  (if (member char special-regex-chars)
-      (string ?\\ char)
-    (make-string 1 char)))
-
-(defun count-char-in-buffer (char)
+(defun count-string-in-buffer (string)
   "Counts the number of char in buffer"
   (save-excursion (goto-char (point-min))
-                  (count-matches (char-to-escaped-regex char))))
+                  (count-matches (regexp-quote string))))
 
-(defmacro max-regions-for-one-jump (char region-restrictor regions-search-limit jumper-limit)
+(defmacro max-regions-for-one-jump (string region-restrictor regions-search-limit jumper-limit)
   "Max number of lines around cursor for which we can limit a jump of char so that it completes in a single step.
 regions-search-limit is our search bound."
   `(loop for r from 0 to ,regions-search-limit
-         until (> (,region-restrictor r (count-char-in-buffer ,char))
+         until (> (,region-restrictor r (count-string-in-buffer ,string))
                   ,jumper-limit)
          finally return (if (eq r 0)
                             r         ;zero is the lowest we can go
