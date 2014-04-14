@@ -24,6 +24,8 @@
   "The default number of input chars to search.")
 (defvar lalopmak-evil-narrowed-ace-jump-num-input-chars 1,
   "The default number of input chars to search in narrowed mode.")
+(defvar lalopmak-evil-ace-jump-line-num-input-chars 0, 
+  "The default number of input chars to search in line mode.")
 
 (defun lalopmak-evil-set-ace-jump-num-lines (n)
   (if (>= n 0)
@@ -47,7 +49,7 @@
   "Number of characters on the screen before we switch to word search;
 should depend on ace-jump-max-chars.")
 
-(defvar lalopmak-jump-timing t
+(defvar lalopmak-jump-timing t 
   "Whether or not we want to time our ace-jumps")
 
 (defun lalopmak-evil-ace-jump-char-mode-replacement (&rest query-chars)
@@ -65,7 +67,22 @@ should depend on ace-jump-max-chars.")
   ;; others : digit , alpha, punc
   (setq ace-jump-query-char (car query-chars)) 
   (setq ace-jump-current-mode 'ace-jump-char-mode)
-  (ace-jump-do (regexp-quote (apply #'string query-chars)))) 
+  (ace-jump-do (space-ambiguous-regex query-chars t))) 
+
+(defun lalopmak-evil-ace-jump-line-mode-replacement (&rest query-chars) 
+  "Custom (non-interactive) AceJump line mode that acceps any number of query chars"
+
+  (when (some (lambda (char) (eq (ace-jump-char-category char) 'other))
+              query-chars)
+    (error "[AceJump] Non-printable character"))
+
+  ;; We should prevent recursion call this function.  This can happen
+  ;; when you trigger the key for ace jump again when already in ace
+  ;; jump mode.  So we stop the previous one first.
+  (if ace-jump-current-mode (ace-jump-done))
+  
+  (setq ace-jump-current-mode 'ace-jump-line-mode)
+  (ace-jump-do (concat "^" (space-ambiguous-regex query-chars))))
 
 (defmacro with-stopwatch-if-timing (message &rest body)
   "Only calls with-stopwatch macro if it exists and we're timing.
@@ -77,7 +94,8 @@ message and body as in with-stopwatch."
 
 (evil-define-motion lalopmak-evil-ace-jump-line-mode (count)
   (with-stopwatch-if-timing "Ace Line Jump"
-                            (evil-ace-jump-line-mode count)))
+                            (apply #'lalopmak-evil-ace-jump-line-mode-replacement 
+                                       (string-to-list (get-ace-user-input lalopmak-evil-ace-jump-line-num-input-chars)))))
 
 (defmacro max-regions-for-one-ace-jump (string region-restrictor regions-search-limit)
   "Max number of lines around cursor for which we can limit an ace jump of input string so that it completes in a single step.

@@ -130,4 +130,53 @@ executes the resulting actions"
        (forward-char)
      (backward-char)))
 
+(defun space-ambiguous-regex (query-chars &optional disallow-match-all)
+  "Given a list of jump- queried chars, returns a regex search,
+
+subject to the condition that terminal spaces might represent 
+
+either literal spaces or end of lines.
+
+disallow-match-all disallows results that match everything.
+
+e.g. (space-ambiguous-regex '(100 101 32 32)) = de\($\| $\|  )"
+  (let* ( ;;the number of terminal spaces
+         (remaining-spaces (let ((first-reversed-space nil)
+                                 (i 0))
+                             (mapc (lambda (char)
+                                     (unless (or first-reversed-space
+                                                 (eq char 32))
+                                       (setq first-reversed-space i))
+                                     (setq i (1+ i)))
+                                   (reverse query-chars))
+                             (or first-reversed-space
+                                 (length query-chars)))) 
+         ;;one above the index of the last non-space
+         (only-spaces-to-end-index (- (length query-chars)
+                                      remaining-spaces))
+         ;;the regex formed only from less than that index
+         (non-eol-regex (regexp-quote 
+                         (apply #'string 
+                                (subseq query-chars 
+                                        0 
+                                        only-spaces-to-end-index))))
+         (final-regex (if (> remaining-spaces 0)
+                          (let ((full-regex (concat non-eol-regex
+                                                    "\\(")))
+                            (dotimes (i remaining-spaces 
+                                        (concat full-regex
+                                                (make-string i 32) 
+                                                "\\)"))
+                              (unless (and disallow-match-all 
+                                           (eq 0 only-spaces-to-end-index)
+                                           (eq i 0))
+                                (setq full-regex 
+                                      (concat full-regex 
+                                              (make-string i 32)
+                                              "$\\|")))))
+                        non-eol-regex))) 
+    final-regex)) 
+
+
+
 (provide 'lalopmak-jump-libraries)
