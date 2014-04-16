@@ -345,10 +345,13 @@
 
 ;switch to buffer
 (lalopmak-evil-define-key evil-motion-state-map "b" 'switch-to-buffer)
-(lalopmak-evil-define-key evil-motion-state-map "\M-b" 'ido-write-file)
+(lalopmak-evil-define-key evil-motion-state-map "\M-b" 'ido-write-file) 
 (lalopmak-evil-define-key evil-motion-state-map "\C-b" 'fiplr-find-file)
 (lalopmak-evil-define-key evil-motion-state-map "B" 'find-file)
 
+;;switches transpose words to transpose symbols
+(lalopmak-evil-define-key evil-insert-state-map "\C-t" 'transpose-symbols)
+(lalopmak-evil-define-key evil-normal-state-map "\C-t" 'transpose-symbols) 
 
 ;;;;;;;;;;;;PASTING;;;;;;;;;;;;;;;;;;
 (evil-define-motion lalopmak-evil-paste-below (count)
@@ -450,5 +453,8 @@
 
 ;;experiment
 (setq evil-cross-lines t)
+
+
+
 
 (provide 'lalopmak-evil)

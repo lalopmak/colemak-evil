@@ -25,7 +25,7 @@
 (require 'lalopmak-layouts)
 (require 'lalopmak-jump)
 
-(defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
+(defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map hy-mode-map))
                                                        (clojure-mode-hook (clojure-mode-map)))
   "List with entries of the form (hook (mode-map1 mode-map2 ...)) where hook are lisp-mode hooks and the mode-maps
 are those to add a keybinding to upon hook being triggered.")
@@ -349,21 +349,19 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 ;;git
 (evil-ex-define-cmd "git" 'magit-status)
-
-;;linum relative toggle
-(evil-ex-define-cmd "relative" 'linum-relative-toggle)
-(evil-ex-define-cmd "ccmode" 'centered-cursor-mode)
+ 
+(evil-ex-define-cmd "ccmode" 'centered-cursor-mode) 
 
 
 ;;comment
-(evil-ex-define-cmd "comment" 'evilnc-comment-operator)
-(evil-ex-define-cmd "c" "comment")
+(evil-ex-define-cmd "com[ment]" 'evilnc-comment-operator)
 
 ;;M-:
 (evil-ex-define-cmd "eval" 'eval-expression)
 (evil-ex-define-cmd "ev" "eval")
 (evil-ex-define-cmd "ielm" 'ielm-window)
 (evil-ex-define-cmd "interactive-eval" "ielm")
+(evil-ex-define-cmd "repl" 'inferior-lisp)
 
 ;;Terminal
 (evil-ex-define-cmd "terminal" 'sole-terminal-window)
@@ -371,18 +369,19 @@ metadata should be a list, e.g. (:type line :repeat abort) or nil"
 
 
 ;;C-h k
-(evil-ex-define-cmd "describe-key" 'describe-key)
-(evil-ex-define-cmd "key" "describe-key")
+(evil-ex-define-cmd "key" 'describe-key)
 
 ;;C-h f
-(evil-ex-define-cmd "describe-function" 'describe-function)
-(evil-ex-define-cmd "function" "describe-function")
-(evil-ex-define-cmd "fun" "describe-function")
+(evil-ex-define-cmd "fun[ction]" 'describe-function)
+
+;;M-x apropos
+(evil-ex-define-cmd "funlist" 'apropos)
 
 ;;C-h v
+(evil-ex-define-cmd "var[iable]" 'describe-variable)
 
-(evil-ex-define-cmd "describe-variable" 'describe-variable)
-(evil-ex-define-cmd "variable" "describe-variable")
+;;C-h m
+(evil-ex-define-cmd "help" 'describe-mode)
 
 ;;calculator
 (evil-ex-define-cmd "ca[lculator]" 'calc)
@@ -414,7 +413,7 @@ If wdired true, opens wdired as well."
   (interactive)
   (dired-in-current-directory t))
 
-(evil-ex-define-cmd "d[ired]" 'dired-in-current-directory)
+(evil-ex-define-cmd "di[red]" 'dired-in-current-directory)
 (evil-ex-define-cmd "wd[ired]" 'wdired-in-current-directory) 
 
 (defun clip-abs-path ()
@@ -435,7 +434,6 @@ If wdired true, opens wdired as well."
   (evil-set-register destination (evil-get-register source 'noerror)))
 
 (evil-ex-define-cmd "rc" 'lalopmak-evil-copy-register)
-
 
 ;;open external program
 
@@ -634,4 +632,16 @@ entire region has been struck through) unstrikes region."
 
 (setq evil-search-module 'evil-search)
  
+;;Generic functions
+
+(defun transpose-symbols (arg)
+  "Interchange symbols around point, leaving point at end of them.
+With prefix arg ARG, effect is to take word before or around point
+and drag it forward past ARG other symbols (backward if ARG negative).
+If ARG is zero, the symbols around or after point and around or after mark
+are interchanged."
+  (interactive "p")
+  (transpose-subr 'forward-symbol arg))
+
+
 (provide 'lalopmak-evil-base)
