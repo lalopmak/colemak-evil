@@ -21,10 +21,10 @@
 (set-in-all-evil-states-but-insert "h" 'lalopmak-evil-backward-char)
 (set-in-all-evil-states-but-insert "l" 'lalopmak-evil-forward-char)
 
-(set-in-all-evil-states-but-insert "e" 'evil-previous-line)
-(set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-up)
-(set-in-all-evil-states-but-insert "n" 'evil-next-line)
-(set-in-all-evil-states-but-insert "\C-n" 'evil-scroll-down)
+;; (set-in-all-evil-states-but-insert "e" 'evil-previous-line)
+;; (set-in-all-evil-states-but-insert "\C-e" 'evil-scroll-up)
+;; (set-in-all-evil-states-but-insert "n" 'evil-next-line)
+;; (set-in-all-evil-states-but-insert "\C-n" 'evil-scroll-down)
 
 (lalopmak-evil-define-key evil-motion-state-map "k" 'evil-search-next)
 (lalopmak-evil-define-key evil-motion-state-map "K" 'evil-search-previous)
@@ -51,7 +51,7 @@
 (lalopmak-evil-define-key evil-motion-state-map (kbd "C-d") 'lalopmak-evil-evil-scroll-down)
 
 ;;Line jump
-(set-in-all-evil-states-but-insert "j" 'lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode) ;temporary assignment
+;; (set-in-all-evil-states-but-insert "j" 'lalopmak-evil-if-count-goto-line-else-ace-jump-line-mode) ;temporary assignment
 
 (set-in-all-evil-states-but-insert "x" 'ido-switch-buffer)
 (set-in-all-evil-states-but-insert "X" 'ido-find-file)
