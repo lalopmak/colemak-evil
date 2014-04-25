@@ -435,6 +435,12 @@ If wdired true, opens wdired as well."
 
 (evil-ex-define-cmd "rc" 'lalopmak-evil-copy-register)
 
+(defun lalopmak-evil-clone-split-buffer ()
+  (interactive)
+  (let ((cloned-buffer (call-interactively 'clone-indirect-buffer)))
+    nil)) 
+
+(evil-ex-define-cmd "csplit" 'lalopmak-evil-clone-split-buffer)
 ;;open external program
 
 ;; (evil-define-operator evil-yank (beg end type register yank-handler)
