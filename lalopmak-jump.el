@@ -57,7 +57,6 @@ should depend on ace-jump-max-chars.")
   ;; when you trigger the key for ace jump again when already in ace
   ;; jump mode.  So we stop the previous one first.
   (if ace-jump-current-mode (ace-jump-done))
-  
   (when (some (lambda (char) (eq (ace-jump-char-category char) 'other))
               query-chars)
     (error "[AceJump] Non-printable character"))
@@ -93,7 +92,7 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
   `(let ((ace-jump-mode-scope 'window))        ;;makes sure we don't leak to other scopes
      (,region-restrictor (or ,n 0) (apply #'lalopmak-evil-ace-jump-char-mode-replacement (string-to-list ,string))))) 
                                   
-(defmacro lalopmak-evil-ace-char-jump-mode-for-region (count region-restrictor max-regions &optional num-chars)
+(defmacro lalopmak-evil-ace-char-jump-mode-for-region (region-restrictor max-regions &optional num-chars)
   "Ace-jumps within the largest region where you would result in a single ace-search."
   `(let* ((ace-user-input (get-ace-user-input (or ,num-chars 1)))
           (numRegions (or ,count 
@@ -105,40 +104,36 @@ Limited by ace-jump-max-lines or regions-search-limit, our search bound."
        (ace-jump-char-within-n-regions ace-user-input ,region-restrictor numRegions)))) 
 
 (evil-define-motion lalopmak-evil-narrowed-ace-jump-char-mode (count)
-  "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search"
+  "Ace jumps within count lines, or according to user-set lalopmak-evil-ace-jump-num-lines, or the most of region that would result in a single ace-search
+
+count specifies the number of characters to be inputted (default is lalopmak-evil-narrowed-ace-jump-num-input-chars)"
   :type inclusive
   :repeat abort
   ;;Three possible search regions so far: chars, words, lines, in increasing granuity.
   (with-stopwatch-if-timing "Ace-jump one-step"
-    (cond ((or count 
-               lalopmak-evil-ace-jump-num-lines) 
-           ;;if user provided restriction input we assume it's in lines
-           (lalopmak-evil-ace-char-jump-mode-for-region count 
-                                                        do-within-n-lines 
-                                                        ace-jump-max-lines 
-                                                        lalopmak-evil-narrowed-ace-jump-num-input-chars))
-          ((< (chars-in-window) jump-word-search-threshold)
-           ;;there are few enough characters for a char search to cover it
-           (lalopmak-evil-ace-char-jump-mode-for-region count 
-                                                        do-within-n-chars 
-                                                        ace-jump-max-chars 
-                                                        lalopmak-evil-narrowed-ace-jump-num-input-chars))
+    (if (< (chars-in-window) jump-word-search-threshold)
+          ;;there are few enough characters for a char search to cover it
+        (lalopmak-evil-ace-char-jump-mode-for-region do-within-n-chars 
+                                                     ace-jump-max-chars 
+                                                     (or count lalopmak-evil-narrowed-ace-jump-num-input-chars))
           ;;there are too many characters, default to word search to cover more area
-          (t (lalopmak-evil-ace-char-jump-mode-for-region count 
-                                                          do-within-n-words 
-                                                          ace-jump-max-words 
-                                                          lalopmak-evil-narrowed-ace-jump-num-input-chars))))) 
+      (lalopmak-evil-ace-char-jump-mode-for-region do-within-n-words 
+                                                   ace-jump-max-words 
+                                                   (or count lalopmak-evil-narrowed-ace-jump-num-input-chars))))) 
 
 
 
 (evil-define-motion lalopmak-evil-ace-jump-char-mode (count)
-  "Jump visually directly to a char using ace-jump.  Has stopwatch and exclusive."
+  "Jump visually directly to a char using ace-jump.  Has stopwatch and exclusive.
+
+count specifies the number of characters to be inputted (default is lalopmak-evil-ace-jump-num-input-chars)"
   :type inclusive
   (with-stopwatch-if-timing "Ace-jump"
-                            (evil-without-repeat 
-                              (evil-enclose-ace-jump-for-motion 
-                                (apply #'lalopmak-evil-ace-jump-char-mode-replacement 
-                                       (string-to-list (get-ace-user-input lalopmak-evil-ace-jump-num-input-chars))))))) 
+                            (let ((ace-jump-mode-scope 'frame))
+                              (evil-without-repeat 
+                                (evil-enclose-ace-jump-for-motion 
+                                  (apply #'lalopmak-evil-ace-jump-char-mode-replacement 
+                                         (string-to-list (get-ace-user-input (or count lalopmak-evil-ace-jump-num-input-chars)))))))))
 
 ;;;
 ;;; "jump-to" mode

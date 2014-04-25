@@ -111,7 +111,7 @@ regions-search-limit is our search bound."
          until (> (,region-restrictor r (count-string-in-buffer ,string))
                   ,jumper-limit)
          finally return (if (eq r 0)
-                            r         ;zero is the lowest we can go
+                            0         ;zero is the lowest we can go
                           (1- r))))
 
 (defmacro if-point-changed (action &optional decreasedAction increasedAction samePlaceAction)
