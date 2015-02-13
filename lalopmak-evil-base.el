@@ -25,7 +25,7 @@
 (require 'lalopmak-layouts)
 (require 'lalopmak-jump)
 
-(defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map hy-mode-map))
+(defvar lalopmak-evil-lisp-mode-hook-and-map-symbols '((nil (emacs-lisp-mode-map lisp-mode-map lisp-interaction-mode-map))
                                                        (clojure-mode-hook (clojure-mode-map)))
   "List with entries of the form (hook (mode-map1 mode-map2 ...)) where hook are lisp-mode hooks and the mode-maps
 are those to add a keybinding to upon hook being triggered.")
@@ -240,8 +240,7 @@ adds 'motion bindings to that lisp mode map."
   "Move the cursor to the end of the COUNT-th next word.
 If BIGWORD is non-nil, move by WORDS."
   :type inclusive
-  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
-    (evil-move-end count move nil t)))
+  (evil-forward-word-end count bigword))
 
 (evil-define-motion lalopmak-evil-forward-WORD-end (count)
   "Move the cursor to the end of the COUNT-th next WORD."
@@ -252,8 +251,7 @@ If BIGWORD is non-nil, move by WORDS."
   "Move the cursor to the end of the COUNT-th previous word.
 If BIGWORD is non-nil, move by WORDS."
   :type inclusive
-  (let ((move (if bigword #'evil-move-WORD #'evil-move-word)))
-    (evil-move-beginning (- (or count 1)) move)))
+  (evil-backward-word-begin count bigword))
 
 (evil-define-motion lalopmak-evil-backward-WORD-begin (count)
   "Move the cursor to the end of the COUNT-th previous WORD."

@@ -183,11 +183,11 @@
 ;;;evil-surround
 
 
-(setcdr surround-mode-map nil) ;removes previous "s" mappings
+(setcdr evil-surround-mode-map nil) ;removes previous "s" mappings
 
-(evil-define-key 'operator surround-mode-map "z" 'surround-edit)
-(evil-define-key 'visual surround-mode-map "z" 'surround-region)
-(evil-define-key 'visual surround-mode-map "Z" 'Surround-region)
+(evil-define-key 'operator evil-surround-mode-map "z" 'surround-edit)
+(evil-define-key 'visual evil-surround-mode-map "z" 'surround-region)
+(evil-define-key 'visual evil-surround-mode-map "Z" 'Surround-region)
 
 ;;; visual Block mode
 ;; Since the system clipboard is accessible by Emacs through the
